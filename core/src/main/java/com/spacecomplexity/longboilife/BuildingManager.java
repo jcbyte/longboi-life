@@ -10,7 +10,12 @@ public class BuildingManager {
     public BuildingManager() {
         buildingDescriptions = new EnumMap<>(Building.class);
 
-        buildingDescriptions.put(Building.Greggs, new BuildingData(BuildingType.Food, new Texture("tiles/grass.png")));
+        buildingDescriptions.put(Building.Greggs, new BuildingData(
+            BuildingType.Food,
+            new Texture("tiles/grass.png"),
+            new Vector2Int(2, 2),
+            2000
+        ));
         // todo this with all buildings
     }
 
