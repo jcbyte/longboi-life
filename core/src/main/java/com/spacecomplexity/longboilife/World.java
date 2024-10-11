@@ -1,5 +1,9 @@
 package com.spacecomplexity.longboilife;
 
+import com.spacecomplexity.longboilife.building.PlacedBuilding;
+import com.spacecomplexity.longboilife.tile.Tile;
+import com.spacecomplexity.longboilife.utils.Vector2Int;
+
 import java.util.Vector;
 
 public class World {

@@ -1,6 +1,7 @@
-package com.spacecomplexity.longboilife;
+package com.spacecomplexity.longboilife.building;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.spacecomplexity.longboilife.utils.Vector2Int;
 
 import java.util.EnumMap;
 

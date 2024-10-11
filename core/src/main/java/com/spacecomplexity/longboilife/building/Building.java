@@ -1,4 +1,4 @@
-package com.spacecomplexity.longboilife;
+package com.spacecomplexity.longboilife.building;
 
 public enum Building {
     Greggs,

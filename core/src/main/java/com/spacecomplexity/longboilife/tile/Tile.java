@@ -1,4 +1,4 @@
-package com.spacecomplexity.longboilife;
+package com.spacecomplexity.longboilife.tile;
 
 public class Tile {
     private TileType type;

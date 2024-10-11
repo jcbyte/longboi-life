@@ -1,4 +1,4 @@
-package com.spacecomplexity.longboilife;
+package com.spacecomplexity.longboilife.tile;
 
 import com.badlogic.gdx.graphics.Texture;
 

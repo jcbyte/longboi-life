@@ -1,4 +1,4 @@
-package com.spacecomplexity.longboilife;
+package com.spacecomplexity.longboilife.utils;
 
 public class Vector2Int {
     public int x;
