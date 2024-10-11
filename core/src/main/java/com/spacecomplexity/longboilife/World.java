@@ -7,11 +7,11 @@ import com.spacecomplexity.longboilife.utils.Vector2Int;
 import java.util.Vector;
 
 public class World {
-    public Vector2Int size;
-    public Tile[][] world;
-    public Vector<PlacedBuilding> buildings;
+    private Vector2Int size;
+    private Tile[][] world;
+    private Vector<PlacedBuilding> buildings;
 
-    World(Vector2Int size) {
+    public World(Vector2Int size) {
         this.size = size;
         world = new Tile[size.x][size.y];
         // todo initialise world
