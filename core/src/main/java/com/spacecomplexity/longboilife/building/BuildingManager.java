@@ -13,7 +13,7 @@ public class BuildingManager {
 
         buildingDescriptions.put(Building.Greggs, new BuildingData(
             BuildingType.Food,
-            new Texture("tiles/grass.png"),
+            new Texture("greggs.png"),
             new Vector2Int(2, 2),
             2000
         ));

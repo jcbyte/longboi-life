@@ -11,9 +11,11 @@ public class TileManager {
         tileDescriptions = new EnumMap<>(TileType.class);
 
         tileDescriptions.put(TileType.GRASS, new TileData(
-            new Texture("tiles/grass.png")
+            new Texture("grass.png")
         ));
-        // todo this with all buildings
+        tileDescriptions.put(TileType.WATER, new TileData(
+            new Texture("water.png")
+        ));
     }
 
     public TileData getTileData(TileType tileType) throws ClassNotFoundException {
