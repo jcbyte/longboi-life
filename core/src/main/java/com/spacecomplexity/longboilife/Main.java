@@ -7,7 +7,6 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -28,7 +27,6 @@ public class Main extends ApplicationAdapter {
 
     private OrthographicCamera camera;
     private Viewport viewport;
-    private Vector2 cameraTargetPosition = new Vector2();
 
     GameConfig gameConfig = GameConfig.getConfig();
 
@@ -47,10 +45,11 @@ public class Main extends ApplicationAdapter {
             throw new RuntimeException(e);
         }
 
-        cameraTargetPosition.set(
+        camera.position.set(new Vector3(
             world.getWidth() * Constants.TILE_SIZE * gameConfig.scaleFactor / 2,
-            world.getHeight() * Constants.TILE_SIZE * gameConfig.scaleFactor / 2
-        );
+            world.getHeight() * Constants.TILE_SIZE * gameConfig.scaleFactor / 2,
+            0
+        ));
 
         Gdx.input.setInputProcessor(new InputProcessor());
     }
@@ -76,29 +75,18 @@ public class Main extends ApplicationAdapter {
         float cameraSpeed = gameConfig.cameraSpeed * deltaTime * camera.zoom * gameConfig.scaleFactor;
 
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            cameraTargetPosition.y += cameraSpeed;
+            camera.position.y += cameraSpeed;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            cameraTargetPosition.y -= cameraSpeed;
+            camera.position.y -= cameraSpeed;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            cameraTargetPosition.x -= cameraSpeed;
+            camera.position.x -= cameraSpeed;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            cameraTargetPosition.x += cameraSpeed;
+            camera.position.x += cameraSpeed;
         }
-
-        cameraTargetPosition = new Vector2(
-            MathUtils.clamp(cameraTargetPosition.x, 0, world.getWidth() * Constants.TILE_SIZE * gameConfig.scaleFactor),
-            MathUtils.clamp(cameraTargetPosition.y, 0, world.getHeight() * Constants.TILE_SIZE * gameConfig.scaleFactor)
-        );
-        Vector3 cameraTargetPositionV3 = new Vector3(cameraTargetPosition.x, cameraTargetPosition.y, camera.position.z);
-        if (gameConfig.smoothCamera) {
-            camera.position.lerp(cameraTargetPositionV3, gameConfig.cameraSmoothness);
-        } else {
-            camera.position.set(cameraTargetPositionV3);
-        }
-
+        
         float cameraZoomSpeed = gameConfig.cameraKeyZoomSpeed * deltaTime * camera.zoom;
 
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
@@ -107,6 +95,12 @@ public class Main extends ApplicationAdapter {
         if (Gdx.input.isKeyPressed(Input.Keys.E)) {
             camera.zoom = MathUtils.clamp(camera.zoom - cameraZoomSpeed, Constants.MIN_ZOOM, Constants.MAX_ZOOM);
         }
+
+        // todo clamp camera position/zoom (possibly abstract this oop)
+//        cameraTargetPosition = new Vector2(
+//            MathUtils.clamp(cameraTargetPosition.x, 0, world.getWidth() * Constants.TILE_SIZE * gameConfig.scaleFactor),
+//            MathUtils.clamp(cameraTargetPosition.y, 0, world.getHeight() * Constants.TILE_SIZE * gameConfig.scaleFactor)
+//        );
 
         // todo document
         // todo readme
@@ -122,8 +116,8 @@ public class Main extends ApplicationAdapter {
 
             float zoomFactor = newZoom / camera.zoom;
 
-            cameraTargetPosition.x += (mousePosition.x - camera.position.x) * (1 - zoomFactor);
-            cameraTargetPosition.y += (mousePosition.y - camera.position.y) * (1 - zoomFactor);
+            camera.position.x += (mousePosition.x - camera.position.x) * (1 - zoomFactor);
+            camera.position.y += (mousePosition.y - camera.position.y) * (1 - zoomFactor);
 
             // Set the new zoom level
             camera.zoom = newZoom;
@@ -139,9 +133,6 @@ public class Main extends ApplicationAdapter {
             lastScreenX = screenX;
             lastScreenY = screenY;
 
-            smoothCameraPreviously = gameConfig.smoothCamera;
-            gameConfig.smoothCamera = false;
-
             return true;
         }
 
@@ -150,20 +141,13 @@ public class Main extends ApplicationAdapter {
             float deltaX = screenX - lastScreenX;
             float deltaY = screenY - lastScreenY;
 
-            cameraTargetPosition.x -= deltaX * camera.zoom;
-            cameraTargetPosition.y += deltaY * camera.zoom;
+            camera.position.x -= deltaX * camera.zoom;
+            camera.position.y += deltaY * camera.zoom;
 
             lastScreenX = screenX;
             lastScreenY = screenY;
 
             return false;
-        }
-
-        @Override
-        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            gameConfig.smoothCamera = smoothCameraPreviously;
-
-            return true;
         }
     }
 
