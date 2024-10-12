@@ -81,6 +81,10 @@ public class Main extends ApplicationAdapter {
             cameraTargetPosition.x += cameraSpeed;
         }
 
+        cameraTargetPosition = new Vector2(
+            MathUtils.clamp(cameraTargetPosition.x, 0, world.getWidth() * Constants.TILE_SIZE * GameConfig.getConfig().scaleFactor),
+            MathUtils.clamp(cameraTargetPosition.y, 0, world.getHeight() * Constants.TILE_SIZE * GameConfig.getConfig().scaleFactor)
+        );
         Vector3 cameraTargetPositionV3 = new Vector3(cameraTargetPosition.x, cameraTargetPosition.y, camera.position.z);
         if (GameConfig.getConfig().smoothCamera) {
             camera.position.lerp(cameraTargetPositionV3, GameConfig.getConfig().cameraSmoothness);
@@ -96,6 +100,10 @@ public class Main extends ApplicationAdapter {
         if (Gdx.input.isKeyPressed(Input.Keys.E)) {
             camera.zoom = MathUtils.clamp(camera.zoom - cameraZoomSpeed, Constants.MIN_ZOOM, Constants.MAX_ZOOM);
         }
+
+        // todo change camera move speed when scaling is different
+        // todo initially start in center of map
+        // todo zoom in onto mouse when using scroll wheel
     }
 
     private class InputProcessor extends InputAdapter {
