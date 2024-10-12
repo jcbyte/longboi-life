@@ -1,6 +1,7 @@
-package com.spacecomplexity.longboilife;
+package com.spacecomplexity.longboilife.world;
 
 import com.spacecomplexity.longboilife.tile.GrassTile;
+import com.spacecomplexity.longboilife.tile.InvalidTileException;
 import com.spacecomplexity.longboilife.tile.Tile;
 import com.spacecomplexity.longboilife.tile.WaterTile;
 

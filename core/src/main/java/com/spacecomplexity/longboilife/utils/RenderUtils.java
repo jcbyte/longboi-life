@@ -1,16 +1,15 @@
 package com.spacecomplexity.longboilife.utils;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.spacecomplexity.longboilife.World;
+import com.spacecomplexity.longboilife.Constants;
+import com.spacecomplexity.longboilife.world.World;
 
 public class RenderUtils {
-    // todo should TILE_SIZE be here?
-    public static final int TILE_SIZE = 20; // in pixels
 
     public static void drawWorld(SpriteBatch batch, World world) {
         for (int x = 0; x < world.size.x; x++) {
             for (int y = 0; y < world.size.y; y++) {
-                batch.draw(world.world[x][y].getTexture(), x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                batch.draw(world.world[x][y].getTexture(), x * Constants.TILE_SIZE, y * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE);
             }
         }
     }

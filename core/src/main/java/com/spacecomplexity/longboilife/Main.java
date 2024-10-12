@@ -3,7 +3,9 @@ package com.spacecomplexity.longboilife;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.spacecomplexity.longboilife.tile.InvalidTileException;
 import com.spacecomplexity.longboilife.utils.RenderUtils;
+import com.spacecomplexity.longboilife.world.World;
 
 import java.io.FileNotFoundException;
 
