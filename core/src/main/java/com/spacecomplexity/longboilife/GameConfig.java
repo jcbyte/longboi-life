@@ -5,7 +5,8 @@ public class GameConfig {
 
     public float scaleFactor = 1;
     public float cameraSpeed = 800;
-    public float cameraSmoothness = 0.2f;
+    public boolean smoothCamera = true;
+    public float cameraSmoothness = 0.35f;
     public float cameraZoomSpeed = 5;
 
     private GameConfig() {

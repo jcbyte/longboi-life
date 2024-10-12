@@ -81,7 +81,12 @@ public class Main extends ApplicationAdapter {
             cameraTargetPosition.x += cameraSpeed;
         }
 
-        camera.position.lerp(new Vector3(cameraTargetPosition.x, cameraTargetPosition.y, camera.position.z), GameConfig.getConfig().cameraSmoothness);
+        Vector3 cameraTargetPositionV3 = new Vector3(cameraTargetPosition.x, cameraTargetPosition.y, camera.position.z);
+        if (GameConfig.getConfig().smoothCamera) {
+            camera.position.lerp(cameraTargetPositionV3, GameConfig.getConfig().cameraSmoothness);
+        } else {
+            camera.position.set(cameraTargetPositionV3);
+        }
 
         float cameraZoomSpeed = GameConfig.getConfig().cameraZoomSpeed * deltaTime * camera.zoom;
 
@@ -102,28 +107,39 @@ public class Main extends ApplicationAdapter {
             return false;
         }
 
-        private float lastMouseX, lastMouseY;
+        private float lastScreenX, lastScreenY;
+        private boolean smoothCameraPreviously;
 
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            lastMouseX = screenX;
-            lastMouseY = screenY;
+            lastScreenX = screenX;
+            lastScreenY = screenY;
+
+            smoothCameraPreviously = GameConfig.getConfig().smoothCamera;
+            GameConfig.getConfig().smoothCamera = false;
 
             return true;
         }
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-            float deltaX = screenX - lastMouseX;
-            float deltaY = screenY - lastMouseY;
+            float deltaX = screenX - lastScreenX;
+            float deltaY = screenY - lastScreenY;
 
             cameraTargetPosition.x -= deltaX * camera.zoom;
             cameraTargetPosition.y += deltaY * camera.zoom;
 
-            lastMouseX = screenX;
-            lastMouseY = screenY;
+            lastScreenX = screenX;
+            lastScreenY = screenY;
 
             return false;
+        }
+
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            GameConfig.getConfig().smoothCamera = smoothCameraPreviously;
+
+            return true;
         }
     }
 
