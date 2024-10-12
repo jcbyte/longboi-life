@@ -15,6 +15,10 @@ public abstract class Tile {
         throw new UnsupportedOperationException("Method should be implemented in subclasses as all subclasses should be singletons");
     }
 
+    public void dispose() {
+        texture.dispose();
+    }
+
     public Texture getTexture() {
         return texture;
     }
