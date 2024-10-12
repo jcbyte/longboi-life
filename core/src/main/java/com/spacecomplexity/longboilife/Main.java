@@ -3,8 +3,10 @@ package com.spacecomplexity.longboilife;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -33,7 +35,6 @@ public class Main extends ApplicationAdapter {
         batch = new SpriteBatch();
 
         camera = new OrthographicCamera();
-//        viewport = new FitViewport((int) (screenHeight * Constants.ASPECT_RATIO), screenHeight, camera);
         viewport = new ScreenViewport(camera);
         int screenHeight = Gdx.graphics.getHeight();
         GameConfig.getConfig().scaleFactor = screenHeight / (float) Constants.SCALING_1_HEIGHT;
@@ -43,11 +44,13 @@ public class Main extends ApplicationAdapter {
         } catch (FileNotFoundException | InvalidTileException e) {
             throw new RuntimeException(e);
         }
+
+        Gdx.input.setInputProcessor(new InputProcessor());
     }
 
     @Override
     public void render() {
-        handleInput();
+        handleConstantInput();
 
         ScreenUtils.clear(0, 0, 0, 1f);
 
@@ -60,7 +63,7 @@ public class Main extends ApplicationAdapter {
         batch.end();
     }
 
-    private void handleInput() {
+    private void handleConstantInput() {
         float deltaTime = Gdx.graphics.getDeltaTime();
 
         float cameraSpeed = GameConfig.getConfig().cameraSpeed * deltaTime * camera.zoom;
@@ -86,11 +89,20 @@ public class Main extends ApplicationAdapter {
             camera.zoom += cameraZoomSpeed;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.E)) {
-            camera.zoom = Math.clamp(camera.zoom - cameraZoomSpeed, 0.01f, Float.POSITIVE_INFINITY);
+            camera.zoom = MathUtils.clamp(camera.zoom - cameraZoomSpeed, 0.01f, Float.POSITIVE_INFINITY);
         }
-        // todo also do this with scroll wheel
 
         // todo clamp maximum zoom + maximum directions off each side
+
+        // todo drag map
+    }
+
+    private class InputProcessor extends InputAdapter {
+        @Override
+        public boolean scrolled(float amountX, float amountY) {
+            camera.zoom = MathUtils.clamp(camera.zoom + amountY * 0.1f, 0.01f, Float.POSITIVE_INFINITY);
+            return false;
+        }
     }
 
     @Override
