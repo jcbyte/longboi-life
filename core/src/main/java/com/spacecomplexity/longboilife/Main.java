@@ -99,7 +99,7 @@ public class Main extends ApplicationAdapter {
             camera.position.set(cameraTargetPositionV3);
         }
 
-        float cameraZoomSpeed = gameConfig.cameraZoomSpeed * deltaTime * camera.zoom;
+        float cameraZoomSpeed = gameConfig.cameraKeyZoomSpeed * deltaTime * camera.zoom;
 
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
             camera.zoom = MathUtils.clamp(camera.zoom + cameraZoomSpeed, Constants.MIN_ZOOM, Constants.MAX_ZOOM);
@@ -108,8 +108,6 @@ public class Main extends ApplicationAdapter {
             camera.zoom = MathUtils.clamp(camera.zoom - cameraZoomSpeed, Constants.MIN_ZOOM, Constants.MAX_ZOOM);
         }
 
-        // todo zoom in onto mouse when using scroll wheel
-
         // todo document
         // todo readme
     }
@@ -117,7 +115,19 @@ public class Main extends ApplicationAdapter {
     private class InputProcessor extends InputAdapter {
         @Override
         public boolean scrolled(float amountX, float amountY) {
-            camera.zoom = MathUtils.clamp(camera.zoom + amountY * 0.1f, Constants.MIN_ZOOM, Constants.MAX_ZOOM);
+            Vector3 mousePosition = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.unproject(mousePosition);
+
+            float newZoom = MathUtils.clamp(camera.zoom + amountY * gameConfig.cameraScrollZoomSpeed, Constants.MIN_ZOOM, Constants.MAX_ZOOM);
+
+            float zoomFactor = newZoom / camera.zoom;
+
+            cameraTargetPosition.x += (mousePosition.x - camera.position.x) * (1 - zoomFactor);
+            cameraTargetPosition.y += (mousePosition.y - camera.position.y) * (1 - zoomFactor);
+
+            // Set the new zoom level
+            camera.zoom = newZoom;
+
             return false;
         }
 
