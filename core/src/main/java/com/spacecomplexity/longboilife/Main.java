@@ -2,8 +2,11 @@ package com.spacecomplexity.longboilife;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -23,6 +26,7 @@ public class Main extends ApplicationAdapter {
 
     private OrthographicCamera camera;
     private Viewport viewport;
+    private Vector2 cameraTargetPosition = new Vector2();
 
     @Override
     public void create() {
@@ -43,6 +47,8 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void render() {
+        handleInput();
+
         ScreenUtils.clear(0, 0, 0, 1f);
 
         viewport.apply();
@@ -52,8 +58,27 @@ public class Main extends ApplicationAdapter {
         batch.begin();
         RenderUtils.drawWorld(batch, world);
         batch.end();
+    }
 
-        // todo apply scaling
+    private void handleInput() {
+        float speed = GameConfig.getConfig().cameraSpeed * Gdx.graphics.getDeltaTime();
+
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            cameraTargetPosition.y += speed;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            cameraTargetPosition.y -= speed;
+
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            cameraTargetPosition.x -= speed;
+
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            cameraTargetPosition.x += speed;
+        }
+
+        camera.position.lerp(new Vector3(cameraTargetPosition.x, cameraTargetPosition.y, 0), GameConfig.getConfig().cameraSmoothness);
     }
 
     @Override
