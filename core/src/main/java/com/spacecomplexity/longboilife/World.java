@@ -15,17 +15,17 @@ public class World {
     public Tile[][] world;
     public Vector<PlacedBuilding> buildings;
 
-    public World(String filename) throws FileNotFoundException {
+    public World(String filename) throws FileNotFoundException, InvalidTileException {
         loadMap(filename);
         buildings = new Vector<>();
     }
 
-    private void loadMap(String filename) throws FileNotFoundException {
+    private void loadMap(String filename) throws FileNotFoundException, InvalidTileException {
         Json json = new Json();
-        FileHandle file = Gdx.files.local("map.json");
+        FileHandle file = Gdx.files.local(filename);
 
         if (!file.exists()) {
-            throw new FileNotFoundException();
+            throw new FileNotFoundException("File does not exist: " + filename);
         }
 
         SaveMap saveMap = json.fromJson(SaveMap.class, file.readString());

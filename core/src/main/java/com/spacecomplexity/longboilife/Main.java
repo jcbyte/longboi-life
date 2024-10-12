@@ -22,7 +22,7 @@ public class Main extends ApplicationAdapter {
 
         try {
             world = new World("map.json");
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | InvalidTileException e) {
             throw new RuntimeException(e);
         }
     }
