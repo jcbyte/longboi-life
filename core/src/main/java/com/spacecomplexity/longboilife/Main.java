@@ -91,19 +91,17 @@ public class Main extends ApplicationAdapter {
         float cameraZoomSpeed = GameConfig.getConfig().cameraZoomSpeed * deltaTime * camera.zoom;
 
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            camera.zoom += cameraZoomSpeed;
+            camera.zoom = MathUtils.clamp(camera.zoom + cameraZoomSpeed, Constants.MIN_ZOOM, Constants.MAX_ZOOM);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.E)) {
-            camera.zoom = MathUtils.clamp(camera.zoom - cameraZoomSpeed, 0.01f, Float.POSITIVE_INFINITY);
+            camera.zoom = MathUtils.clamp(camera.zoom - cameraZoomSpeed, Constants.MIN_ZOOM, Constants.MAX_ZOOM);
         }
-
-        // todo clamp maximum zoom + maximum directions off each side
     }
 
     private class InputProcessor extends InputAdapter {
         @Override
         public boolean scrolled(float amountX, float amountY) {
-            camera.zoom = MathUtils.clamp(camera.zoom + amountY * 0.1f, 0.01f, Float.POSITIVE_INFINITY);
+            camera.zoom = MathUtils.clamp(camera.zoom + amountY * 0.1f, Constants.MIN_ZOOM, Constants.MAX_ZOOM);
             return false;
         }
 
