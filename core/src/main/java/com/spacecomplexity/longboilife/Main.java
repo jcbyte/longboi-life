@@ -30,6 +30,8 @@ public class Main extends ApplicationAdapter {
     private Viewport viewport;
     private Vector2 cameraTargetPosition = new Vector2();
 
+    GameConfig gameConfig = GameConfig.getConfig();
+
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -37,7 +39,7 @@ public class Main extends ApplicationAdapter {
         camera = new OrthographicCamera();
         viewport = new ScreenViewport(camera);
         int screenHeight = Gdx.graphics.getHeight();
-        GameConfig.getConfig().scaleFactor = screenHeight / (float) Constants.SCALING_1_HEIGHT;
+        gameConfig.scaleFactor = screenHeight / (float) Constants.SCALING_1_HEIGHT;
 
         try {
             world = new World("map.json");
@@ -66,7 +68,7 @@ public class Main extends ApplicationAdapter {
     private void handleConstantInput() {
         float deltaTime = Gdx.graphics.getDeltaTime();
 
-        float cameraSpeed = GameConfig.getConfig().cameraSpeed * deltaTime * camera.zoom;
+        float cameraSpeed = gameConfig.cameraSpeed * deltaTime * camera.zoom;
 
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             cameraTargetPosition.y += cameraSpeed;
@@ -82,17 +84,17 @@ public class Main extends ApplicationAdapter {
         }
 
         cameraTargetPosition = new Vector2(
-            MathUtils.clamp(cameraTargetPosition.x, 0, world.getWidth() * Constants.TILE_SIZE * GameConfig.getConfig().scaleFactor),
-            MathUtils.clamp(cameraTargetPosition.y, 0, world.getHeight() * Constants.TILE_SIZE * GameConfig.getConfig().scaleFactor)
+            MathUtils.clamp(cameraTargetPosition.x, 0, world.getWidth() * Constants.TILE_SIZE * gameConfig.scaleFactor),
+            MathUtils.clamp(cameraTargetPosition.y, 0, world.getHeight() * Constants.TILE_SIZE * gameConfig.scaleFactor)
         );
         Vector3 cameraTargetPositionV3 = new Vector3(cameraTargetPosition.x, cameraTargetPosition.y, camera.position.z);
-        if (GameConfig.getConfig().smoothCamera) {
-            camera.position.lerp(cameraTargetPositionV3, GameConfig.getConfig().cameraSmoothness);
+        if (gameConfig.smoothCamera) {
+            camera.position.lerp(cameraTargetPositionV3, gameConfig.cameraSmoothness);
         } else {
             camera.position.set(cameraTargetPositionV3);
         }
 
-        float cameraZoomSpeed = GameConfig.getConfig().cameraZoomSpeed * deltaTime * camera.zoom;
+        float cameraZoomSpeed = gameConfig.cameraZoomSpeed * deltaTime * camera.zoom;
 
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
             camera.zoom = MathUtils.clamp(camera.zoom + cameraZoomSpeed, Constants.MIN_ZOOM, Constants.MAX_ZOOM);
@@ -121,8 +123,8 @@ public class Main extends ApplicationAdapter {
             lastScreenX = screenX;
             lastScreenY = screenY;
 
-            smoothCameraPreviously = GameConfig.getConfig().smoothCamera;
-            GameConfig.getConfig().smoothCamera = false;
+            smoothCameraPreviously = gameConfig.smoothCamera;
+            gameConfig.smoothCamera = false;
 
             return true;
         }
@@ -143,7 +145,7 @@ public class Main extends ApplicationAdapter {
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            GameConfig.getConfig().smoothCamera = smoothCameraPreviously;
+            gameConfig.smoothCamera = smoothCameraPreviously;
 
             return true;
         }
@@ -154,7 +156,7 @@ public class Main extends ApplicationAdapter {
         viewport.update(width, height, true);
 
         int screenHeight = Gdx.graphics.getHeight();
-        GameConfig.getConfig().scaleFactor = screenHeight / (float) Constants.SCALING_1_HEIGHT;
+        gameConfig.scaleFactor = screenHeight / (float) Constants.SCALING_1_HEIGHT;
     }
 
     @Override
