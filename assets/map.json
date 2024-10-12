@@ -1,0 +1,44 @@
+{
+  "map": [
+    [
+      "GRASS",
+      "GRASS",
+      "GRASS",
+      "GRASS",
+      "GRASS",
+      "GRASS",
+      "GRASS",
+      "GRASS"
+    ],
+    [
+      "GRASS",
+      "WATER",
+      "WATER",
+      "GRASS",
+      "GRASS",
+      "GRASS",
+      "GRASS",
+      "GRASS"
+    ],
+    [
+      "GRASS",
+      "WATER",
+      "GRASS",
+      "GRASS",
+      "GRASS",
+      "GRASS",
+      "GRASS",
+      "GRASS"
+    ],
+    [
+      "GRASS",
+      "GRASS",
+      "GRASS",
+      "GRASS",
+      "GRASS",
+      "GRASS",
+      "GRASS",
+      "GRASS"
+    ]
+  ]
+}

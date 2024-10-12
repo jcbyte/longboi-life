@@ -4,10 +4,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.spacecomplexity.longboilife.utils.Vector2Int;
 
 public class BuildingData {
-    private BuildingType type;
-    private Texture tex;
-    private Vector2Int size;
-    private float cost;
+    public BuildingType type;
+    public Texture tex;
+    public Vector2Int size;
+    public float cost;
+    // todo these should be constant
 
     public BuildingData(BuildingType type, Texture tex, Vector2Int size, float cost) {
         this.type = type;
