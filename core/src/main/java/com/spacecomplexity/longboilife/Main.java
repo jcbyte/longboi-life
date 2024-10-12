@@ -73,7 +73,7 @@ public class Main extends ApplicationAdapter {
     private void handleConstantInput() {
         float deltaTime = Gdx.graphics.getDeltaTime();
 
-        float cameraSpeed = gameConfig.cameraSpeed * deltaTime * camera.zoom;
+        float cameraSpeed = gameConfig.cameraSpeed * deltaTime * camera.zoom * gameConfig.scaleFactor;
 
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             cameraTargetPosition.y += cameraSpeed;
@@ -108,7 +108,6 @@ public class Main extends ApplicationAdapter {
             camera.zoom = MathUtils.clamp(camera.zoom - cameraZoomSpeed, Constants.MIN_ZOOM, Constants.MAX_ZOOM);
         }
 
-        // todo change camera move speed when scaling is different
         // todo zoom in onto mouse when using scroll wheel
 
         // todo document
