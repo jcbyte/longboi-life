@@ -4,18 +4,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.spacecomplexity.longboilife.utils.Vector2Int;
 
 public abstract class Building {
-    private final Texture tex;
+    private final Texture texture;
     private final Vector2Int size;
     private final float cost;
 
-    public Building(Texture tex, Vector2Int size, float cost) {
-        this.tex = tex;
+    public Building(Texture texture, Vector2Int size, float cost) {
+        this.texture = texture;
         this.size = size;
         this.cost = cost;
     }
 
-    public Texture getTex() {
-        return tex;
+    public Texture getTexture() {
+        return texture;
     }
 
     public Vector2Int getSize() {

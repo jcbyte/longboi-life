@@ -10,7 +10,7 @@ public class RenderUtils {
     public static void drawWorld(SpriteBatch batch, World world) {
         for (int x = 0; x < world.size.x; x++) {
             for (int y = 0; y < world.size.y; y++) {
-                batch.draw(world.world[x][y].getTex(), x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                batch.draw(world.world[x][y].getTexture(), x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
             }
         }
     }

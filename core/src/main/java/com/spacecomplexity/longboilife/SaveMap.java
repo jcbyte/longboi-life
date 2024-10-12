@@ -19,10 +19,10 @@ public class SaveMap {
 
                 switch (map[x][y]) {
                     case "GRASS":
-                        tile = new GrassTile();
+                        tile = GrassTile.getInstance();
                         break;
                     case "WATER":
-                        tile = new WaterTile();
+                        tile = WaterTile.getInstance();
                         break;
                 }
 
