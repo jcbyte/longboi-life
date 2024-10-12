@@ -47,6 +47,11 @@ public class Main extends ApplicationAdapter {
             throw new RuntimeException(e);
         }
 
+        cameraTargetPosition.set(
+            world.getWidth() * Constants.TILE_SIZE * gameConfig.scaleFactor / 2,
+            world.getHeight() * Constants.TILE_SIZE * gameConfig.scaleFactor / 2
+        );
+
         Gdx.input.setInputProcessor(new InputProcessor());
     }
 
@@ -104,8 +109,10 @@ public class Main extends ApplicationAdapter {
         }
 
         // todo change camera move speed when scaling is different
-        // todo initially start in center of map
         // todo zoom in onto mouse when using scroll wheel
+
+        // todo document
+        // todo readme
     }
 
     private class InputProcessor extends InputAdapter {
@@ -153,7 +160,7 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height, true);
+        viewport.update(width, height, false);
 
         int screenHeight = Gdx.graphics.getHeight();
         gameConfig.scaleFactor = screenHeight / (float) Constants.SCALING_1_HEIGHT;
