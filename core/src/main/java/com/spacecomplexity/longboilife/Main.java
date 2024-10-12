@@ -81,7 +81,7 @@ public class Main extends ApplicationAdapter {
             cameraTargetPosition.x += cameraSpeed;
         }
 
-        camera.position.lerp(new Vector3(cameraTargetPosition.x, cameraTargetPosition.y, 0), GameConfig.getConfig().cameraSmoothness);
+        camera.position.lerp(new Vector3(cameraTargetPosition.x, cameraTargetPosition.y, camera.position.z), GameConfig.getConfig().cameraSmoothness);
 
         float cameraZoomSpeed = GameConfig.getConfig().cameraZoomSpeed * deltaTime * camera.zoom;
 
@@ -93,14 +93,36 @@ public class Main extends ApplicationAdapter {
         }
 
         // todo clamp maximum zoom + maximum directions off each side
-
-        // todo drag map
     }
 
     private class InputProcessor extends InputAdapter {
         @Override
         public boolean scrolled(float amountX, float amountY) {
             camera.zoom = MathUtils.clamp(camera.zoom + amountY * 0.1f, 0.01f, Float.POSITIVE_INFINITY);
+            return false;
+        }
+
+        private float lastMouseX, lastMouseY;
+
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+            lastMouseX = screenX;
+            lastMouseY = screenY;
+
+            return true;
+        }
+
+        @Override
+        public boolean touchDragged(int screenX, int screenY, int pointer) {
+            float deltaX = screenX - lastMouseX;
+            float deltaY = screenY - lastMouseY;
+
+            cameraTargetPosition.x -= deltaX * camera.zoom;
+            cameraTargetPosition.y += deltaY * camera.zoom;
+
+            lastMouseX = screenX;
+            lastMouseY = screenY;
+
             return false;
         }
     }
