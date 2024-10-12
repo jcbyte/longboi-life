@@ -3,11 +3,11 @@ package com.spacecomplexity.longboilife.building;
 import com.spacecomplexity.longboilife.utils.Vector2Int;
 
 public class PlacedBuilding {
-    private BuildingType buildingType;
+    private Building building;
     private Vector2Int location;
 
-    public PlacedBuilding(BuildingType buildingType, Vector2Int location) {
-        this.buildingType = buildingType;
+    public PlacedBuilding(Building building, Vector2Int location) {
+        this.building = building;
         this.location = location;
     }
 }
