@@ -8,10 +8,14 @@ public abstract class Building {
     private final Vector2Int size;
     private final float cost;
 
-    public Building(Texture texture, Vector2Int size, float cost) {
+    protected Building(Texture texture, Vector2Int size, float cost) {
         this.texture = texture;
         this.size = size;
         this.cost = cost;
+    }
+
+    public static Building getInstance() {
+        throw new UnsupportedOperationException("Method should be implemented in subclasses as all subclasses should be singletons");
     }
 
     public Texture getTexture() {

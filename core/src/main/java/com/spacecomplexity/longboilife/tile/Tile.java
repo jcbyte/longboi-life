@@ -11,6 +11,10 @@ public abstract class Tile {
         this.isBuildable = canBuildOn;
     }
 
+    public static Tile getInstance() {
+        throw new UnsupportedOperationException("Method should be implemented in subclasses as all subclasses should be singletons");
+    }
+
     public Texture getTexture() {
         return texture;
     }
@@ -18,9 +22,4 @@ public abstract class Tile {
     public boolean isBuildable() {
         return isBuildable;
     }
-
-    public static Tile getInstance() {
-        throw new UnsupportedOperationException("Method should be implemented in subclasses as all subclasses should be singletons");
-    }
-
 }
