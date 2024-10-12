@@ -13,9 +13,9 @@ import java.io.FileNotFoundException;
 import java.util.Vector;
 
 public class World {
-    private Vector2Int size;
-    private Tile[][] world;
-    private Vector<PlacedBuilding> buildings;
+    public Vector2Int size;
+    public Tile[][] world;
+    public Vector<PlacedBuilding> buildings;
 
     public World(String filename) throws FileNotFoundException, ClassNotFoundException {
         loadMap(filename);

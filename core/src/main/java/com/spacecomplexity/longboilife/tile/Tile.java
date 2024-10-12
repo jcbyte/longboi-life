@@ -1,8 +1,8 @@
 package com.spacecomplexity.longboilife.tile;
 
 public class Tile {
-    private TileType type;
-    private boolean occupied;
+    public TileType type;
+    public boolean occupied;
 
     public Tile(TileType type, boolean isOccupied) {
         this.type = type;
