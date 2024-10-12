@@ -32,7 +32,7 @@ public class Main extends ApplicationAdapter {
 //        viewport = new FitViewport((int) (screenHeight * Constants.ASPECT_RATIO), screenHeight, camera);
         viewport = new ScreenViewport(camera);
         int screenHeight = Gdx.graphics.getHeight();
-        GameConfig.getConfig().scaleFactor = (float) Constants.SCALING_1_HEIGHT / screenHeight;
+        GameConfig.getConfig().scaleFactor = screenHeight / (float) Constants.SCALING_1_HEIGHT;
 
         try {
             world = new World("map.json");
@@ -59,6 +59,9 @@ public class Main extends ApplicationAdapter {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
+
+        int screenHeight = Gdx.graphics.getHeight();
+        GameConfig.getConfig().scaleFactor = screenHeight / (float) Constants.SCALING_1_HEIGHT;
     }
 
     @Override
