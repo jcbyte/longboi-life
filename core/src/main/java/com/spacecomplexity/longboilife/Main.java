@@ -61,24 +61,36 @@ public class Main extends ApplicationAdapter {
     }
 
     private void handleInput() {
-        float speed = GameConfig.getConfig().cameraSpeed * Gdx.graphics.getDeltaTime();
+        float deltaTime = Gdx.graphics.getDeltaTime();
+
+        float cameraSpeed = GameConfig.getConfig().cameraSpeed * deltaTime * camera.zoom;
 
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            cameraTargetPosition.y += speed;
+            cameraTargetPosition.y += cameraSpeed;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            cameraTargetPosition.y -= speed;
-
+            cameraTargetPosition.y -= cameraSpeed;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            cameraTargetPosition.x -= speed;
-
+            cameraTargetPosition.x -= cameraSpeed;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            cameraTargetPosition.x += speed;
+            cameraTargetPosition.x += cameraSpeed;
         }
 
         camera.position.lerp(new Vector3(cameraTargetPosition.x, cameraTargetPosition.y, 0), GameConfig.getConfig().cameraSmoothness);
+
+        float cameraZoomSpeed = GameConfig.getConfig().cameraZoomSpeed * deltaTime * camera.zoom;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+            camera.zoom += cameraZoomSpeed;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+            camera.zoom = Math.clamp(camera.zoom - cameraZoomSpeed, 0.01f, Float.POSITIVE_INFINITY);
+        }
+        // todo also do this with scroll wheel
+
+        // todo clamp maximum zoom + maximum directions off each side
     }
 
     @Override
