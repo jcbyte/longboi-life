@@ -6,14 +6,12 @@ import com.badlogic.gdx.utils.Json;
 import com.spacecomplexity.longboilife.building.PlacedBuilding;
 import com.spacecomplexity.longboilife.tile.InvalidTileException;
 import com.spacecomplexity.longboilife.tile.Tile;
-import com.spacecomplexity.longboilife.utils.Vector2Int;
 
 import java.io.FileNotFoundException;
 import java.util.Vector;
 
 public class World {
-    public Vector2Int size;
-    public Tile[][] world;
+    private Tile[][] world;
     public Vector<PlacedBuilding> buildings;
 
     public World(String filename) throws FileNotFoundException, InvalidTileException {
@@ -31,6 +29,17 @@ public class World {
 
         SaveMap saveMap = json.fromJson(SaveMap.class, file.readString());
         world = saveMap.getWorld();
-        size = new Vector2Int(world.length, world[0].length);
+    }
+
+    public Tile getTile(int x, int y) {
+        return world[x][y];
+    }
+
+    public int getHeight() {
+        return world[0].length;
+    }
+
+    public int getWidth() {
+        return world.length;
     }
 }

@@ -13,12 +13,16 @@ public class SaveMap {
 
     public Tile[][] getWorld() throws InvalidTileException {
 
-        Tile[][] world = new Tile[map.length][map[0].length];
-        for (int x = 0; x < map.length; x++) {
-            for (int y = 0; y < map[0].length; y++) {
+        int height = map.length;
+        int width = map[0].length;
+
+        Tile[][] world = new Tile[width][height];
+
+        for (int y = height - 1; y >= 0; y--) {
+            for (int x = 0; x < width; x++) {
                 Tile tile = null;
 
-                switch (map[x][y]) {
+                switch (map[y][x]) {
                     case "GRASS":
                         tile = GrassTile.getInstance();
                         break;
