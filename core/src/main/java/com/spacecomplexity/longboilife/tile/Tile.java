@@ -1,11 +1,21 @@
 package com.spacecomplexity.longboilife.tile;
 
-public class Tile {
-    public TileType type;
-    public boolean occupied;
+import com.badlogic.gdx.graphics.Texture;
 
-    public Tile(TileType type, boolean isOccupied) {
-        this.type = type;
-        this.occupied = isOccupied;
+public abstract class Tile {
+    private final Texture tex;
+    private final boolean isBuildable;
+
+    public Tile(Texture tex, boolean canBuildOn) {
+        this.tex = tex;
+        this.isBuildable = canBuildOn;
+    }
+
+    public Texture getTex() {
+        return tex;
+    }
+
+    public boolean isBuildable() {
+        return isBuildable;
     }
 }
