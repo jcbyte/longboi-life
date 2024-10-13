@@ -134,12 +134,14 @@ public class Main extends ApplicationAdapter {
          */
         @Override
         public boolean scrolled(float amountX, float amountY) {
+            float deltaTime = Gdx.graphics.getDeltaTime();
+
             // Convert the current mouse position into world coordinates
             Vector3 mousePosition = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.getCamera().unproject(mousePosition);
 
             // Zoom in/out at the mouses current position
-            camera.zoomAt(amountY * gameConfig.cameraScrollZoomSpeed, mousePosition);
+            camera.zoomAt(amountY * gameConfig.cameraScrollZoomSpeed * deltaTime * camera.zoom, mousePosition);
 
             return true;
         }

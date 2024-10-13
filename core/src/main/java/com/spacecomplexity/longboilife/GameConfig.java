@@ -24,7 +24,7 @@ public class GameConfig {
     /**
      * Camera zooming speed whilst controlling with mouse/trackpad.
      */
-    public float cameraScrollZoomSpeed = 0.1f;
+    public float cameraScrollZoomSpeed = 32;
 
     private GameConfig() {
     }
