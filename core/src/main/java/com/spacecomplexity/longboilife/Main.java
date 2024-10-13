@@ -2,7 +2,6 @@ package com.spacecomplexity.longboilife;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
@@ -94,31 +93,29 @@ public class Main extends ApplicationAdapter {
     private void handleConstantInput() {
         float deltaTime = Gdx.graphics.getDeltaTime();
 
-        // Calculate camera speed and move camera around given WASD
+        // Calculate camera speed and move camera around given camera direction keys pressed
         float cameraSpeed = gameConfig.cameraSpeed * deltaTime * camera.zoom * gameConfig.scaleFactor;
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+        if (Gdx.input.isKeyPressed(Keybindings.CAMERA_UP.getKey())) {
             camera.position.y += cameraSpeed;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+        if (Gdx.input.isKeyPressed(Keybindings.CAMERA_DOWN.getKey())) {
             camera.position.y -= cameraSpeed;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        if (Gdx.input.isKeyPressed(Keybindings.CAMERA_LEFT.getKey())) {
             camera.position.x -= cameraSpeed;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+        if (Gdx.input.isKeyPressed(Keybindings.CAMERA_RIGHT.getKey())) {
             camera.position.x += cameraSpeed;
         }
 
-        // Calculate camera zoom speed and zoom camera around given Q/E
+        // Calculate camera zoom speed and zoom camera around given camera zoom keys pressed
         float cameraZoomSpeed = gameConfig.cameraKeyZoomSpeed * deltaTime * camera.zoom;
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+        if (Gdx.input.isKeyPressed(Keybindings.CAMERA_ZOOM_IN.getKey())) {
             camera.zoom += cameraZoomSpeed;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+        if (Gdx.input.isKeyPressed(Keybindings.CAMERA_ZOOM_OUT.getKey())) {
             camera.zoom -= cameraZoomSpeed;
         }
-
-        // todo create keybindings class
     }
 
     /**
