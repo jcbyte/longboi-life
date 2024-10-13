@@ -26,7 +26,7 @@ public class Main extends ApplicationAdapter {
     private CameraManager camera;
     private Viewport viewport;
 
-    GameConfig gameConfig = GameConfig.getConfig();
+    private final GameConfig gameConfig = GameConfig.getConfig();
 
     /**
      * Responsible for setting up the game initial state.
