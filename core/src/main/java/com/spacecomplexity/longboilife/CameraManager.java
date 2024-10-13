@@ -42,6 +42,14 @@ public class CameraManager {
         return camera.combined;
     }
 
-    // todo add some utility functions (zoom, scroll etc)
+    public void zoomAt(float change, Vector3 atPosition) {
+        float newZoom = MathUtils.clamp(zoom + change, Constants.MIN_ZOOM, Constants.MAX_ZOOM);
 
+        float zoomFactor = newZoom / zoom;
+
+        position.x += (atPosition.x - position.x) * (1 - zoomFactor);
+        position.y += (atPosition.y - position.y) * (1 - zoomFactor);
+
+        zoom = newZoom;
+    }
 }

@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -105,20 +104,12 @@ public class Main extends ApplicationAdapter {
             Vector3 mousePosition = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.getCamera().unproject(mousePosition);
 
-            float newZoom = MathUtils.clamp(camera.zoom + amountY * gameConfig.cameraScrollZoomSpeed, Constants.MIN_ZOOM, Constants.MAX_ZOOM);
-
-            float zoomFactor = newZoom / camera.zoom;
-
-            camera.position.x += (mousePosition.x - camera.position.x) * (1 - zoomFactor);
-            camera.position.y += (mousePosition.y - camera.position.y) * (1 - zoomFactor);
-
-            camera.zoom = newZoom;
+            camera.zoomAt(amountY * gameConfig.cameraScrollZoomSpeed, mousePosition);
 
             return false;
         }
 
         private float lastScreenX, lastScreenY;
-        private boolean smoothCameraPreviously;
 
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
