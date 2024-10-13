@@ -95,7 +95,6 @@ public class Main extends ApplicationAdapter {
         }
 
         // todo document
-        // todo readme
     }
 
     private class InputProcessor extends InputAdapter {

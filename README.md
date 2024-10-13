@@ -1,8 +1,11 @@
 # longboi-life
 
-A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
+*University of York ENG1 Project.*
 
-This project was generated with a template including simple application launchers and an `ApplicationAdapter` extension that draws libGDX logo.
+Short single-player game that allows the player to build their own university
+campus trying to reach the highest student satisfaction possible.
+
+A [libGDX](https://libgdx.com/) project.
 
 ## Platforms
 
@@ -29,5 +32,10 @@ Useful Gradle tasks and flags:
 - `lwjgl3:run`: starts the application.
 - `test`: runs unit tests (if any).
 
-Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
+Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should
+be replaced with the ID of a specific project.
 For example, `core:clean` removes `build` folder only from the `core` project.
+
+## DevUtils
+
+`/DevUtils/` contains useful scripts (not necessarily in Java) for developing the project.
