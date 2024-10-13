@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -21,6 +22,7 @@ import java.io.FileNotFoundException;
  */
 public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
+    private ShapeRenderer shapeRenderer;
     private World world;
 
     private CameraManager camera;
@@ -41,8 +43,9 @@ public class Main extends ApplicationAdapter {
             throw new RuntimeException(e);
         }
 
-        // Initialise SpriteBatch for rendering
+        // Initialise SpriteBatch and ShapeRender for rendering
         batch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
 
         // Initialises camera from CameraManager and Viewport
         camera = new CameraManager(world);
@@ -77,13 +80,12 @@ public class Main extends ApplicationAdapter {
         // Applies viewport transformations and updates camera ready for rendering
         viewport.apply();
         camera.update();
-        // Update the SpriteBatch to match the updates camera
+        // Update the SpriteBatch and ShapeRenderer to match the updates camera
         batch.setProjectionMatrix(camera.getCombinedMatrix());
+        shapeRenderer.setProjectionMatrix(camera.getCombinedMatrix());
 
         // Draw the world on screen
-        batch.begin();
-        RenderUtils.drawWorld(batch, world);
-        batch.end();
+        RenderUtils.drawWorld(batch, shapeRenderer, world, true);
     }
 
     /**
@@ -210,5 +212,6 @@ public class Main extends ApplicationAdapter {
     @Override
     public void dispose() {
         batch.dispose();
+        shapeRenderer.dispose();
     }
 }
