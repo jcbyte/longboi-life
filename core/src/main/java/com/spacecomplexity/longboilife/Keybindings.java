@@ -2,6 +2,9 @@ package com.spacecomplexity.longboilife;
 
 import com.badlogic.gdx.Input;
 
+/**
+ * Stores the keybindings of different actions.
+ */
 public enum Keybindings {
     CAMERA_UP(Input.Keys.W),
     CAMERA_LEFT(Input.Keys.A),
@@ -12,10 +15,20 @@ public enum Keybindings {
 
     private final int key;
 
+    /**
+     * Initialises a key to an enum attribute.
+     *
+     * @param key the key assigned to the enum attribute.
+     */
     Keybindings(int key) {
         this.key = key;
     }
 
+    /**
+     * Return the key assigned to the enum attribute.
+     *
+     * @return the key assigned.
+     */
     public int getKey() {
         return key;
     }
