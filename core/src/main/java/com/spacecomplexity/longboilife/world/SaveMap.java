@@ -33,7 +33,6 @@ public class SaveMap {
      */
     public Tile[][] getWorld() throws InvalidTileException {
         // Grid generated will be transformed so it can be accessed as map[x][y]
-        // y will also be flipped as libGDX coordinates start in the bottom right instead of left
 
         int height = map.length;
         int width = map[0].length;
