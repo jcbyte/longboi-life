@@ -7,7 +7,7 @@ import com.spacecomplexity.longboilife.utils.Vector2Int;
  * Contains a list of all buildings, including there default data.
  */
 public enum BuildingType {
-    GREGGS(new Texture("greggs.png"), new Vector2Int(2, 2), BuildingCategory.FOOD, 200);
+    GREGGS(new Texture("buildings/greggs.png"), new Vector2Int(2, 2), BuildingCategory.FOOD, 200);
 
     private final Texture texture;
     private final Vector2Int size;

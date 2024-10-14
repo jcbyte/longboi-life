@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
  * Contains a list of all tile types, including there default data.
  */
 public enum TileType {
-    GRASS(new Texture("grass.png"), true),
-    WATER(new Texture("water.png"), false);
+    GRASS(new Texture("tiles/grass.png"), true),
+    WATER(new Texture("tiles/water.png"), false);
 
     private final Texture texture;
     private final boolean isNaturallyBuildable;
