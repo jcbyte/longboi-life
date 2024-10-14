@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.spacecomplexity.longboilife.tile.InvalidTileException;
+import com.spacecomplexity.longboilife.tile.InvalidSaveMapException;
 import com.spacecomplexity.longboilife.utils.RenderUtils;
 import com.spacecomplexity.longboilife.world.World;
 
@@ -39,7 +39,7 @@ public class Main extends ApplicationAdapter {
         // Creates a new World object from "map.json" file
         try {
             world = new World("map.json");
-        } catch (FileNotFoundException | InvalidTileException e) {
+        } catch (FileNotFoundException | InvalidSaveMapException e) {
             throw new RuntimeException(e);
         }
 
