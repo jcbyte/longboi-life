@@ -43,19 +43,8 @@ public class SaveMap {
         for (int y = height - 1; y >= 0; y--) {
             for (int x = 0; x < width; x++) {
                 // Determine the type of tile based on value in the JSON map
-                Tile tile = switch (map[y][x]) {
-                    // TODO could these strings be got from the enum?
-                    case "GRASS" -> new Tile(TileType.GRASS);
-                    case "WATER" -> new Tile(TileType.WATER);
-                    default -> null;
-                };
-
-                // If the tile is invalid throw an error
-                if (tile == null) {
-                    throw new InvalidTileException("Invalid tile: " + map[x][y]);
-                }
-
-                world[x][y] = tile;
+                TileType tileType = TileType.valueOf(map[y][x]);
+                world[x][y] = new Tile(tileType);
             }
         }
 
