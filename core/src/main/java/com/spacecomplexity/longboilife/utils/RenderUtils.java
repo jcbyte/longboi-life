@@ -29,7 +29,7 @@ public class RenderUtils {
                 // y will  be flipped as libGDX coordinates start in the bottom right instead of left
                 // Draw the tile texture with size specified by TILE_SIZE and the current scaling factor
                 batch.draw(
-                    world.getTile(x, world.getHeight() - 1 - y).getTexture(),
+                    world.getTile(x, world.getHeight() - 1 - y).getType().getTexture(),
                     x * Constants.TILE_SIZE * gameConfig.scaleFactor,
                     y * Constants.TILE_SIZE * gameConfig.scaleFactor,
                     Constants.TILE_SIZE * gameConfig.scaleFactor,

@@ -1,58 +1,46 @@
 package com.spacecomplexity.longboilife.tile;
 
-import com.badlogic.gdx.graphics.Texture;
-
 /**
- * Represents a generic tile in the game.
- * <p>
- * All subclasses should be implemented as singleton classes.
+ * Represents a tile in the game.
  */
-public abstract class Tile {
-    private final Texture texture;
-    private final boolean isBuildable;
+public class Tile {
+    private final TileType type;
+    private boolean isBuildable;
 
     /**
-     * Constructs a tile instance with specified attributes.
+     * Constructs a tile instance given the specific tile.
      *
-     * @param texture    the texture associated with this tile.
-     * @param canBuildOn whether the tile can be built on.
+     * @param type whether the tile can be built on.
      */
-    protected Tile(Texture texture, boolean canBuildOn) {
-        this.texture = texture;
-        this.isBuildable = canBuildOn;
+    public Tile(TileType type) {
+        this.type = type;
+        isBuildable = type.isNaturallyBuildable();
     }
 
     /**
-     * Returns the singleton instance of the implemented class.
+     * Get the tile type.
      *
-     * @return the single instance of the implemented class.
+     * @return the tile type.
      */
-    public static Tile getInstance() {
-        throw new UnsupportedOperationException("Method should be implemented in subclasses as all subclasses should be singletons");
+    public TileType getType() {
+        return type;
     }
 
     /**
-     * Dispose of resources allocated with this tile.
-     */
-    public void dispose() {
-        texture.dispose();
-    }
-
-    /**
-     * Get the texture associated with the tile.
-     *
-     * @return the associated texture.
-     */
-    public Texture getTexture() {
-        return texture;
-    }
-
-    /**
-     * Get whether the tile is buildable.
+     * Get whether the tile is currently able to be built on.
      *
      * @return whether the tile is buildable.
      */
     public boolean isBuildable() {
         return isBuildable;
+    }
+
+    /**
+     * Set the buildable status of this tile.
+     *
+     * @param isBuildable the new buildable status.
+     */
+    public void setBuildable(boolean isBuildable) {
+        this.isBuildable = isBuildable;
     }
 }

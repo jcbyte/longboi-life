@@ -1,9 +1,8 @@
 package com.spacecomplexity.longboilife.world;
 
-import com.spacecomplexity.longboilife.tile.GrassTile;
 import com.spacecomplexity.longboilife.tile.InvalidTileException;
 import com.spacecomplexity.longboilife.tile.Tile;
-import com.spacecomplexity.longboilife.tile.WaterTile;
+import com.spacecomplexity.longboilife.tile.TileType;
 
 /**
  * Class representing the saved map in a JSON format.
@@ -45,8 +44,9 @@ public class SaveMap {
             for (int x = 0; x < width; x++) {
                 // Determine the type of tile based on value in the JSON map
                 Tile tile = switch (map[y][x]) {
-                    case "GRASS" -> GrassTile.getInstance();
-                    case "WATER" -> WaterTile.getInstance();
+                    // TODO could these strings be got from the enum?
+                    case "GRASS" -> new Tile(TileType.GRASS);
+                    case "WATER" -> new Tile(TileType.WATER);
                     default -> null;
                 };
 
