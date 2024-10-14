@@ -189,6 +189,36 @@ public class Main extends ApplicationAdapter {
 
             return true;
         }
+
+        private int prevAppWidth, prevAppHeight;
+
+        /**
+         * Handles onKeyPress events.
+         *
+         * @param keycode one of the constants in {@link com.badlogic.gdx.Input.Keys}
+         * @return true to show the event was handled.
+         */
+        @Override
+        public boolean keyDown(int keycode) {
+            // If the fullscreen key is pressed then toggle fullscreen mode
+            if (keycode == Keybindings.FULLSCREEN.getKey()) {
+                gameConfig.fullscreen = !gameConfig.fullscreen;
+
+                if (gameConfig.fullscreen) {
+                    // If going to fullscreen then record the current width and height to return to
+                    prevAppWidth = Gdx.graphics.getWidth();
+                    prevAppHeight = Gdx.graphics.getHeight();
+
+                    // Change to fullscreen
+                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+                } else {
+                    // Change back to windowed mode, restoring the previous app width and height
+                    Gdx.graphics.setWindowedMode(prevAppWidth, prevAppHeight);
+                }
+            }
+
+            return true;
+        }
     }
 
     /**

@@ -26,6 +26,11 @@ public class GameConfig {
      */
     public float cameraScrollZoomSpeed = 32;
 
+    /**
+     * If the game is in fullscreen mode.
+     */
+    public boolean fullscreen = false;
+
     private GameConfig() {
     }
 
