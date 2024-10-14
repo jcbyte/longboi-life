@@ -1,71 +1,49 @@
 package com.spacecomplexity.longboilife.building;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.spacecomplexity.longboilife.utils.Vector2Int;
 
 /**
- * Represents a generic building in the game.
- * <p>
- * All subclasses should be implemented as singleton classes.
+ * Represents a building in the game.
  */
-public abstract class Building {
-    private final Texture texture;
-    private final Vector2Int size;
-    private final float cost;
+public class Building {
+    private final BuildingType type;
+    private Vector2Int position;
 
     /**
-     * Constructs a building instance with the specified attributes.
+     * Constructs a building instance given the specific type.
      *
-     * @param texture the texture associated with this building.
-     * @param size    the size of this building, in tiles.
-     * @param cost    the cost to place this building.
+     * @param type     the type of building to create.
+     * @param position the position of this building in the world.
      */
-    protected Building(Texture texture, Vector2Int size, float cost) {
-        this.texture = texture;
-        this.size = size;
-        this.cost = cost;
+    public Building(BuildingType type, Vector2Int position) {
+        this.type = type;
+        this.position = position;
     }
 
     /**
-     * Returns the singleton instance of the implemented class.
+     * Get the building type.
      *
-     * @return the single instance of the implemented class.
+     * @return the building type.
      */
-    public static Building getInstance() {
-        throw new UnsupportedOperationException("Method should be implemented in subclasses as all subclasses should be singletons");
+    public BuildingType getType() {
+        return type;
     }
 
     /**
-     * Dispose of resources allocated with this tile.
+     * Get the buildings' location.
+     *
+     * @return the buildings' location.
      */
-    public void dispose() {
-        texture.dispose();
+    public Vector2Int getPosition() {
+        return position;
     }
 
     /**
-     * Get the texture associated with the tile.
+     * Set the buildings' location.
      *
-     * @return the associated texture.
+     * @param position the new buildings' location.
      */
-    public Texture getTexture() {
-        return texture;
-    }
-
-    /**
-     * Get the size of the building.
-     *
-     * @return the size of the building.
-     */
-    public Vector2Int getSize() {
-        return size;
-    }
-
-    /**
-     * Get the cost of the building.
-     *
-     * @return the cost of the building.
-     */
-    public float getCost() {
-        return cost;
+    public void setPosition(Vector2Int position) {
+        this.position = position;
     }
 }

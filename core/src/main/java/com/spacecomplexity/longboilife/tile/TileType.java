@@ -3,7 +3,7 @@ package com.spacecomplexity.longboilife.tile;
 import com.badlogic.gdx.graphics.Texture;
 
 /**
- * Contains list of all tile types, including there default data.
+ * Contains a list of all tile types, including there default data.
  */
 public enum TileType {
     GRASS(new Texture("grass.png"), true),
@@ -15,8 +15,8 @@ public enum TileType {
     /**
      * Constructor to create a {@link TileType} with specified attributes.
      *
-     * @param texture              The texture representing the tile.
-     * @param isNaturallyBuildable A boolean indicating if the tile can be built on.
+     * @param texture              the texture representing the tile.
+     * @param isNaturallyBuildable a boolean indicating if the tile can be built on.
      */
     TileType(Texture texture, boolean isNaturallyBuildable) {
         this.texture = texture;

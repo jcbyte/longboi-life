@@ -3,7 +3,7 @@ package com.spacecomplexity.longboilife.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
-import com.spacecomplexity.longboilife.building.PlacedBuilding;
+import com.spacecomplexity.longboilife.building.Building;
 import com.spacecomplexity.longboilife.tile.InvalidTileException;
 import com.spacecomplexity.longboilife.tile.Tile;
 
@@ -15,7 +15,7 @@ import java.util.Vector;
  */
 public class World {
     private Tile[][] world;
-    public Vector<PlacedBuilding> buildings;
+    public Vector<Building> buildings;
 
     /**
      * Creates a new world loaded from a map JSON file.

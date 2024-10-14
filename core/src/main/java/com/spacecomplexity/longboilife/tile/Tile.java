@@ -10,7 +10,7 @@ public class Tile {
     /**
      * Constructs a tile instance given the specific tile.
      *
-     * @param type whether the tile can be built on.
+     * @param type the type of tile to create.
      */
     public Tile(TileType type) {
         this.type = type;
