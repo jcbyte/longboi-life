@@ -7,10 +7,11 @@ import com.spacecomplexity.longboilife.utils.Vector2Int;
  * Contains a list of all buildings, including there default data.
  */
 public enum BuildingType {
-    GREGGS(new Texture("greggs.png"), new Vector2Int(2, 2), 200);
+    GREGGS(new Texture("greggs.png"), new Vector2Int(2, 2), BuildingCategory.FOOD, 200);
 
     private final Texture texture;
     private final Vector2Int size;
+    private final BuildingCategory category;
     private final float cost;
 
     /**
@@ -20,9 +21,10 @@ public enum BuildingType {
      * @param size    the size of the building (in tiles).
      * @param cost    the cost to place the building.
      */
-    BuildingType(Texture texture, Vector2Int size, float cost) {
+    BuildingType(Texture texture, Vector2Int size, BuildingCategory category, float cost) {
         this.texture = texture;
         this.size = size;
+        this.category = category;
         this.cost = cost;
     }
 
@@ -42,6 +44,15 @@ public enum BuildingType {
      */
     public Vector2Int getSize() {
         return size;
+    }
+
+    /**
+     * Get the category of the building.
+     *
+     * @return the category of the building.
+     */
+    public BuildingCategory getCategory() {
+        return category;
     }
 
     /**
