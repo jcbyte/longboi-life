@@ -42,9 +42,14 @@ public class SaveMap {
         // Go though each element in the object in the specified order
         for (int y = height - 1; y >= 0; y--) {
             for (int x = 0; x < width; x++) {
-                // Determine the type of tile based on value in the JSON map
-                TileType tileType = TileType.valueOf(map[y][x]);
-                world[x][y] = new Tile(tileType);
+                try {
+                    // Determine the type of tile based on value in the JSON map
+                    TileType tileType = TileType.valueOf(map[y][x]);
+                    world[x][y] = new Tile(tileType);
+                } catch (IllegalArgumentException e) {
+                    // If the tile is invalid throw an error
+                    throw new InvalidTileException("Invalid tile type: " + map[y][x] + " at (" + x + ", " + y + ")");
+                }
             }
         }
 
