@@ -29,11 +29,6 @@ public class CameraManager {
         zoom = 1;
     }
 
-    /**
-     * Get the camera instance.
-     *
-     * @return the camera instance.
-     */
     public OrthographicCamera getCamera() {
         return camera;
     }

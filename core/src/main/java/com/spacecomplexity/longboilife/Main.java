@@ -72,7 +72,7 @@ public class Main extends ApplicationAdapter {
     @Override
     public void render() {
         // Call to handles any constant input
-        handleConstantInput();
+        handleContinuousInput();
 
         // Clear the screen
         ScreenUtils.clear(0, 0, 0, 1f);
@@ -92,7 +92,7 @@ public class Main extends ApplicationAdapter {
      * Handles continuous input which won't be processed in {@link InputProcessor} (as this is event driven).
      * Should be called every frame (before rendering).
      */
-    private void handleConstantInput() {
+    private void handleContinuousInput() {
         float deltaTime = Gdx.graphics.getDeltaTime();
 
         // Calculate camera speed and move camera around given camera direction keys pressed
@@ -122,7 +122,7 @@ public class Main extends ApplicationAdapter {
 
     /**
      * Handles input (event driven).
-     * Will be called every frame (before rendering, hence before {@link Main#handleConstantInput()}).
+     * Will be called every frame (before rendering, hence before {@link Main#handleContinuousInput()}).
      */
     private class InputProcessor extends InputAdapter {
         /**

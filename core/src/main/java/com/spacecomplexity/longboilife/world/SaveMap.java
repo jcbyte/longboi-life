@@ -16,7 +16,7 @@ import com.spacecomplexity.longboilife.tile.TileType;
  *  ]
  * }
  * </pre>
- * Where each element can be any valid tile name.
+ * Where each element can be any valid enum name as specified in {@link TileType}.
  */
 public class SaveMap {
     private String[][] map;

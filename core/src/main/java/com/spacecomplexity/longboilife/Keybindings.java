@@ -26,9 +26,9 @@ public enum Keybindings {
     }
 
     /**
-     * Return the key assigned to the enum attribute.
+     * Return the key code assigned to the enum attribute.
      *
-     * @return the key assigned.
+     * @return the key code assigned.
      */
     public int getKey() {
         return key;

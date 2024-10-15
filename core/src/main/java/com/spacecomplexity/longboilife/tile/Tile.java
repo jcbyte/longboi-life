@@ -17,11 +17,6 @@ public class Tile {
         isBuildable = type.isNaturallyBuildable();
     }
 
-    /**
-     * Get the tile type.
-     *
-     * @return the tile type.
-     */
     public TileType getType() {
         return type;
     }

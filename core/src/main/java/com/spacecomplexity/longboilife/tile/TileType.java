@@ -23,11 +23,6 @@ public enum TileType {
         this.isNaturallyBuildable = isNaturallyBuildable;
     }
 
-    /**
-     * Get the texture associated with the tile.
-     *
-     * @return the texture associated with the tile.
-     */
     public Texture getTexture() {
         return texture;
     }

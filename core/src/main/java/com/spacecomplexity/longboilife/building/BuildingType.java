@@ -28,38 +28,20 @@ public enum BuildingType {
         this.cost = cost;
     }
 
-    /**
-     * Get the texture associated with the building.
-     *
-     * @return the texture associated with the building.
-     */
+
     public Texture getTexture() {
         return texture;
     }
 
-    /**
-     * Get the size of the building.
-     *
-     * @return the size of the building.
-     */
+
     public Vector2Int getSize() {
         return size;
     }
 
-    /**
-     * Get the category of the building.
-     *
-     * @return the category of the building.
-     */
     public BuildingCategory getCategory() {
         return category;
     }
-
-    /**
-     * Get the cost of the building.
-     *
-     * @return the cost of the building.
-     */
+    
     public float getCost() {
         return cost;
     }

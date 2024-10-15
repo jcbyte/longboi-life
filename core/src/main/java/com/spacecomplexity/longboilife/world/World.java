@@ -69,20 +69,11 @@ public class World {
         return world[x][y];
     }
 
-    /**
-     * Get the height of the world.
-     *
-     * @return the height of the world.
-     */
     public int getHeight() {
         return world[0].length;
     }
 
-    /**
-     * Get the width of the world.
-     *
-     * @return the width of the world.
-     */
+
     public int getWidth() {
         return world.length;
     }
