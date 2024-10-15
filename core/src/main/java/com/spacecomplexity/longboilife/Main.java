@@ -38,7 +38,7 @@ public class Main extends ApplicationAdapter {
     public void create() {
         // Creates a new World object from "map.json" file
         try {
-            world = new World("map.json");
+            world = new World(Gdx.files.internal("map.json"));
         } catch (FileNotFoundException | InvalidSaveMapException e) {
             throw new RuntimeException(e);
         }

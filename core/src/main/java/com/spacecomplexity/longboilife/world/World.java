@@ -1,6 +1,5 @@
 package com.spacecomplexity.longboilife.world;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.SerializationException;
@@ -21,40 +20,39 @@ public class World {
     /**
      * Creates a new world loaded from a map JSON file.
      *
-     * @param filename the name of the JSON file.
+     * @param mapFile the handle to the JSON file containing map.
      * @throws FileNotFoundException   if the specified file does not exist.
      * @throws InvalidSaveMapException if the map contains invalid tile names.
      */
-    public World(String filename) throws FileNotFoundException, InvalidSaveMapException {
-        world = getMap(filename);
+    public World(FileHandle mapFile) throws FileNotFoundException, InvalidSaveMapException {
+        world = getMap(mapFile);
         buildings = new Vector<>();
     }
 
     /**
      * Loads the map from JSON file and returns the tile grid.
      *
-     * @param filename the name of the JSON file.
+     * @param mapFile the handle to the JSON file containing map.
      * @return the {@link Tile} grid representing the world extracted from the JSON file.
      * @throws FileNotFoundException   if the specified file does not exist.
      * @throws InvalidSaveMapException if the map contains invalid tile names.
      */
-    private Tile[][] getMap(String filename) throws FileNotFoundException, InvalidSaveMapException {
+    private Tile[][] getMap(FileHandle mapFile) throws FileNotFoundException, InvalidSaveMapException {
         Json json = new Json();
-        FileHandle file = Gdx.files.local(filename);
 
         // If the file does not exist throw an exception
-        if (!file.exists()) {
-            throw new FileNotFoundException("File does not exist: \"" + filename + "\"");
+        if (!mapFile.exists()) {
+            throw new FileNotFoundException("File does not exist: \"" + mapFile.name() + "\"");
         }
 
         try {
             // Deserialize the JSON data into the SaveMap object
-            SaveMap saveMap = json.fromJson(SaveMap.class, file.readString());
+            SaveMap saveMap = json.fromJson(SaveMap.class, mapFile.readString());
             // Return the Tile[][] from this object.
             return saveMap.getWorld();
         } catch (SerializationException e) {
             // If there is an issue in deserialising throw an exception
-            throw new InvalidSaveMapException("Issue deserialising map save file \"" + filename + "\": " + e.getMessage());
+            throw new InvalidSaveMapException("Issue deserialising map save file \"" + mapFile.name() + "\": " + e.getMessage());
         }
     }
 
