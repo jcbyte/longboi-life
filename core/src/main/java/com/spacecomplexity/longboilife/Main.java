@@ -23,10 +23,12 @@ import java.io.FileNotFoundException;
 public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
-    private World world;
+    private UIManager ui;
 
     private CameraManager camera;
     private Viewport viewport;
+
+    private World world;
 
     private final GameConfig gameConfig = GameConfig.getConfig();
 
@@ -46,6 +48,7 @@ public class Main extends ApplicationAdapter {
         // Initialise SpriteBatch and ShapeRender for rendering
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
+        ui = new UIManager();
 
         // Initialises camera from CameraManager and Viewport
         camera = new CameraManager(world);
@@ -86,6 +89,9 @@ public class Main extends ApplicationAdapter {
 
         // Draw the world on screen
         RenderUtils.drawWorld(batch, shapeRenderer, world, true);
+
+        // Render the UI
+        ui.render();
     }
 
     /**
@@ -245,5 +251,6 @@ public class Main extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         shapeRenderer.dispose();
+        ui.dispose();
     }
 }
