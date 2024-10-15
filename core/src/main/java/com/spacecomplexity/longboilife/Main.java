@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.tile.InvalidSaveMapException;
+import com.spacecomplexity.longboilife.ui.UIManager;
 import com.spacecomplexity.longboilife.utils.RenderUtils;
 import com.spacecomplexity.longboilife.world.World;
 

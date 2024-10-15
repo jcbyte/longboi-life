@@ -22,6 +22,7 @@ public class UIManager {
         stage.addActor(table);
 
         skin = new Skin(Gdx.files.internal("uiskins/default/skin/uiskin.json"));
+        skin = new Skin(Gdx.files.internal("shadeui/skin/uiskin.json"));
     }
 
     /**
