@@ -9,49 +9,38 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.Timer;
 
 /**
- * Class to manage the UI clock.
+ * Class to represent the Clock {@link UIElement}
  */
-public class UIClockMenu {
-    private Viewport viewport;
-
-    private Table table;
-
+public class UIClockMenu extends UIElement {
     private Label timeLabel;
 
     private Timer timer;
 
     /**
-     * Initialise clock UI elements.
+     * Initialise clock menu elements.
      *
      * @param uiViewport  the viewport used to render UI.
-     * @param parentTable the table to render the clock menus container onto.
+     * @param parentTable the table to render this element onto.
      * @param skin        the provided skin.
      * @param timer       the timer for displaying time from.
      */
     public UIClockMenu(Viewport uiViewport, Table parentTable, Skin skin, Timer timer) {
-        viewport = uiViewport;
+        super(uiViewport, parentTable, skin);
 
-        // Initialise table container
-        table = new Table(skin);
+        this.timer = timer;
 
-        // Initialise time text label
+        // Initialise time label
         timeLabel = new Label("", skin);
         timeLabel.setFontScale(1.5f);
         timeLabel.setColor(Color.WHITE);
 
-        // Place labels onto table
+        // Place label onto table
         table.add(timeLabel).align(Align.center);
 
-        // Style and place the clock table
+        // Style and place the table
         table.setBackground(skin.getDrawable("panel1"));
         table.setSize(75, 50);
-        table.setPosition(0, viewport.getScreenHeight() - table.getHeight());
-        table.pad(5);
-
-        // Add clock table to root table
-        parentTable.addActor(table);
-
-        this.timer = timer;
+        placeTable();
     }
 
     public void render() {
@@ -68,13 +57,8 @@ public class UIClockMenu {
         timeLabel.setText(String.format("%d:%02d", time / 60, time % 60));
     }
 
-    /**
-     * Handles resizing events, to ensure the placement of clock menu mapped correctly.
-     */
-    public void resize() {
-        System.out.println(viewport.getScreenHeight());
-
-        // Updates clock menu position to match new window size
-        table.setPosition(0, viewport.getScreenHeight() - table.getHeight());
+    @Override
+    protected void placeTable() {
+        table.setPosition(0, uiViewport.getScreenHeight() - table.getHeight());
     }
 }
