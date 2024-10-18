@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.spacecomplexity.longboilife.Timer;
 
 /**
  * Class to manage the UI in the game.
@@ -21,8 +22,10 @@ public class UIManager {
 
     /**
      * Initialise UI elements needed for the game.
+     *
+     * @param timer timer for {@link UIClockMenu} to use.
      */
-    public UIManager() {
+    public UIManager(Timer timer) {
         // Initialise viewport for rescaling
         viewport = new ScreenViewport();
 
@@ -39,15 +42,14 @@ public class UIManager {
         skin = new Skin(Gdx.files.internal("shadeui/skin/uiskin.json"));
 
         // create clock menu on our root table
-        clockMenu = new UIClockMenu(viewport, table, skin);
+        clockMenu = new UIClockMenu(viewport, table, skin, timer);
     }
 
     /**
      * Apply and draw UI onto the screen.
      */
     public void render() {
-        // For debugging
-        clockMenu.setLabels("5:00");
+        clockMenu.render();
 
         // Apply and then draw
         viewport.apply();

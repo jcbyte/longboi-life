@@ -33,6 +33,8 @@ public class Main extends ApplicationAdapter {
 
     private final GameConfig gameConfig = GameConfig.getConfig();
 
+    private Timer timer;
+
     /**
      * Responsible for setting up the game initial state.
      * Called when the game is first run.
@@ -46,6 +48,9 @@ public class Main extends ApplicationAdapter {
             throw new RuntimeException(e);
         }
 
+        // Create a new timer for 5 minutes
+        timer = new Timer(5 * 60 * 1000);
+
         // Initialise SpriteBatch and ShapeRender for rendering
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
@@ -57,7 +62,7 @@ public class Main extends ApplicationAdapter {
         viewport = new ScreenViewport(camera.getCamera());
 
         // Initialise UI elements with UIManager
-        ui = new UIManager();
+        ui = new UIManager(timer);
 
         // Calculates the scale factor based initial screen height
         int screenHeight = Gdx.graphics.getHeight();
@@ -228,7 +233,7 @@ public class Main extends ApplicationAdapter {
                     Gdx.graphics.setWindowedMode(prevAppWidth, prevAppHeight);
                 }
             }
-
+            
             return true;
         }
     }
