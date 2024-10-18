@@ -9,28 +9,21 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
- * Class to manage the UI clock.
+ * Class to represent the Satisfaction Score UI.
  */
-public class UISatisfactionMenu {
-    private Viewport viewport;
-
-    private Table table;
-
+public class UISatisfactionMenu extends UIElement {
     private Label label;
     private ProgressBar satisfactionBar;
 
     /**
-     * Initialise satisfaction menu UI elements.
+     * Initialise satisfaction menu elements.
      *
      * @param uiViewport  the viewport used to render UI.
-     * @param parentTable the table to render the clock menus container onto.
-     * @param skin        the provided skin
+     * @param parentTable the table to render this element onto.
+     * @param skin        the provided skin.
      */
     public UISatisfactionMenu(Viewport uiViewport, Table parentTable, Skin skin) {
-        viewport = uiViewport;
-
-        // Initialise table container
-        table = new Table(skin);
+        super(uiViewport, parentTable, skin);
 
         // Initialise label
         label = new Label("Satisfaction Score:", skin);
@@ -49,25 +42,14 @@ public class UISatisfactionMenu {
         table.setBackground(skin.getDrawable("panel1"));
         table.setSize(175, 60);
         placeTable();
-
-        // Add clock table to root table
-        parentTable.addActor(table);
     }
 
     public void render() {
         // todo set satisfaction score
     }
 
-    /**
-     * Handles resizing events, to ensure the placement of clock menu mapped correctly.
-     */
-    public void resize() {
-        // Updates clock menu position to match new window size
-        placeTable();
-    }
-
-    private void placeTable() {
-        table.setPosition(viewport.getScreenWidth() - table.getWidth(), viewport.getScreenHeight() - table.getHeight());
-
+    @Override
+    protected void placeTable() {
+        table.setPosition(uiViewport.getScreenWidth() - table.getWidth(), uiViewport.getScreenHeight() - table.getHeight());
     }
 }

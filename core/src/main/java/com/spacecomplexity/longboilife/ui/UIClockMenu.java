@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.Timer;
 
 /**
- * Class to represent the Clock {@link UIElement}
+ * Class to represent the Clock UI.
  */
 public class UIClockMenu extends UIElement {
     private Label timeLabel;
