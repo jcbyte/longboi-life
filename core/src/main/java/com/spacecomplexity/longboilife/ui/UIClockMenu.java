@@ -16,7 +16,6 @@ public class UIClockMenu {
     private Table table;
 
     private Label timeLabel;
-    private Label descriptionLabel;
 
     /**
      * Initialise clock UI elements.
@@ -31,23 +30,16 @@ public class UIClockMenu {
         table = new Table(skin);
 
         // Initialise time text label
-        timeLabel = new Label("Time", skin);
+        timeLabel = new Label("", skin);
         timeLabel.setFontScale(1.5f);
         timeLabel.setColor(Color.WHITE);
 
-        // Initialise description text label
-        descriptionLabel = new Label("Description", skin);
-        descriptionLabel.setFontScale(1.0f);
-        descriptionLabel.setColor(Color.LIGHT_GRAY);
-
         // Place labels onto table
         table.add(timeLabel).align(Align.center);
-        table.row();
-        table.add(descriptionLabel).align(Align.center);
 
         // Style and place the clock table
         table.setBackground(skin.getDrawable("panel1"));
-        table.setSize(150, 75);
+        table.setSize(75, 50);
         table.setPosition(0, viewport.getScreenHeight() - table.getHeight());
         table.pad(5);
 
@@ -58,12 +50,10 @@ public class UIClockMenu {
     /**
      * Set the labels on the clock menu.
      *
-     * @param time        the main text block.
-     * @param description the secondary text block.
+     * @param time the main text block.
      */
-    public void setLabels(String time, String description) {
+    public void setLabels(String time) {
         timeLabel.setText(time);
-        descriptionLabel.setText(description);
     }
 
     /**

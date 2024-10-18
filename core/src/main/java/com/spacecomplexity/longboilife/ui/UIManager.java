@@ -7,8 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import java.util.Random;
-
 /**
  * Class to manage the UI in the game.
  */
@@ -49,8 +47,7 @@ public class UIManager {
      */
     public void render() {
         // For debugging
-        Random random = new Random();
-        clockMenu.setLabels(Integer.toString(random.nextInt()), Float.toString(random.nextFloat()));
+        clockMenu.setLabels("5:00");
 
         // Apply and then draw
         viewport.apply();
