@@ -49,11 +49,16 @@ public class Main extends ApplicationAdapter {
         // Initialise SpriteBatch and ShapeRender for rendering
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
+
+        // Initialises camera with CameraManager
+        camera = new CameraManager(world);
+
+        // Initialise viewport for rescaling
+        viewport = new ScreenViewport(camera.getCamera());
+
+        // Initialise UI elements with UIManager
         ui = new UIManager();
 
-        // Initialises camera from CameraManager and Viewport
-        camera = new CameraManager(world);
-        viewport = new ScreenViewport(camera.getCamera());
         // Calculates the scale factor based initial screen height
         int screenHeight = Gdx.graphics.getHeight();
         gameConfig.scaleFactor = screenHeight / (float) Constants.SCALING_1_HEIGHT;
@@ -242,6 +247,9 @@ public class Main extends ApplicationAdapter {
 
         // Recalculate scaling factor with new height
         gameConfig.scaleFactor = height / (float) Constants.SCALING_1_HEIGHT;
+
+        // Rescale UI
+        ui.resize(width, height);
     }
 
     /**
