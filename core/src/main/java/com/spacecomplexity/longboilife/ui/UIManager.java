@@ -20,6 +20,7 @@ public class UIManager {
 
     private UIClockMenu clockMenu;
     private UISatisfactionMenu satisfactionMenu;
+    private UIMoneyMenu moneyMenu;
 
     /**
      * Initialise UI elements needed for the game.
@@ -42,17 +43,20 @@ public class UIManager {
         // load external UI skin
         skin = new Skin(Gdx.files.internal("shadeui/skin/uiskin.json"));
 
-        // create clock menu on our root table
+        // create our UI elements
         clockMenu = new UIClockMenu(viewport, table, skin, timer);
         satisfactionMenu = new UISatisfactionMenu(viewport, table, skin);
+        moneyMenu = new UIMoneyMenu(viewport, table, skin);
     }
 
     /**
      * Apply and draw UI onto the screen.
      */
     public void render() {
+        // todo change this to array?
         clockMenu.render();
         satisfactionMenu.render();
+        moneyMenu.render();
 
         // Apply and then draw
         viewport.apply();
@@ -74,6 +78,7 @@ public class UIManager {
         // Run resize functions on UI elements
         clockMenu.resize();
         satisfactionMenu.resize();
+        moneyMenu.resize();
     }
 
 

@@ -46,6 +46,7 @@ public class UISatisfactionMenu extends UIElement {
 
     public void render() {
         // todo set satisfaction score
+        satisfactionBar.setValue(0.65f);
     }
 
     @Override
