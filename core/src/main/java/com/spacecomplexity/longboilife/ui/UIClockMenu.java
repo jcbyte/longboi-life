@@ -12,7 +12,7 @@ import com.spacecomplexity.longboilife.Timer;
  * Class to represent the Clock UI.
  */
 public class UIClockMenu extends UIElement {
-    private Label timeLabel;
+    private Label label;
 
     private Timer timer;
 
@@ -30,12 +30,12 @@ public class UIClockMenu extends UIElement {
         this.timer = timer;
 
         // Initialise time label
-        timeLabel = new Label("", skin);
-        timeLabel.setFontScale(1.5f);
-        timeLabel.setColor(Color.WHITE);
+        label = new Label("", skin);
+        label.setFontScale(1.5f);
+        label.setColor(Color.WHITE);
 
         // Place label onto table
-        table.add(timeLabel).align(Align.center);
+        table.add(label).align(Align.center);
 
         // Style and place the table
         table.setBackground(skin.getDrawable("panel1"));
@@ -54,7 +54,7 @@ public class UIClockMenu extends UIElement {
      */
     public void setTime(long time) {
         // Format this onto the time label
-        timeLabel.setText(String.format("%d:%02d", time / 60, time % 60));
+        label.setText(String.format("%d:%02d", time / 60, time % 60));
     }
 
     @Override
