@@ -23,8 +23,10 @@ public class UIClockMenu {
     /**
      * Initialise clock UI elements.
      *
+     * @param uiViewport  the viewport used to render UI.
      * @param parentTable the table to render the clock menus container onto.
-     * @param skin        the provided skin
+     * @param skin        the provided skin.
+     * @param timer       the timer for displaying time from.
      */
     public UIClockMenu(Viewport uiViewport, Table parentTable, Skin skin, Timer timer) {
         viewport = uiViewport;

@@ -19,6 +19,7 @@ public class UIManager {
     private Table table;
 
     private UIClockMenu clockMenu;
+    private UISatisfactionMenu satisfactionMenu;
 
     /**
      * Initialise UI elements needed for the game.
@@ -43,6 +44,7 @@ public class UIManager {
 
         // create clock menu on our root table
         clockMenu = new UIClockMenu(viewport, table, skin, timer);
+        satisfactionMenu = new UISatisfactionMenu(viewport, table, skin);
     }
 
     /**
@@ -50,6 +52,7 @@ public class UIManager {
      */
     public void render() {
         clockMenu.render();
+        satisfactionMenu.render();
 
         // Apply and then draw
         viewport.apply();
@@ -70,6 +73,7 @@ public class UIManager {
 
         // Run resize functions on UI elements
         clockMenu.resize();
+        satisfactionMenu.resize();
     }
 
 
