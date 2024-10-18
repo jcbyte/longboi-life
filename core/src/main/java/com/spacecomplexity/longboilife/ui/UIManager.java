@@ -18,9 +18,7 @@ public class UIManager {
     private Skin skin;
     private Table table;
 
-    private UIClockMenu clockMenu;
-    private UISatisfactionMenu satisfactionMenu;
-    private UIMoneyMenu moneyMenu;
+    private UIElement[] uiElements;
 
     /**
      * Initialise UI elements needed for the game.
@@ -31,32 +29,34 @@ public class UIManager {
         // Initialise viewport for rescaling
         viewport = new ScreenViewport();
 
-        // initialise stage
+        // Initialise stage
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
-        // initialise root table
+        // Initialise root table
         table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
 
-        // load external UI skin
+        // Load external UI skin
         skin = new Skin(Gdx.files.internal("shadeui/skin/uiskin.json"));
 
-        // create our UI elements
-        clockMenu = new UIClockMenu(viewport, table, skin, timer);
-        satisfactionMenu = new UISatisfactionMenu(viewport, table, skin);
-        moneyMenu = new UIMoneyMenu(viewport, table, skin);
+        // Create our UI elements
+        uiElements = new UIElement[]{
+            new UIClockMenu(viewport, table, skin, timer),
+            new UISatisfactionMenu(viewport, table, skin),
+            new UIMoneyMenu(viewport, table, skin),
+        };
     }
 
     /**
      * Apply and draw UI onto the screen.
      */
     public void render() {
-        // todo change this to array?
-        clockMenu.render();
-        satisfactionMenu.render();
-        moneyMenu.render();
+        // Render on each of the UI elements
+        for (UIElement uiElement : uiElements) {
+            uiElement.render();
+        }
 
         // Apply and then draw
         viewport.apply();
@@ -76,11 +76,10 @@ public class UIManager {
         viewport.update(width, height, true);
 
         // Run resize functions on UI elements
-        clockMenu.resize();
-        satisfactionMenu.resize();
-        moneyMenu.resize();
+        for (UIElement uiElement : uiElements) {
+            uiElement.resize();
+        }
     }
-
 
     /**
      * Dispose of all loaded assets.
