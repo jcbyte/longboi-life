@@ -46,13 +46,18 @@ public class UIManager {
             new UIClockMenu(viewport, table, skin, timer),
             new UISatisfactionMenu(viewport, table, skin),
             new UIMoneyMenu(viewport, table, skin),
+            new UIBottomMenu(viewport, table, skin),
         };
+
+//        table.debugAll();
     }
 
     /**
      * Apply and draw UI onto the screen.
      */
     public void render() {
+        // todo rescaling UI
+
         // Render on each of the UI elements
         for (UIElement uiElement : uiElements) {
             uiElement.render();
