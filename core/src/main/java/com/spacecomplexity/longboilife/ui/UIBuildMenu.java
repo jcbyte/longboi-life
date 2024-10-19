@@ -45,9 +45,12 @@ public class UIBuildMenu extends UIElement {
         BuildingType[] buildings = BuildingType.getBuildingsOfType(category);
 
         for (BuildingType building : buildings) {
-            // todo make buttons scale to height of container
-            ImageButton button = new ImageButton(new TextureRegionDrawable(building.getTexture()));
-            buildingButtonsTable.add(button).expandX().padLeft(2);
+            // todo also display name / cost etc
+            TextureRegionDrawable texture = new TextureRegionDrawable(building.getTexture());
+            float textureSize = table.getHeight() - 25;
+            texture.setMinSize(textureSize, textureSize);
+            ImageButton button = new ImageButton(texture);
+            buildingButtonsTable.add(button).expandX().expandY().fillY().padLeft(2);
         }
         table.add(buildingButtonsTable).expandX().left();
 
