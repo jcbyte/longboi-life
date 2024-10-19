@@ -1,19 +1,19 @@
 package com.spacecomplexity.longboilife.ui;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.building.BuildingCategory;
-
-import java.util.Arrays;
 
 /**
  * Class to represent the Bottom Menu UI.
  */
 public class UIBottomMenu extends UIElement {
-    private TextButton[] buildingButtons;
     private TextButton pauseButton;
+    private UIBuildMenu buildMenu;
 
     /**
      * Initialise bottom menu elements.
@@ -25,14 +25,23 @@ public class UIBottomMenu extends UIElement {
     public UIBottomMenu(Viewport uiViewport, Table parentTable, Skin skin) {
         super(uiViewport, parentTable, skin);
 
-        // Initialise building buttons
-        buildingButtons = Arrays.stream(BuildingCategory.values()).map(
-            (BuildingCategory category) -> new TextButton(category.getDisplayName(), skin)
-        ).toArray(TextButton[]::new);
+        buildMenu = new UIBuildMenu(uiViewport, parentTable, skin);
 
         // Place building buttons on separate table for condensed styling
         Table buildingButtonsTable = new Table(skin);
-        for (TextButton button : buildingButtons) {
+        // Initialise building buttons
+        for (BuildingCategory category : BuildingCategory.values()) {
+            TextButton button = new TextButton(category.getDisplayName(), skin);
+
+            // On click execute function to open the buildMenuTable on the specific category
+            button.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    buildMenu.openBuildMenu(category);
+                    // todo need to close this at some point
+                }
+            });
+
             buildingButtonsTable.add(button).expandX().padLeft(2);
         }
         // Add the buttons onto the main table
@@ -41,6 +50,7 @@ public class UIBottomMenu extends UIElement {
         // Initialise pause button
         // todo display ❚❚ ▶
         pauseButton = new TextButton("❚❚", skin);
+        // todo pause game on clicked
         // Place pause button on the table
         table.add(pauseButton).right().padRight(2);
 
@@ -50,7 +60,13 @@ public class UIBottomMenu extends UIElement {
     }
 
     public void render() {
-        // todo
+        buildMenu.render();
+    }
+
+    @Override
+    public void resize() {
+        placeTable();
+        buildMenu.resize();
     }
 
     @Override
