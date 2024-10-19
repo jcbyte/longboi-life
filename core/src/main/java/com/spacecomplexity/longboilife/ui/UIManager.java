@@ -1,6 +1,7 @@
 package com.spacecomplexity.longboilife.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -23,15 +24,16 @@ public class UIManager {
     /**
      * Initialise UI elements needed for the game.
      *
-     * @param timer timer for {@link UIClockMenu} to use.
+     * @param inputMultiplexer to add the UI events to the input processing
+     * @param timer            timer for {@link UIClockMenu} to use.
      */
-    public UIManager(Timer timer) {
+    public UIManager(InputMultiplexer inputMultiplexer, Timer timer) {
         // Initialise viewport for rescaling
         viewport = new ScreenViewport();
 
         // Initialise stage
         stage = new Stage(viewport);
-        Gdx.input.setInputProcessor(stage);
+        inputMultiplexer.addProcessor(stage);
 
         // Initialise root table
         table = new Table();

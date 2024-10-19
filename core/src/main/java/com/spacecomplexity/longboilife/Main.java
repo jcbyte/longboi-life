@@ -3,6 +3,7 @@ package com.spacecomplexity.longboilife;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
@@ -51,6 +52,9 @@ public class Main extends ApplicationAdapter {
         // Create a new timer for 5 minutes
         timer = new Timer(5 * 60 * 1000);
 
+        // Create an input multiplexer to handle input from all sources
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+
         // Initialise SpriteBatch and ShapeRender for rendering
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
@@ -62,7 +66,7 @@ public class Main extends ApplicationAdapter {
         viewport = new ScreenViewport(camera.getCamera());
 
         // Initialise UI elements with UIManager
-        ui = new UIManager(timer);
+        ui = new UIManager(inputMultiplexer, timer);
 
         // Calculates the scale factor based initial screen height
         int screenHeight = Gdx.graphics.getHeight();
@@ -76,7 +80,9 @@ public class Main extends ApplicationAdapter {
         ));
 
         // Set up an InputProcessor to handle user inputs
-        Gdx.input.setInputProcessor(new InputProcessor());
+        inputMultiplexer.addProcessor(new InputProcessor());
+        // Set the Gdx input processor to handle all our input processes
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     /**
@@ -233,7 +239,7 @@ public class Main extends ApplicationAdapter {
                     Gdx.graphics.setWindowedMode(prevAppWidth, prevAppHeight);
                 }
             }
-            
+
             return true;
         }
     }
