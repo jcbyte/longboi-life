@@ -1,6 +1,7 @@
 package com.spacecomplexity.longboilife.ui;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -12,6 +13,8 @@ import com.spacecomplexity.longboilife.building.BuildingType;
  * Class to represent the Build Menu UI.
  */
 public class UIBuildMenu extends UIElement {
+    private Skin skin;
+
     /**
      * Initialise build menu elements.
      *
@@ -21,6 +24,8 @@ public class UIBuildMenu extends UIElement {
      */
     public UIBuildMenu(Viewport uiViewport, Table parentTable, Skin skin) {
         super(uiViewport, parentTable, skin);
+
+        this.skin = skin;
 
         // Style and place the table
         table.setBackground(skin.getDrawable("panel1"));
@@ -38,22 +43,42 @@ public class UIBuildMenu extends UIElement {
      * @param category specific category of buildings to show.
      */
     public void openBuildMenu(BuildingCategory category) {
+        // CLear previous buildings from the table
         table.clear();
 
-        Table buildingButtonsTable = new Table();
-
+        // Get list of all buildings to display on this menu
         BuildingType[] buildings = BuildingType.getBuildingsOfType(category);
 
+        // Place building buttons on separate table for condensed styling
+        Table buildingButtonsTable = new Table();
         for (BuildingType building : buildings) {
-            // todo also display name / cost etc
+            // Get building texture and make it fill the bar
             TextureRegionDrawable texture = new TextureRegionDrawable(building.getTexture());
-            float textureSize = table.getHeight() - 25;
+            float textureSize = table.getHeight() - 60;
             texture.setMinSize(textureSize, textureSize);
+            // Initialise building button
             ImageButton button = new ImageButton(texture);
-            buildingButtonsTable.add(button).expandX().expandY().fillY().padLeft(2);
+
+            // Initialise building labels
+            Label titleLabel = new Label(building.name(), skin);
+            Label costLabel = new Label(String.format("$%.2f", building.getCost()), skin);
+
+            // create container for UI elements relating to this building
+            Table buildingTable = new Table();
+            // Add building UI elements into there container
+            buildingTable.add(button);
+            buildingTable.row();
+            buildingTable.add(titleLabel).padTop(2);
+            buildingTable.row();
+            buildingTable.add(costLabel).padTop(2);
+
+            // Add the container to the building table
+            buildingButtonsTable.add(buildingTable).expandX().expandY().fillY().padLeft(2);
         }
+        // Add the buildings table onto the main table
         table.add(buildingButtonsTable).expandX().left();
 
+        // Show the build menu
         table.setVisible(true);
     }
 
@@ -61,6 +86,7 @@ public class UIBuildMenu extends UIElement {
      * Close the build menu.
      */
     public void closeBuildMenu() {
+        // Hide the build menu
         table.setVisible(false);
     }
 
