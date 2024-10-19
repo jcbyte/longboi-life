@@ -1,9 +1,12 @@
 package com.spacecomplexity.longboilife.ui;
 
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.building.BuildingCategory;
+import com.spacecomplexity.longboilife.building.BuildingType;
 
 /**
  * Class to represent the Build Menu UI.
@@ -35,7 +38,19 @@ public class UIBuildMenu extends UIElement {
      * @param category specific category of buildings to show.
      */
     public void openBuildMenu(BuildingCategory category) {
-        // todo create the building buttons
+        table.clear();
+
+        Table buildingButtonsTable = new Table();
+
+        BuildingType[] buildings = BuildingType.getBuildingsOfType(category);
+
+        for (BuildingType building : buildings) {
+            // todo make buttons scale to height of container
+            ImageButton button = new ImageButton(new TextureRegionDrawable(building.getTexture()));
+            buildingButtonsTable.add(button).expandX().padLeft(2);
+        }
+        table.add(buildingButtonsTable).expandX().left();
+
         table.setVisible(true);
     }
 

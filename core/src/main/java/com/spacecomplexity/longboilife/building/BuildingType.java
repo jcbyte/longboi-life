@@ -3,11 +3,15 @@ package com.spacecomplexity.longboilife.building;
 import com.badlogic.gdx.graphics.Texture;
 import com.spacecomplexity.longboilife.utils.Vector2Int;
 
+import java.util.stream.Stream;
+
 /**
  * Contains a list of all buildings, including there default data.
  */
 public enum BuildingType {
-    GREGGS(new Texture("buildings/greggs.png"), new Vector2Int(2, 2), BuildingCategory.FOOD, 200);
+    GREGGS(new Texture("buildings/greggs.png"), new Vector2Int(2, 2), BuildingCategory.FOOD, 200),
+    PAPA_JOHNS(new Texture("error.png"), new Vector2Int(2, 2), BuildingCategory.FOOD, 200),
+    HALIFAX(new Texture("error.png"), new Vector2Int(2, 2), BuildingCategory.ACCOMMODATION, 200);
 
     private final Texture texture;
     private final Vector2Int size;
@@ -41,9 +45,16 @@ public enum BuildingType {
     public BuildingCategory getCategory() {
         return category;
     }
-    
+
     public float getCost() {
         return cost;
+    }
+
+    public static BuildingType[] getBuildingsOfType(BuildingCategory category) {
+        return Stream.of(BuildingType.values())
+            .filter(buildingType -> buildingType.getCategory().equals(category))
+            .toArray(BuildingType[]::new);
+
     }
 
     /**
