@@ -1,11 +1,14 @@
 package com.spacecomplexity.longboilife.ui;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.spacecomplexity.longboilife.EventHandler;
 import com.spacecomplexity.longboilife.building.BuildingCategory;
 import com.spacecomplexity.longboilife.building.BuildingType;
 
@@ -56,8 +59,22 @@ public class UIBuildMenu extends UIElement {
             TextureRegionDrawable texture = new TextureRegionDrawable(building.getTexture());
             float textureSize = table.getHeight() - 60;
             texture.setMinSize(textureSize, textureSize);
+
             // Initialise building button
             ImageButton button = new ImageButton(texture);
+            // Initialise place building sequence when clicked
+            button.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    try {
+                        EventHandler.getEventHandler().callEvent("start_building", building);
+                    } catch (NoSuchMethodException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    closeBuildMenu();
+                }
+            });
 
             // Initialise building labels
             Label titleLabel = new Label(building.name(), skin);

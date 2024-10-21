@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.spacecomplexity.longboilife.building.BuildingType;
 import com.spacecomplexity.longboilife.tile.InvalidSaveMapException;
 import com.spacecomplexity.longboilife.ui.UIManager;
 import com.spacecomplexity.longboilife.utils.RenderUtils;
@@ -32,6 +33,8 @@ public class Main extends ApplicationAdapter {
     private World world;
 
     private final GameConfig gameConfig = GameConfig.getConfig();
+
+    private BuildingType buildingToBeBuilt;
 
     /**
      * Responsible for setting up the game initial state.
@@ -81,6 +84,20 @@ public class Main extends ApplicationAdapter {
         inputManager = new InputManager(inputMultiplexer);
         // Set the Gdx input processor to handle all our input processes
         Gdx.input.setInputProcessor(inputMultiplexer);
+
+        // Initialise the events performed from this script.
+        initialiseEvents();
+    }
+
+    /**
+     * Initialise events for the event handler.
+     */
+    private void initialiseEvents() {
+        // Set the building to be built when it is selected from the UI.
+        EventHandler.getEventHandler().createEvent("start_building", (params) -> {
+            buildingToBeBuilt = (BuildingType) params[0];
+            return null;
+        });
     }
 
     /**
@@ -103,7 +120,7 @@ public class Main extends ApplicationAdapter {
         shapeRenderer.setProjectionMatrix(MainCamera.camera().getCombinedMatrix());
 
         // Draw the world on screen
-        RenderUtils.drawWorld(batch, shapeRenderer, world, BuildingType.GREGGS, true);
+        RenderUtils.drawWorld(batch, shapeRenderer, world, buildingToBeBuilt, true);
 
         // Render the UI
         ui.render();
