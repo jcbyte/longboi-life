@@ -46,7 +46,7 @@ public class UISatisfactionMenu extends UIElement {
     }
 
     public void render() {
-        satisfactionBar.setValue(GameState.getConfig().satisfactionScore);
+        satisfactionBar.setValue(GameState.getState().satisfactionScore);
     }
 
     @Override

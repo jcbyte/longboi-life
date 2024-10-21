@@ -39,7 +39,7 @@ public class UIMoneyMenu extends UIElement {
     }
 
     public void render() {
-        label.setText("$" + GameState.getConfig().money);
+        label.setText("$" + GameState.getState().money);
     }
 
     @Override

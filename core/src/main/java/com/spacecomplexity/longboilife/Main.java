@@ -32,7 +32,7 @@ public class Main extends ApplicationAdapter {
 
     private World world;
 
-    private final GameState gameState = GameState.getConfig();
+    private final GameState gameState = GameState.getState();
 
     private BuildingType buildingToBeBuilt;
 

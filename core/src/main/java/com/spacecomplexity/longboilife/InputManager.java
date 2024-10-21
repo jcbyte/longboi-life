@@ -6,7 +6,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.math.Vector3;
 
 public class InputManager {
-    private final GameState gameState = GameState.getConfig();
+    private final GameState gameState = GameState.getState();
 
     /**
      * Create an input manager by initialising the input processors and set attributes.

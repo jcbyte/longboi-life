@@ -49,7 +49,7 @@ public class GameState {
      *
      * @return The single {@link GameState} class.
      */
-    public static GameState getConfig() {
+    public static GameState getState() {
         return gameState;
     }
 }

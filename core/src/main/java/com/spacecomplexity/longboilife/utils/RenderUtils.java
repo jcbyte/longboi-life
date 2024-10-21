@@ -21,7 +21,7 @@ public class RenderUtils {
      * @param displayGridlines whether gridlines/tile borders should be drawn.
      */
     public static void drawWorld(SpriteBatch batch, ShapeRenderer shapeRenderer, World world, BuildingType ghostBuilding, boolean displayGridlines) {
-        GameState gameState = GameState.getConfig();
+        GameState gameState = GameState.getState();
 
         float cellSize = Constants.TILE_SIZE * gameState.scaleFactor;
 
