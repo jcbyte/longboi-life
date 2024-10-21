@@ -34,6 +34,11 @@ public class UIBuildMenu extends UIElement {
         table.setBackground(skin.getDrawable("panel1"));
         closeBuildMenu();
         placeTable();
+
+        EventHandler.getEventHandler().createEvent("close_build_menu", (params) -> {
+            closeBuildMenu();
+            return null;
+        });
     }
 
     public void render() {

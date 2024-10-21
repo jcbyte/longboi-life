@@ -145,6 +145,15 @@ public class InputManager {
                     Gdx.graphics.setWindowedMode(prevAppWidth, prevAppHeight);
                 }
             }
+            // If the close key is pressed, send events to cancel actions
+            else if (keycode == Keybindings.CLOSE.getKey()) {
+                try {
+                    EventHandler.getEventHandler().callEvent("close_build_menu");
+                    EventHandler.getEventHandler().callEvent("remove_started_building");
+                } catch (NoSuchMethodException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
             return true;
         }

@@ -98,6 +98,11 @@ public class Main extends ApplicationAdapter {
             buildingToBeBuilt = (BuildingType) params[0];
             return null;
         });
+
+        EventHandler.getEventHandler().createEvent("remove_started_building", (params) -> {
+            buildingToBeBuilt = null;
+            return null;
+        });
     }
 
     /**
