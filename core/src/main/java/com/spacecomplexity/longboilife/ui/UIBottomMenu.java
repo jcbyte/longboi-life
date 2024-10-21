@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.spacecomplexity.longboilife.TimerManager;
 import com.spacecomplexity.longboilife.building.BuildingCategory;
 
 /**
@@ -49,8 +50,26 @@ public class UIBottomMenu extends UIElement {
 
         // Initialise pause button
         // todo display ❚❚ ▶
-        pauseButton = new TextButton("❚❚", skin);
-        // todo pause game on clicked
+        pauseButton = new TextButton("Pause", skin);
+        // Pause the game when clicked
+        pauseButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                TimerManager timerManager = TimerManager.getTimerManager();
+
+                if (timerManager.getTimer().isPaused()) {
+                    // If currently paused then resume playing
+                    pauseButton.setText("Pause");
+                    timerManager.getTimer().resumeTimer();
+                    // todo actually pause game
+                    // todo pause overlay
+                } else {
+                    // If currently playing then pause
+                    pauseButton.setText("Play");
+                    timerManager.getTimer().pauseTimer();
+                }
+            }
+        });
         // Place pause button on the table
         table.add(pauseButton).right().padRight(2);
 

@@ -68,4 +68,13 @@ public class Timer {
 
         return finishTime - System.currentTimeMillis();
     }
+
+    /**
+     * Return whether the timer is currently paused.
+     *
+     * @return whether the timer is currently paused.
+     */
+    public boolean isPaused() {
+        return paused;
+    }
 }
