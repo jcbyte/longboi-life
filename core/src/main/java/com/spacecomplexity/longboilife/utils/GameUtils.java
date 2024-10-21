@@ -3,7 +3,7 @@ package com.spacecomplexity.longboilife.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 import com.spacecomplexity.longboilife.Constants;
-import com.spacecomplexity.longboilife.GameConfig;
+import com.spacecomplexity.longboilife.GameState;
 import com.spacecomplexity.longboilife.MainCamera;
 import com.spacecomplexity.longboilife.world.World;
 
@@ -23,7 +23,7 @@ public class GameUtils {
         MainCamera.camera().getCamera().unproject(mouse);
 
         // Divide these by the cell size (as the world starts at (0, 0))
-        float cellSize = Constants.TILE_SIZE * GameConfig.getConfig().scaleFactor;
+        float cellSize = Constants.TILE_SIZE * GameState.getConfig().scaleFactor;
         return new Vector2Int(
             Math.max(0, Math.min((int) (mouse.x / cellSize), world.getWidth() - 1)),
             Math.max(0, Math.min((int) (mouse.y / cellSize), world.getHeight() - 1))

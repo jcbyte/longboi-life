@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.spacecomplexity.longboilife.Constants;
-import com.spacecomplexity.longboilife.GameConfig;
+import com.spacecomplexity.longboilife.GameState;
 import com.spacecomplexity.longboilife.building.BuildingType;
 import com.spacecomplexity.longboilife.world.World;
 
@@ -21,9 +21,9 @@ public class RenderUtils {
      * @param displayGridlines whether gridlines/tile borders should be drawn.
      */
     public static void drawWorld(SpriteBatch batch, ShapeRenderer shapeRenderer, World world, BuildingType ghostBuilding, boolean displayGridlines) {
-        GameConfig gameConfig = GameConfig.getConfig();
+        GameState gameState = GameState.getConfig();
 
-        float cellSize = Constants.TILE_SIZE * gameConfig.scaleFactor;
+        float cellSize = Constants.TILE_SIZE * gameState.scaleFactor;
 
         batch.begin();
         // For every tile
@@ -61,16 +61,16 @@ public class RenderUtils {
             shapeRenderer.setColor(Color.BLACK);
 
             // Draw all vertical lines
-            float worldTop = world.getHeight() * Constants.TILE_SIZE * gameConfig.scaleFactor;
+            float worldTop = world.getHeight() * Constants.TILE_SIZE * gameState.scaleFactor;
             for (int x = 0; x < world.getWidth(); x++) {
-                float xEdge = x * Constants.TILE_SIZE * gameConfig.scaleFactor;
+                float xEdge = x * Constants.TILE_SIZE * gameState.scaleFactor;
                 shapeRenderer.line(xEdge, 0, xEdge, worldTop);
             }
 
             // Draw all horizontal lines
-            float worldRight = world.getWidth() * Constants.TILE_SIZE * gameConfig.scaleFactor;
+            float worldRight = world.getWidth() * Constants.TILE_SIZE * gameState.scaleFactor;
             for (int y = 0; y < world.getHeight(); y++) {
-                float yEdge = y * Constants.TILE_SIZE * gameConfig.scaleFactor;
+                float yEdge = y * Constants.TILE_SIZE * gameState.scaleFactor;
                 shapeRenderer.line(0, yEdge, worldRight, yEdge);
             }
 

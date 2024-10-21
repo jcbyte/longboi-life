@@ -35,6 +35,7 @@ public class UIBuildMenu extends UIElement {
         closeBuildMenu();
         placeTable();
 
+        // Close build menu when receiving an event to do so.
         EventHandler.getEventHandler().createEvent("close_build_menu", (params) -> {
             closeBuildMenu();
             return null;
@@ -42,7 +43,6 @@ public class UIBuildMenu extends UIElement {
     }
 
     public void render() {
-        // todo
     }
 
     /**

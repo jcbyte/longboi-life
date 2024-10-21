@@ -32,7 +32,7 @@ public class Main extends ApplicationAdapter {
 
     private World world;
 
-    private final GameConfig gameConfig = GameConfig.getConfig();
+    private final GameState gameState = GameState.getConfig();
 
     private BuildingType buildingToBeBuilt;
 
@@ -71,12 +71,12 @@ public class Main extends ApplicationAdapter {
 
         // Calculates the scale factor based initial screen height
         int screenHeight = Gdx.graphics.getHeight();
-        gameConfig.scaleFactor = screenHeight / (float) Constants.SCALING_1_HEIGHT;
+        gameState.scaleFactor = screenHeight / (float) Constants.SCALING_1_HEIGHT;
 
         // Position camera in the center of the world map
         MainCamera.camera().position.set(new Vector3(
-            world.getWidth() * Constants.TILE_SIZE * gameConfig.scaleFactor / 2,
-            world.getHeight() * Constants.TILE_SIZE * gameConfig.scaleFactor / 2,
+            world.getWidth() * Constants.TILE_SIZE * gameState.scaleFactor / 2,
+            world.getHeight() * Constants.TILE_SIZE * gameState.scaleFactor / 2,
             0
         ));
 
@@ -144,7 +144,7 @@ public class Main extends ApplicationAdapter {
         viewport.update(width, height, false);
 
         // Recalculate scaling factor with new height
-        gameConfig.scaleFactor = height / (float) Constants.SCALING_1_HEIGHT;
+        gameState.scaleFactor = height / (float) Constants.SCALING_1_HEIGHT;
 
         // Rescale UI
         ui.resize(width, height);

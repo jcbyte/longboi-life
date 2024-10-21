@@ -13,7 +13,7 @@ import com.spacecomplexity.longboilife.world.World;
 public class CameraManager {
     private final OrthographicCamera camera;
     private World world;
-    private final GameConfig gameConfig = GameConfig.getConfig();
+    private final GameState gameState = GameState.getConfig();
     public Vector3 position;
     public float zoom;
 
@@ -39,8 +39,8 @@ public class CameraManager {
     public void update() {
         // Clamp the position within the specified bounds to keep it from going over 50% of the screen off the map in any direction
         position.set(new Vector3(
-            MathUtils.clamp(position.x, 0, world.getWidth() * Constants.TILE_SIZE * gameConfig.scaleFactor),
-            MathUtils.clamp(position.y, 0, world.getHeight() * Constants.TILE_SIZE * gameConfig.scaleFactor),
+            MathUtils.clamp(position.x, 0, world.getWidth() * Constants.TILE_SIZE * gameState.scaleFactor),
+            MathUtils.clamp(position.y, 0, world.getHeight() * Constants.TILE_SIZE * gameState.scaleFactor),
             0
         ));
         camera.position.set(position);

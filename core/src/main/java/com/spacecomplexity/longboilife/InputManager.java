@@ -6,7 +6,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.math.Vector3;
 
 public class InputManager {
-    private final GameConfig gameConfig = GameConfig.getConfig();
+    private final GameState gameState = GameState.getConfig();
 
     /**
      * Create an input manager by initialising the input processors and set attributes.
@@ -25,7 +25,7 @@ public class InputManager {
         float deltaTime = Gdx.graphics.getDeltaTime();
 
         // Calculate camera speed and move camera around given camera direction keys pressed
-        float cameraSpeed = gameConfig.cameraSpeed * deltaTime * MainCamera.camera().zoom * gameConfig.scaleFactor;
+        float cameraSpeed = gameState.cameraSpeed * deltaTime * MainCamera.camera().zoom * gameState.scaleFactor;
         if (Gdx.input.isKeyPressed(Keybindings.CAMERA_UP.getKey())) {
             MainCamera.camera().position.y += cameraSpeed;
         }
@@ -40,7 +40,7 @@ public class InputManager {
         }
 
         // Calculate camera zoom speed and zoom camera around given camera zoom keys pressed
-        float cameraZoomSpeed = gameConfig.cameraKeyZoomSpeed * deltaTime * MainCamera.camera().zoom;
+        float cameraZoomSpeed = gameState.cameraKeyZoomSpeed * deltaTime * MainCamera.camera().zoom;
         if (Gdx.input.isKeyPressed(Keybindings.CAMERA_ZOOM_IN.getKey())) {
             MainCamera.camera().zoom += cameraZoomSpeed;
         }
@@ -70,7 +70,7 @@ public class InputManager {
             MainCamera.camera().getCamera().unproject(mousePosition);
 
             // Zoom in/out at the mouses current position
-            MainCamera.camera().zoomAt(amountY * gameConfig.cameraScrollZoomSpeed * deltaTime * MainCamera.camera().zoom, mousePosition);
+            MainCamera.camera().zoomAt(amountY * gameState.cameraScrollZoomSpeed * deltaTime * MainCamera.camera().zoom, mousePosition);
 
             return true;
         }
@@ -131,9 +131,9 @@ public class InputManager {
         public boolean keyDown(int keycode) {
             // If the fullscreen key is pressed then toggle fullscreen mode
             if (keycode == Keybindings.FULLSCREEN.getKey()) {
-                gameConfig.fullscreen = !gameConfig.fullscreen;
+                gameState.fullscreen = !gameState.fullscreen;
 
-                if (gameConfig.fullscreen) {
+                if (gameState.fullscreen) {
                     // If going to fullscreen then record the current width and height to return to
                     prevAppWidth = Gdx.graphics.getWidth();
                     prevAppHeight = Gdx.graphics.getHeight();

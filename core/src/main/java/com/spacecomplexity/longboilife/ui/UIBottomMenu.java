@@ -39,7 +39,6 @@ public class UIBottomMenu extends UIElement {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     buildMenu.openBuildMenu(category);
-                    // todo need to close this at some point
                 }
             });
 

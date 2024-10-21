@@ -3,8 +3,8 @@ package com.spacecomplexity.longboilife;
 /**
  * Singleton class to contain variables relating to state/config of the game.
  */
-public class GameConfig {
-    private static final GameConfig gameConfig = new GameConfig();
+public class GameState {
+    private static final GameState gameState = new GameState();
 
     /**
      * The current scale factor of game for rendering.
@@ -31,15 +31,15 @@ public class GameConfig {
      */
     public boolean fullscreen = false;
 
-    private GameConfig() {
+    private GameState() {
     }
 
     /**
-     * Get the singleton instance of the {@link GameConfig} class.
+     * Get the singleton instance of the {@link GameState} class.
      *
-     * @return The single {@link GameConfig} class.
+     * @return The single {@link GameState} class.
      */
-    public static GameConfig getConfig() {
-        return gameConfig;
+    public static GameState getConfig() {
+        return gameState;
     }
 }
