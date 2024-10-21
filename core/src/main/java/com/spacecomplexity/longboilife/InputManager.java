@@ -7,17 +7,14 @@ import com.badlogic.gdx.math.Vector3;
 
 public class InputManager {
     private final GameConfig gameConfig = GameConfig.getConfig();
-    private CameraManager camera;
 
     /**
      * Create an input manager by initialising the input processors and set attributes.
      *
      * @param inputMultiplexer to add the input processor events to the input processing.
-     * @param camera           modified by input events.
      */
-    public InputManager(InputMultiplexer inputMultiplexer, CameraManager camera) {
+    public InputManager(InputMultiplexer inputMultiplexer) {
         inputMultiplexer.addProcessor(new InputProcessor());
-        this.camera = camera;
     }
 
     /**
@@ -28,27 +25,27 @@ public class InputManager {
         float deltaTime = Gdx.graphics.getDeltaTime();
 
         // Calculate camera speed and move camera around given camera direction keys pressed
-        float cameraSpeed = gameConfig.cameraSpeed * deltaTime * camera.zoom * gameConfig.scaleFactor;
+        float cameraSpeed = gameConfig.cameraSpeed * deltaTime * MainCamera.camera().zoom * gameConfig.scaleFactor;
         if (Gdx.input.isKeyPressed(Keybindings.CAMERA_UP.getKey())) {
-            camera.position.y += cameraSpeed;
+            MainCamera.camera().position.y += cameraSpeed;
         }
         if (Gdx.input.isKeyPressed(Keybindings.CAMERA_DOWN.getKey())) {
-            camera.position.y -= cameraSpeed;
+            MainCamera.camera().position.y -= cameraSpeed;
         }
         if (Gdx.input.isKeyPressed(Keybindings.CAMERA_LEFT.getKey())) {
-            camera.position.x -= cameraSpeed;
+            MainCamera.camera().position.x -= cameraSpeed;
         }
         if (Gdx.input.isKeyPressed(Keybindings.CAMERA_RIGHT.getKey())) {
-            camera.position.x += cameraSpeed;
+            MainCamera.camera().position.x += cameraSpeed;
         }
 
         // Calculate camera zoom speed and zoom camera around given camera zoom keys pressed
-        float cameraZoomSpeed = gameConfig.cameraKeyZoomSpeed * deltaTime * camera.zoom;
+        float cameraZoomSpeed = gameConfig.cameraKeyZoomSpeed * deltaTime * MainCamera.camera().zoom;
         if (Gdx.input.isKeyPressed(Keybindings.CAMERA_ZOOM_IN.getKey())) {
-            camera.zoom += cameraZoomSpeed;
+            MainCamera.camera().zoom += cameraZoomSpeed;
         }
         if (Gdx.input.isKeyPressed(Keybindings.CAMERA_ZOOM_OUT.getKey())) {
-            camera.zoom -= cameraZoomSpeed;
+            MainCamera.camera().zoom -= cameraZoomSpeed;
         }
     }
 
@@ -70,10 +67,10 @@ public class InputManager {
 
             // Convert the current mouse position into world coordinates
             Vector3 mousePosition = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.getCamera().unproject(mousePosition);
+            MainCamera.camera().getCamera().unproject(mousePosition);
 
             // Zoom in/out at the mouses current position
-            camera.zoomAt(amountY * gameConfig.cameraScrollZoomSpeed * deltaTime * camera.zoom, mousePosition);
+            MainCamera.camera().zoomAt(amountY * gameConfig.cameraScrollZoomSpeed * deltaTime * MainCamera.camera().zoom, mousePosition);
 
             return true;
         }
@@ -113,8 +110,8 @@ public class InputManager {
             float deltaY = screenY - lastScreenY;
 
             // Move the camera the respective amount to simulate dragging
-            camera.position.x -= deltaX * camera.zoom;
-            camera.position.y += deltaY * camera.zoom;
+            MainCamera.camera().position.x -= deltaX * MainCamera.camera().zoom;
+            MainCamera.camera().position.y += deltaY * MainCamera.camera().zoom;
 
             lastScreenX = screenX;
             lastScreenY = screenY;

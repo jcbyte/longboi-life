@@ -27,7 +27,6 @@ public class Main extends ApplicationAdapter {
     private UIManager ui;
     private InputManager inputManager;
 
-    private CameraManager camera;
     private Viewport viewport;
 
     private World world;
@@ -58,10 +57,11 @@ public class Main extends ApplicationAdapter {
         shapeRenderer = new ShapeRenderer();
 
         // Initialises camera with CameraManager
-        camera = new CameraManager(world);
+        CameraManager camera = new CameraManager(world);
+        MainCamera.setMainCamera(camera);
 
         // Initialise viewport for rescaling
-        viewport = new ScreenViewport(camera.getCamera());
+        viewport = new ScreenViewport(MainCamera.camera().getCamera());
 
         // Initialise UI elements with UIManager
         ui = new UIManager(inputMultiplexer);
@@ -71,7 +71,7 @@ public class Main extends ApplicationAdapter {
         gameConfig.scaleFactor = screenHeight / (float) Constants.SCALING_1_HEIGHT;
 
         // Position camera in the center of the world map
-        camera.position.set(new Vector3(
+        MainCamera.camera().position.set(new Vector3(
             world.getWidth() * Constants.TILE_SIZE * gameConfig.scaleFactor / 2,
             world.getHeight() * Constants.TILE_SIZE * gameConfig.scaleFactor / 2,
             0
@@ -97,10 +97,10 @@ public class Main extends ApplicationAdapter {
 
         // Applies viewport transformations and updates camera ready for rendering
         viewport.apply();
-        camera.update();
+        MainCamera.camera().update();
         // Update the SpriteBatch and ShapeRenderer to match the updates camera
-        batch.setProjectionMatrix(camera.getCombinedMatrix());
-        shapeRenderer.setProjectionMatrix(camera.getCombinedMatrix());
+        batch.setProjectionMatrix(MainCamera.camera().getCombinedMatrix());
+        shapeRenderer.setProjectionMatrix(MainCamera.camera().getCombinedMatrix());
 
         // Draw the world on screen
         RenderUtils.drawWorld(batch, shapeRenderer, world, true);
