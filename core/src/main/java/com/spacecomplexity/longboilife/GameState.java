@@ -31,6 +31,16 @@ public class GameState {
      */
     public boolean fullscreen = false;
 
+    /**
+     * The amount of money the player currently has.
+     */
+    public float money = 800000;
+
+    /**
+     * The current satisfaction score.
+     */
+    public float satisfactionScore = 0.5f;
+
     private GameState() {
     }
 

@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.spacecomplexity.longboilife.GameState;
 
 /**
  * Class to represent the Satisfaction Score UI.
@@ -45,8 +46,7 @@ public class UISatisfactionMenu extends UIElement {
     }
 
     public void render() {
-        // todo set satisfaction score
-        satisfactionBar.setValue(0.65f);
+        satisfactionBar.setValue(GameState.getConfig().satisfactionScore);
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.spacecomplexity.longboilife.GameState;
 
 /**
  * Class to represent the Money UI.
@@ -38,8 +39,7 @@ public class UIMoneyMenu extends UIElement {
     }
 
     public void render() {
-        // todo set money level
-        label.setText("$1,000,000");
+        label.setText("$" + GameState.getConfig().money);
     }
 
     @Override
