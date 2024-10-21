@@ -34,8 +34,6 @@ public class Main extends ApplicationAdapter {
 
     private final GameConfig gameConfig = GameConfig.getConfig();
 
-    private Timer timer;
-
     /**
      * Responsible for setting up the game initial state.
      * Called when the game is first run.
@@ -50,7 +48,7 @@ public class Main extends ApplicationAdapter {
         }
 
         // Create a new timer for 5 minutes
-        timer = new Timer(5 * 60 * 1000);
+        TimerManager.getTimerManager().getTimer().setTimer(5 * 60 * 1000);
 
         // Create an input multiplexer to handle input from all sources
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
@@ -66,7 +64,7 @@ public class Main extends ApplicationAdapter {
         viewport = new ScreenViewport(camera.getCamera());
 
         // Initialise UI elements with UIManager
-        ui = new UIManager(inputMultiplexer, timer);
+        ui = new UIManager(inputMultiplexer);
 
         // Calculates the scale factor based initial screen height
         int screenHeight = Gdx.graphics.getHeight();

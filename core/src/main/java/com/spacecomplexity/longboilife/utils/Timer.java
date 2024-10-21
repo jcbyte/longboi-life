@@ -1,4 +1,4 @@
-package com.spacecomplexity.longboilife;
+package com.spacecomplexity.longboilife.utils;
 
 /**
  * Class to represent a simple timer
@@ -8,12 +8,25 @@ public class Timer {
     private long onPauseTime;
     private boolean paused;
 
+    public Timer() {
+    }
+
     /**
      * Create a new timer with specified duration.
      *
      * @param duration duration of timer in ms.
      */
-    Timer(long duration) {
+    public Timer(long duration) {
+        setTimer(duration);
+        paused = false;
+    }
+
+    /**
+     * Start a new timer with specified duration.
+     *
+     * @param duration duration of timer in ms.
+     */
+    public void setTimer(long duration) {
         finishTime = System.currentTimeMillis() + duration;
         paused = false;
     }

@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.spacecomplexity.longboilife.Timer;
 
 /**
  * Class to manage the UI in the game.
@@ -25,9 +24,8 @@ public class UIManager {
      * Initialise UI elements needed for the game.
      *
      * @param inputMultiplexer to add the UI events to the input processing
-     * @param timer            timer for {@link UIClockMenu} to use.
      */
-    public UIManager(InputMultiplexer inputMultiplexer, Timer timer) {
+    public UIManager(InputMultiplexer inputMultiplexer) {
         // Initialise viewport for rescaling
         viewport = new ScreenViewport();
 
@@ -45,7 +43,7 @@ public class UIManager {
 
         // Create our UI elements
         uiElements = new UIElement[]{
-            new UIClockMenu(viewport, table, skin, timer),
+            new UIClockMenu(viewport, table, skin),
             new UISatisfactionMenu(viewport, table, skin),
             new UIMoneyMenu(viewport, table, skin),
             new UIBottomMenu(viewport, table, skin),
