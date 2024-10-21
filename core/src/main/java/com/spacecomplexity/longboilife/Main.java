@@ -157,7 +157,7 @@ public class Main extends ApplicationAdapter {
         shapeRenderer.setProjectionMatrix(MainCamera.camera().getCombinedMatrix());
 
         // Draw the world on screen
-        RenderUtils.drawWorld(batch, shapeRenderer, world, buildingToBeBuilt, true);
+        RenderUtils.drawWorld(batch, shapeRenderer, world, buildingToBeBuilt, buildingToBeBuilt != null);
 
         // Render the UI
         ui.render();
