@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.spacecomplexity.longboilife.Constants;
 import com.spacecomplexity.longboilife.GameConfig;
+import com.spacecomplexity.longboilife.building.BuildingType;
 import com.spacecomplexity.longboilife.world.World;
 
 /**
@@ -19,8 +20,10 @@ public class RenderUtils {
      * @param world            the {@link World} containing map and buildings to draw.
      * @param displayGridlines whether gridlines/tile borders should be drawn.
      */
-    public static void drawWorld(SpriteBatch batch, ShapeRenderer shapeRenderer, World world, boolean displayGridlines) {
+    public static void drawWorld(SpriteBatch batch, ShapeRenderer shapeRenderer, World world, BuildingType ghostBuilding, boolean displayGridlines) {
         GameConfig gameConfig = GameConfig.getConfig();
+
+        float cellSize = Constants.TILE_SIZE * gameConfig.scaleFactor;
 
         batch.begin();
         // For every tile
@@ -30,13 +33,26 @@ public class RenderUtils {
                 // Draw the tile texture with size specified by TILE_SIZE and the current scaling factor
                 batch.draw(
                     world.getTile(x, world.getHeight() - 1 - y).getType().getTexture(),
-                    x * Constants.TILE_SIZE * gameConfig.scaleFactor,
-                    y * Constants.TILE_SIZE * gameConfig.scaleFactor,
-                    Constants.TILE_SIZE * gameConfig.scaleFactor,
-                    Constants.TILE_SIZE * gameConfig.scaleFactor
+                    x * cellSize,
+                    y * cellSize,
+                    cellSize,
+                    cellSize
                 );
             }
         }
+
+        // If there is a ghost building to draw, draw in on top of the tiles
+        if (ghostBuilding != null) {
+            Vector2Int mouse = GameUtils.getMouseOnGrid(world);
+            batch.draw(
+                ghostBuilding.getTexture(),
+                mouse.x * cellSize,
+                mouse.y * cellSize,
+                ghostBuilding.getSize().x * cellSize,
+                ghostBuilding.getSize().y * cellSize
+            );
+        }
+
         batch.end();
 
         // If we are to display gird lines do it now
