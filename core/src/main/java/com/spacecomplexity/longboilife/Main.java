@@ -12,7 +12,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.building.BuildingType;
 import com.spacecomplexity.longboilife.tile.InvalidSaveMapException;
 import com.spacecomplexity.longboilife.ui.UIManager;
+import com.spacecomplexity.longboilife.utils.GameUtils;
 import com.spacecomplexity.longboilife.utils.RenderUtils;
+import com.spacecomplexity.longboilife.utils.Vector2Int;
 import com.spacecomplexity.longboilife.world.World;
 
 import java.io.FileNotFoundException;
@@ -99,8 +101,38 @@ public class Main extends ApplicationAdapter {
             return null;
         });
 
+        // Clear the building to be built when it is requested.
         EventHandler.getEventHandler().createEvent("remove_started_building", (params) -> {
             buildingToBeBuilt = null;
+            return null;
+        });
+
+        // Build the selected building
+        EventHandler.getEventHandler().createEvent("build", (params) -> {
+            // If there is no selected building do nothing
+            if (buildingToBeBuilt == null) {
+                return null;
+            }
+
+            // If the user doesn't have enough money to buy the building then don't build
+            float cost = buildingToBeBuilt.getCost();
+            if (gameState.money < cost) {
+                return null;
+            }
+
+            // If the building is in an invalid location then don't built
+            Vector2Int mouse = GameUtils.getMouseOnGrid(world);
+            if (!world.canBuild(buildingToBeBuilt, mouse.x, mouse.y)) {
+                return null;
+            }
+
+            // Build the building at the mouse location and charge the player accordingly
+            world.build(buildingToBeBuilt, mouse.x, mouse.y);
+            gameState.money -= cost;
+
+            // Remove the selected building
+            buildingToBeBuilt = null;
+
             return null;
         });
     }

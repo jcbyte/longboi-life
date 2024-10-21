@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.spacecomplexity.longboilife.Constants;
 import com.spacecomplexity.longboilife.GameState;
+import com.spacecomplexity.longboilife.building.Building;
 import com.spacecomplexity.longboilife.building.BuildingType;
 import com.spacecomplexity.longboilife.world.World;
 
@@ -29,10 +30,9 @@ public class RenderUtils {
         // For every tile
         for (int x = 0; x < world.getWidth(); x++) {
             for (int y = 0; y < world.getHeight(); y++) {
-                // y will  be flipped as libGDX coordinates start in the bottom right instead of left
                 // Draw the tile texture with size specified by TILE_SIZE and the current scaling factor
                 batch.draw(
-                    world.getTile(x, world.getHeight() - 1 - y).getType().getTexture(),
+                    world.getTile(x, y).getType().getTexture(),
                     x * cellSize,
                     y * cellSize,
                     cellSize,
@@ -41,9 +41,34 @@ public class RenderUtils {
             }
         }
 
+        // For every building
+        for (Building building : world.buildings) {
+            Vector2Int buildingPosition = building.getPosition();
+            Vector2Int buildingSize = building.getType().getSize();
+
+            // Draw the building
+            batch.draw(
+                building.getType().getTexture(),
+                buildingPosition.x * cellSize,
+                buildingPosition.y * cellSize,
+                buildingSize.x * cellSize,
+                buildingSize.y * cellSize
+            );
+        }
+
         // If there is a ghost building to draw, draw in on top of the tiles
         if (ghostBuilding != null) {
             Vector2Int mouse = GameUtils.getMouseOnGrid(world);
+
+            // Check if this would be a valid position to build
+            boolean invalidPlacement = !world.canBuild(ghostBuilding, mouse.x, mouse.y);
+
+            // If an invalid position then give the building a red hue
+            if (invalidPlacement) {
+                batch.setColor(Color.RED);
+            }
+
+            // Draw the ghost building
             batch.draw(
                 ghostBuilding.getTexture(),
                 mouse.x * cellSize,
@@ -51,6 +76,11 @@ public class RenderUtils {
                 ghostBuilding.getSize().x * cellSize,
                 ghostBuilding.getSize().y * cellSize
             );
+
+            // If we previously set a red hue, return it to white
+            if (invalidPlacement) {
+                batch.setColor(Color.WHITE);
+            }
         }
 
         batch.end();

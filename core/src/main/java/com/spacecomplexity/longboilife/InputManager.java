@@ -92,6 +92,12 @@ public class InputManager {
             lastScreenX = screenX;
             lastScreenY = screenY;
 
+            try {
+                EventHandler.getEventHandler().callEvent("build");
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
+
             return true;
         }
 

@@ -4,8 +4,10 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.SerializationException;
 import com.spacecomplexity.longboilife.building.Building;
+import com.spacecomplexity.longboilife.building.BuildingType;
 import com.spacecomplexity.longboilife.tile.InvalidSaveMapException;
 import com.spacecomplexity.longboilife.tile.Tile;
+import com.spacecomplexity.longboilife.utils.Vector2Int;
 
 import java.io.FileNotFoundException;
 import java.util.Vector;
@@ -71,8 +73,61 @@ public class World {
         return world[0].length;
     }
 
-
     public int getWidth() {
         return world.length;
+    }
+
+    /**
+     * Check if a building can be placed at a specific location in the world.
+     *
+     * @param building the building we wish to place.
+     * @param x        the x coordinate of the building.
+     * @param y        the y coordinate of the building.
+     * @return whether this is a valid position to build the building.
+     */
+    public boolean canBuild(BuildingType building, int x, int y) {
+        Vector2Int buildingSize = building.getSize();
+
+        // If the building goes off the edge of the map it is not valid
+        if (x + buildingSize.x > getWidth() || y + buildingSize.y > getHeight()) {
+            return false;
+        }
+
+        // Check if every tile underneath this building is buildable
+        for (int xi = x; xi < x + buildingSize.x; xi++) {
+            for (int yi = y; yi < y + buildingSize.y; yi++) {
+                if (!getTile(xi, yi).isBuildable()) {
+                    // If a single tile is not then the building placement is invalid
+                    return false;
+                }
+            }
+        }
+
+        // If all tiles are then the building placement is valid
+        return true;
+    }
+
+    /**
+     * Build a building at a specific location in the world.
+     *
+     * @param building the building we wish to place.
+     * @param x        the x coordinate of the building.
+     * @param y        the y coordinate of the building.
+     */
+    public void build(BuildingType building, int x, int y) {
+        if (!canBuild(building, x, y)) {
+            throw new IllegalStateException("Building \"" + building.name() + "\" cannot build at (" + x + ", " + y + ")");
+        }
+
+        Vector2Int buildingSize = building.getSize();
+
+        // Set every tile underneath this building to un-buildable
+        for (int xi = x; xi < x + buildingSize.x; xi++) {
+            for (int yi = y; yi < y + buildingSize.y; yi++) {
+                getTile(xi, yi).setBuildable(false);
+            }
+        }
+
+        buildings.add(new Building(building, new Vector2Int(x, y)));
     }
 }
