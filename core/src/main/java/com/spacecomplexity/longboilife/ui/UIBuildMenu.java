@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.EventHandler;
+import com.spacecomplexity.longboilife.GameState;
 import com.spacecomplexity.longboilife.building.BuildingCategory;
 import com.spacecomplexity.longboilife.building.BuildingType;
 
@@ -71,12 +72,7 @@ public class UIBuildMenu extends UIElement {
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    try {
-                        EventHandler.getEventHandler().callEvent("start_building", building);
-                    } catch (NoSuchMethodException e) {
-                        throw new RuntimeException(e);
-                    }
-
+                    GameState.getState().selectedBuilding = building;
                     closeBuildMenu();
                 }
             });

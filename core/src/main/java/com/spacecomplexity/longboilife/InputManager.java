@@ -155,7 +155,7 @@ public class InputManager {
             else if (keycode == Keybindings.CLOSE.getKey()) {
                 try {
                     EventHandler.getEventHandler().callEvent("close_build_menu");
-                    EventHandler.getEventHandler().callEvent("remove_started_building");
+                    gameState.selectedBuilding = null;
                 } catch (NoSuchMethodException e) {
                     throw new RuntimeException(e);
                 }

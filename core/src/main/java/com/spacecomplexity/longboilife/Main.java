@@ -36,8 +36,6 @@ public class Main extends ApplicationAdapter {
 
     private final GameState gameState = GameState.getState();
 
-    private BuildingType buildingToBeBuilt;
-
     /**
      * Responsible for setting up the game initial state.
      * Called when the game is first run.
@@ -95,43 +93,33 @@ public class Main extends ApplicationAdapter {
      * Initialise events for the event handler.
      */
     private void initialiseEvents() {
-        // Set the building to be built when it is selected from the UI.
-        EventHandler.getEventHandler().createEvent("start_building", (params) -> {
-            buildingToBeBuilt = (BuildingType) params[0];
-            return null;
-        });
-
-        // Clear the building to be built when it is requested.
-        EventHandler.getEventHandler().createEvent("remove_started_building", (params) -> {
-            buildingToBeBuilt = null;
-            return null;
-        });
-
         // Build the selected building
         EventHandler.getEventHandler().createEvent("build", (params) -> {
+            BuildingType toBuild = gameState.selectedBuilding;
+
             // If there is no selected building do nothing
-            if (buildingToBeBuilt == null) {
+            if (toBuild == null) {
                 return null;
             }
 
             // If the user doesn't have enough money to buy the building then don't build
-            float cost = buildingToBeBuilt.getCost();
+            float cost = toBuild.getCost();
             if (gameState.money < cost) {
                 return null;
             }
 
             // If the building is in an invalid location then don't built
             Vector2Int mouse = GameUtils.getMouseOnGrid(world);
-            if (!world.canBuild(buildingToBeBuilt, mouse.x, mouse.y)) {
+            if (!world.canBuild(toBuild, mouse.x, mouse.y)) {
                 return null;
             }
 
             // Build the building at the mouse location and charge the player accordingly
-            world.build(buildingToBeBuilt, mouse.x, mouse.y);
+            world.build(toBuild, mouse.x, mouse.y);
             gameState.money -= cost;
 
             // Remove the selected building
-            buildingToBeBuilt = null;
+            gameState.selectedBuilding = null;
 
             return null;
         });
@@ -157,7 +145,7 @@ public class Main extends ApplicationAdapter {
         shapeRenderer.setProjectionMatrix(MainCamera.camera().getCombinedMatrix());
 
         // Draw the world on screen
-        RenderUtils.drawWorld(batch, shapeRenderer, world, buildingToBeBuilt, buildingToBeBuilt != null);
+        RenderUtils.drawWorld(batch, shapeRenderer, world, gameState.selectedBuilding, gameState.selectedBuilding != null);
 
         // Render the UI
         ui.render();

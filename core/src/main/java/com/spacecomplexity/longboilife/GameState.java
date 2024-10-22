@@ -1,5 +1,7 @@
 package com.spacecomplexity.longboilife;
 
+import com.spacecomplexity.longboilife.building.BuildingType;
+
 /**
  * Singleton class to contain variables relating to state/config of the game.
  */
@@ -40,6 +42,13 @@ public class GameState {
      * The current satisfaction score.
      */
     public float satisfactionScore = 0.5f;
+
+    /**
+     * The currently selected and about to be placed building.
+     * <p>
+     * If {@code null} then nothing is selected.
+     */
+    public BuildingType selectedBuilding = null;
 
     private GameState() {
     }
