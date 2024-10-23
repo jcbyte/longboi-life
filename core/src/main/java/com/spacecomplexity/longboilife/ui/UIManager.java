@@ -48,7 +48,7 @@ public class UIManager {
         skin = new Skin(Gdx.files.internal("ui/skin/uiskin.json"));
 
         // Load external font
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/Roboto-Medium.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/fonts/Roboto-Medium.ttf"));
         // Generate a bitmap font for size 12
         BitmapFont ourFont12 = generator.generateFont(new FreeTypeFontGenerator.FreeTypeFontParameter() {{
             size = 12;
@@ -120,5 +120,10 @@ public class UIManager {
     public void dispose() {
         stage.dispose();
         skin.dispose();
+
+        // Run dispose functions on UI elements
+        for (UIElement uiElement : uiElements) {
+            uiElement.dispose();
+        }
     }
 }

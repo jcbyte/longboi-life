@@ -1,10 +1,14 @@
 package com.spacecomplexity.longboilife.ui;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.EventHandler;
 import com.spacecomplexity.longboilife.GameState;
@@ -16,7 +20,12 @@ import com.spacecomplexity.longboilife.utils.UIUtils;
  * Class to represent the Bottom Menu UI.
  */
 public class UIBottomMenu extends UIElement {
-    private TextButton pauseButton;
+    private ImageButton pauseButton;
+    private Texture pauseTexture;
+    private TextureRegionDrawable pauseDrawable;
+    private Texture playTexture;
+    private TextureRegionDrawable playDrawable;
+
     private UIBuildMenu buildMenu;
 
     /**
@@ -50,8 +59,21 @@ public class UIBottomMenu extends UIElement {
         // Add the buttons onto the main table
         table.add(buildingButtonsTable).expandX().left();
 
+        // Load play/pause textures as drawables
+        float textureSize = 25;
+        pauseTexture = new Texture(Gdx.files.internal("ui/buttons/pause.png"));
+        pauseDrawable = new TextureRegionDrawable(pauseTexture);
+        pauseDrawable.setMinSize(textureSize, textureSize);
+        playTexture = new Texture(Gdx.files.internal("ui/buttons/play.png"));
+        playDrawable = new TextureRegionDrawable(playTexture);
+        playDrawable.setMinSize(textureSize, textureSize);
+
         // Initialise pause button
-        pauseButton = new TextButton("Pause", skin);
+        pauseButton = new ImageButton(skin);
+        pauseButton.setSize(textureSize, textureSize);
+        // Initially set background to ❚❚
+        pauseButton.getStyle().up = pauseDrawable;
+        pauseButton.getStyle().down = pauseDrawable;
         // Pause/resume the game when clicked
         pauseButton.addListener(new ClickListener() {
             @Override
@@ -83,8 +105,9 @@ public class UIBottomMenu extends UIElement {
             // Disable all UI but the pause button
             UIUtils.disableAllActors(parentTable.getStage());
             UIUtils.enableActor(pauseButton);
-            // Change text to resume // todo change to ❚❚
-            pauseButton.setText("Resume");
+            // Change background to ▶
+            pauseButton.getStyle().up = playDrawable;
+            pauseButton.getStyle().down = playDrawable;
 
             return null;
         });
@@ -95,8 +118,9 @@ public class UIBottomMenu extends UIElement {
             TimerManager.getTimerManager().getTimer().resumeTimer();
             // Re enable all UI
             UIUtils.enableAllActors(parentTable.getStage());
-            // Change text to resume // todo change to ▶
-            pauseButton.setText("Pause");
+            // Change background to ❚❚
+            pauseButton.getStyle().up = pauseDrawable;
+            pauseButton.getStyle().down = pauseDrawable;
 
             return null;
         });
@@ -117,5 +141,13 @@ public class UIBottomMenu extends UIElement {
     protected void placeTable() {
         table.setSize(uiViewport.getWorldWidth(), 60);
         table.setPosition(0, 0);
+    }
+
+    @Override
+    public void dispose() {
+        playTexture.dispose();
+        pauseTexture.dispose();
+
+        buildMenu.dispose();
     }
 }

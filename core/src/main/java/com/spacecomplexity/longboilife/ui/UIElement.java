@@ -23,7 +23,7 @@ public abstract class UIElement {
 
         // Initialise table container
         table = new Table(skin);
-        
+
         // Add table to root table
         parentTable.addActor(table);
     }
@@ -44,4 +44,10 @@ public abstract class UIElement {
      * Set the table position relative to the viewport.
      */
     abstract protected void placeTable();
+
+    /**
+     * Dispose of all loaded assets.
+     */
+    public void dispose() {
+    }
 }
