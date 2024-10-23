@@ -35,6 +35,11 @@ public class GameUtils {
      */
     public static void calculateScaling() {
         int screenHeight = Gdx.graphics.getHeight();
+
+        // If height is 0 then the window is minimised so don't bother calculating as this could cause unintended behaviour with scaling at 0
+        if (screenHeight == 0)
+            return;
+
         // Calculate scale factor based on screen height linearly using constant
         GameState.getState().scaleFactor = screenHeight / (float) Constants.SCALING_1_HEIGHT;
         // Calculate UI scale factor based on screen height using scaling map

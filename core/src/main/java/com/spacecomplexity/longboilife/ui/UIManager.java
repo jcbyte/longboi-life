@@ -80,14 +80,14 @@ public class UIManager {
      * @param height the new height in pixels.
      */
     public void resize(int width, int height) {
-        // Updates viewport to match new window size
-        viewport.update(width, height, true);
-
         // Update world size to match scaling of uiScaleFactor
         viewport.setWorldSize(
             (float) width / GameState.getState().uiScaleFactor,
             (float) height / GameState.getState().uiScaleFactor
         );
+        
+        // Updates viewport to match new window size
+        viewport.update(width, height, true);
 
         // Run resize functions on UI elements
         for (UIElement uiElement : uiElements) {

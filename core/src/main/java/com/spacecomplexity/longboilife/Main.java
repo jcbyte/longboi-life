@@ -83,8 +83,7 @@ public class Main extends ApplicationAdapter {
         inputManager = new InputManager(inputMultiplexer);
         // Set the Gdx input processor to handle all our input processes
         Gdx.input.setInputProcessor(inputMultiplexer);
-
-        // todo why do i need this here + when full screening, create the same issue
+        
         // Initialise the events performed from this script.
         initialiseEvents();
     }
