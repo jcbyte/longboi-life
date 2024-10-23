@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.spacecomplexity.longboilife.building.Building;
 import com.spacecomplexity.longboilife.building.BuildingType;
 import com.spacecomplexity.longboilife.tile.InvalidSaveMapException;
 import com.spacecomplexity.longboilife.tile.Tile;
@@ -95,7 +96,7 @@ public class Main extends ApplicationAdapter {
     private void initialiseEvents() {
         // Build the selected building
         EventHandler.getEventHandler().createEvent("build", (params) -> {
-            BuildingType toBuild = gameState.selectedBuilding;
+            BuildingType toBuild = gameState.placingBuilding;
 
             // If there is no selected building do nothing
             if (toBuild == null) {
@@ -119,24 +120,34 @@ public class Main extends ApplicationAdapter {
             gameState.money -= cost;
 
             // Remove the selected building
-            gameState.selectedBuilding = null;
+            gameState.placingBuilding = null;
 
             return null;
         });
 
         // Select a previously built building
         EventHandler.getEventHandler().createEvent("select_building", (params) -> {
+            // Get the tile at the mouse coordinates
             Vector2Int mouse = GameUtils.getMouseOnGrid(world);
             Tile tile = world.getTile(mouse.x, mouse.y);
+            // Get the building on the tile
+            Building selectedBuilding = tile.getBuildingRef();
 
-            if (tile.getBuildingRef() != null) {
-                try {
-                    EventHandler.getEventHandler().callEvent("open_selected_menu");
-                } catch (NoSuchMethodException e) {
-                    throw new RuntimeException(e);
-                }
+            // If there is no building here then do nothing
+            if (selectedBuilding == null) {
+                return null;
             }
 
+            // Set the selected building
+            gameState.selectedBuilding = selectedBuilding;
+
+            // Open the selected building menu
+            try {
+                EventHandler.getEventHandler().callEvent("open_selected_menu");
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
+            
             return null;
         });
     }
@@ -161,7 +172,7 @@ public class Main extends ApplicationAdapter {
         shapeRenderer.setProjectionMatrix(MainCamera.camera().getCombinedMatrix());
 
         // Draw the world on screen
-        RenderUtils.drawWorld(batch, shapeRenderer, world, gameState.selectedBuilding, gameState.paused, gameState.selectedBuilding != null);
+        RenderUtils.drawWorld(batch, shapeRenderer, world, gameState.placingBuilding, gameState.paused, gameState.placingBuilding != null);
 
         // Render the UI
         ui.render();

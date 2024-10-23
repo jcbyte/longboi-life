@@ -1,5 +1,6 @@
 package com.spacecomplexity.longboilife;
 
+import com.spacecomplexity.longboilife.building.Building;
 import com.spacecomplexity.longboilife.building.BuildingType;
 
 /**
@@ -49,11 +50,19 @@ public class GameState {
     public float satisfactionScore = 0.5f;
 
     /**
-     * The currently selected and about to be placed building.
+     * The building selected to be placed.
      * <p>
      * If {@code null} then nothing is selected.
      */
-    public BuildingType selectedBuilding = null;
+    public BuildingType placingBuilding = null;
+
+    /**
+     * The currently selected building on the map.
+     * <p>
+     * If {@code null} then nothing is selected.
+     */
+    // todo highlight this in rendering
+    public Building selectedBuilding = null;
 
     /**
      * If the game is currently paused.

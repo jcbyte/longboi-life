@@ -98,7 +98,7 @@ public class InputManager {
                 // If main button clicked
                 case 0:
                     // If a building is selected then try to build this
-                    if (GameState.getState().selectedBuilding != null) {
+                    if (GameState.getState().placingBuilding != null) {
                         try {
                             EventHandler.getEventHandler().callEvent("build");
                         } catch (NoSuchMethodException e) {
@@ -191,6 +191,7 @@ public class InputManager {
             else if (keycode == Keybindings.CLOSE.getKey()) {
                 try {
                     EventHandler.getEventHandler().callEvent("close_build_menu");
+                    gameState.placingBuilding = null;
                     EventHandler.getEventHandler().callEvent("close_selected_menu");
                     gameState.selectedBuilding = null;
                 } catch (NoSuchMethodException e) {
