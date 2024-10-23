@@ -87,7 +87,7 @@ public class UIBottomMenu extends UIElement {
             }
         });
         // Place pause button on the table
-        table.add(pauseButton).right().padRight(2);
+        table.add(pauseButton).right().padRight(10);
 
         // Style and place the table
         table.setBackground(skin.getDrawable("panel1"));
