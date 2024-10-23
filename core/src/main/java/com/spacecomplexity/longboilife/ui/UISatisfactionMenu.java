@@ -51,6 +51,6 @@ public class UISatisfactionMenu extends UIElement {
 
     @Override
     protected void placeTable() {
-        table.setPosition(uiViewport.getScreenWidth() - table.getWidth(), uiViewport.getScreenHeight() - table.getHeight());
+        table.setPosition(uiViewport.getWorldWidth() - table.getWidth(), uiViewport.getWorldHeight() - table.getHeight());
     }
 }

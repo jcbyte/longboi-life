@@ -44,6 +44,6 @@ public class UIMoneyMenu extends UIElement {
 
     @Override
     protected void placeTable() {
-        table.setPosition(uiViewport.getScreenWidth() - table.getWidth(), uiViewport.getScreenHeight() - table.getHeight() - 55);
+        table.setPosition(uiViewport.getWorldWidth() - table.getWidth(), uiViewport.getWorldHeight() - table.getHeight() - 55);
     }
 }

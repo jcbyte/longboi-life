@@ -23,7 +23,7 @@ public abstract class UIElement {
 
         // Initialise table container
         table = new Table(skin);
-
+        
         // Add table to root table
         parentTable.addActor(table);
     }

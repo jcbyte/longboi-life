@@ -14,6 +14,11 @@ public class GameState {
     public float scaleFactor = 1;
 
     /**
+     * The current scale factor of the UI.
+     */
+    public float uiScaleFactor = 1;
+
+    /**
      * Camera speed whilst controlling with keyboard.
      */
     public float cameraSpeed = 1400;

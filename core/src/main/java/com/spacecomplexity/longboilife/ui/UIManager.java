@@ -5,8 +5,10 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.spacecomplexity.longboilife.GameState;
 
 /**
  * Class to manage the UI in the game.
@@ -27,7 +29,7 @@ public class UIManager {
      */
     public UIManager(InputMultiplexer inputMultiplexer) {
         // Initialise viewport for rescaling
-        viewport = new ScreenViewport();
+        viewport = new ScalingViewport(Scaling.fit, 640, 480);
 
         // Initialise stage
         stage = new Stage(viewport);
@@ -56,8 +58,6 @@ public class UIManager {
      * Apply and draw UI onto the screen.
      */
     public void render() {
-        // todo rescaling UI
-
         // Render on each of the UI elements
         for (UIElement uiElement : uiElements) {
             uiElement.render();
@@ -69,6 +69,9 @@ public class UIManager {
         stage.draw();
     }
 
+    private float customNonLinearScale(float scaleFactor) {
+        return (float) Math.pow(scaleFactor, 5);
+    }
 
     /**
      * Handles resizing events, to ensure the UI is scaled correctly.
@@ -79,6 +82,12 @@ public class UIManager {
     public void resize(int width, int height) {
         // Updates viewport to match new window size
         viewport.update(width, height, true);
+
+        // Update world size to match scaling of uiScaleFactor
+        viewport.setWorldSize(
+            (float) width / GameState.getState().uiScaleFactor,
+            (float) height / GameState.getState().uiScaleFactor
+        );
 
         // Run resize functions on UI elements
         for (UIElement uiElement : uiElements) {
