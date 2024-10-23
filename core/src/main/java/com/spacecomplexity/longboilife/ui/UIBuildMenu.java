@@ -66,7 +66,7 @@ public class UIBuildMenu extends UIElement {
         for (BuildingType building : buildings) {
             // Get building texture and make it fill the bar
             TextureRegionDrawable texture = new TextureRegionDrawable(building.getTexture());
-            float textureSize = table.getHeight() - 60;
+            float textureSize = table.getHeight() - 75;
             texture.setMinSize(textureSize, textureSize);
 
             // Initialise building button
@@ -83,6 +83,7 @@ public class UIBuildMenu extends UIElement {
             // Initialise building labels
             Label titleLabel = new Label(building.getDisplayName(), skin);
             Label costLabel = new Label(NumberFormat.getCurrencyInstance(Locale.UK).format(building.getCost()), skin);
+            Label sizeLabel = new Label(String.format("%dx%d", building.getSize().x, building.getSize().y), skin);
 
             // create container for UI elements relating to this building
             Table buildingTable = new Table();
@@ -92,6 +93,8 @@ public class UIBuildMenu extends UIElement {
             buildingTable.add(titleLabel).padTop(2);
             buildingTable.row();
             buildingTable.add(costLabel).padTop(2);
+            buildingTable.row();
+            buildingTable.add(sizeLabel).padTop(2);
 
             // Add the container to the building table
             buildingButtonsTable.add(buildingTable).expandX().expandY().fillY().padLeft(2);
