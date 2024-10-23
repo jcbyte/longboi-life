@@ -21,12 +21,17 @@ public class RenderUtils {
      * @param world            the {@link World} containing map and buildings to draw.
      * @param displayGridlines whether gridlines/tile borders should be drawn.
      */
-    public static void drawWorld(SpriteBatch batch, ShapeRenderer shapeRenderer, World world, BuildingType ghostBuilding, boolean displayGridlines) {
+    public static void drawWorld(SpriteBatch batch, ShapeRenderer shapeRenderer, World world, BuildingType ghostBuilding, boolean darkened, boolean displayGridlines) {
         GameState gameState = GameState.getState();
 
         float cellSize = Constants.TILE_SIZE * gameState.scaleFactor;
 
         batch.begin();
+
+        // If the map should be darkened then add a tint here
+        if (darkened)
+            batch.setColor(Color.GRAY);
+
         // For every tile
         for (int x = 0; x < world.getWidth(); x++) {
             for (int y = 0; y < world.getHeight(); y++) {
@@ -55,6 +60,9 @@ public class RenderUtils {
                 buildingSize.y * cellSize
             );
         }
+
+        // Remove the darkened tint if there was one applied
+        batch.setColor(Color.WHITE);
 
         // If there is a ghost building to draw, draw in on top of the tiles
         if (ghostBuilding != null) {
