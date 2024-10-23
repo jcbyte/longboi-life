@@ -151,6 +151,21 @@ public class Main extends ApplicationAdapter {
 
             return null;
         });
+
+        // Cancel all events
+        EventHandler.getEventHandler().createEvent("cancel_all", (params) -> {
+            // Close menus and deselect any buildings
+            try {
+                EventHandler.getEventHandler().callEvent("close_build_menu");
+                gameState.placingBuilding = null;
+                EventHandler.getEventHandler().callEvent("close_selected_menu");
+                gameState.selectedBuilding = null;
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
+
+            return null;
+        });
     }
 
     /**

@@ -193,12 +193,9 @@ public class InputManager {
             }
 
             // If the close key is pressed, send events to cancel actions
-            else if (keycode == Keybindings.CLOSE.getKey()) {
+            else if (keycode == Keybindings.CANCEL.getKey()) {
                 try {
-                    EventHandler.getEventHandler().callEvent("close_build_menu");
-                    gameState.placingBuilding = null;
-                    EventHandler.getEventHandler().callEvent("close_selected_menu");
-                    gameState.selectedBuilding = null;
+                    EventHandler.getEventHandler().callEvent("cancel_all");
                 } catch (NoSuchMethodException e) {
                     throw new RuntimeException(e);
                 }

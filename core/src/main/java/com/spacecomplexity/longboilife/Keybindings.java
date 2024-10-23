@@ -13,7 +13,7 @@ public enum Keybindings {
     CAMERA_ZOOM_IN(Input.Keys.Q),
     CAMERA_ZOOM_OUT(Input.Keys.E),
     FULLSCREEN(Input.Keys.F11),
-    CLOSE(Input.Keys.ESCAPE),
+    CANCEL(Input.Keys.ESCAPE),
     PAUSE(Input.Keys.SPACE),
     ;
 
