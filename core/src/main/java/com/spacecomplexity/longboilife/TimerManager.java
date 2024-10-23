@@ -12,6 +12,18 @@ public class TimerManager {
 
     private TimerManager() {
         timer = new Timer();
+
+        // Assign pause and play events here to pause and unpause the timer as well as setting state
+        EventHandler.getEventHandler().createEvent("pause_game", (params) -> {
+            timer.pauseTimer();
+            GameState.getState().paused = true;
+            return null;
+        });
+        EventHandler.getEventHandler().createEvent("resume_game", (params) -> {
+            timer.resumeTimer();
+            GameState.getState().paused = false;
+            return null;
+        });
     }
 
     /**

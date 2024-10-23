@@ -83,7 +83,7 @@ public class Main extends ApplicationAdapter {
         inputManager = new InputManager(inputMultiplexer);
         // Set the Gdx input processor to handle all our input processes
         Gdx.input.setInputProcessor(inputMultiplexer);
-        
+
         // Initialise the events performed from this script.
         initialiseEvents();
     }
@@ -144,7 +144,7 @@ public class Main extends ApplicationAdapter {
         shapeRenderer.setProjectionMatrix(MainCamera.camera().getCombinedMatrix());
 
         // Draw the world on screen
-        RenderUtils.drawWorld(batch, shapeRenderer, world, gameState.selectedBuilding, gameState.selectedBuilding != null);
+        RenderUtils.drawWorld(batch, shapeRenderer, world, gameState.selectedBuilding, gameState.paused, gameState.selectedBuilding != null);
 
         // Render the UI
         ui.render();

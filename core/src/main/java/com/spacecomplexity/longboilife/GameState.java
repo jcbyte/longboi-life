@@ -55,6 +55,11 @@ public class GameState {
      */
     public BuildingType selectedBuilding = null;
 
+    /**
+     * If the game is currently paused.
+     */
+    public boolean paused = false;
+
     private GameState() {
     }
 

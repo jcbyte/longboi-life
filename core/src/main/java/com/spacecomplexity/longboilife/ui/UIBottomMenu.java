@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.spacecomplexity.longboilife.EventHandler;
 import com.spacecomplexity.longboilife.TimerManager;
 import com.spacecomplexity.longboilife.building.BuildingCategory;
 
@@ -59,13 +60,19 @@ public class UIBottomMenu extends UIElement {
                 if (timerManager.getTimer().isPaused()) {
                     // If currently paused then resume playing
                     pauseButton.setText("Pause");
-                    timerManager.getTimer().resumeTimer();
-                    // todo actually pause game
-                    // todo pause overlay
+                    try {
+                        EventHandler.getEventHandler().callEvent("resume_game");
+                    } catch (NoSuchMethodException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else {
                     // If currently playing then pause
                     pauseButton.setText("Play");
-                    timerManager.getTimer().pauseTimer();
+                    try {
+                        EventHandler.getEventHandler().callEvent("pause_game");
+                    } catch (NoSuchMethodException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
