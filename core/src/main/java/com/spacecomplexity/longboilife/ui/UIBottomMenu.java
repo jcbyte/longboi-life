@@ -102,6 +102,12 @@ public class UIBottomMenu extends UIElement {
             // Close menus and deselect any buildings
             buildMenu.closeMenu();
             GameState.getState().placingBuilding = null;
+            try {
+                EventHandler.getEventHandler().callEvent("close_selected_menu");
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
+            GameState.getState().selectedBuilding = null;
             // Disable all UI but the pause button
             UIUtils.disableAllActors(parentTable.getStage());
             UIUtils.enableActor(pauseButton);

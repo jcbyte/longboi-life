@@ -97,6 +97,11 @@ public class InputManager {
             switch (button) {
                 // If main button clicked
                 case 0:
+                    // If game is paused don't allow any actions
+                    if (gameState.paused) {
+                        return true;
+                    }
+
                     // If a building is selected then try to build this
                     if (GameState.getState().placingBuilding != null) {
                         try {
