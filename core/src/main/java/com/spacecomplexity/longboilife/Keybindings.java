@@ -14,7 +14,8 @@ public enum Keybindings {
     CAMERA_ZOOM_OUT(Input.Keys.E),
     FULLSCREEN(Input.Keys.F11),
     CLOSE(Input.Keys.ESCAPE),
-    PAUSE(Input.Keys.SPACE);
+    PAUSE(Input.Keys.SPACE),
+    ;
 
     private final int key;
 

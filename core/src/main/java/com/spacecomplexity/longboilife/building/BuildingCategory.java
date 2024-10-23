@@ -7,7 +7,8 @@ public enum BuildingCategory {
     ACCOMMODATION("Accommodation"),
     EDUCATIONAL("Educational"),
     FOOD("Food"),
-    RECREATIONAL("Recreational");
+    RECREATIONAL("Recreational"),
+    ;
 
     private final String displayName;
 

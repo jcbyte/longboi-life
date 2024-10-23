@@ -7,7 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
  */
 public enum TileType {
     GRASS(new Texture("tiles/grass.png"), true),
-    WATER(new Texture("tiles/water.png"), false);
+    WATER(new Texture("tiles/water.png"), false),
+    ;
 
     private final Texture texture;
     private final boolean isNaturallyBuildable;
