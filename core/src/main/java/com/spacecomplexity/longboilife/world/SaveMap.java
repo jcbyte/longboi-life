@@ -47,19 +47,22 @@ public class SaveMap {
         Tile[][] world = new Tile[width][height];
 
         // Go though each element in the object in the specified order
-        for (int y = height - 1; y >= 0; y--) {
+        for (int y = 0; y < height; y++) {
             // throw an error if any line mismatches the size of the width
             if (map[y].length != width) {
                 throw new InvalidSaveMapException("World width mismatched at y: " + y);
             }
             for (int x = 0; x < width; x++) {
+                // Retrieve the tile name
+                // Flipping the y-axis as LibGdx draws from the bottom right, instead of top left how our json is structured
+                String tileName = map[height - y - 1][x];
                 try {
                     // Determine the type of tile based on value in the JSON map
-                    TileType tileType = TileType.valueOf(map[y][x]);
+                    TileType tileType = TileType.valueOf(tileName);
                     world[x][y] = new Tile(tileType);
                 } catch (IllegalArgumentException e) {
                     // If the tile is invalid throw an error
-                    throw new InvalidSaveMapException("Invalid tile type \"" + map[y][x] + "\" at (" + x + ", " + y + ")");
+                    throw new InvalidSaveMapException("Invalid tile type \"" + tileName + "\" at (" + x + ", " + y + ")");
                 }
             }
         }
