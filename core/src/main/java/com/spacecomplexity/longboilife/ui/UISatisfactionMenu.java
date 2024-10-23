@@ -37,15 +37,16 @@ public class UISatisfactionMenu extends UIElement {
         // Place elements onto table
         table.add(label).align(Align.left);
         table.row();
-        table.add(satisfactionBar);
+        table.add(satisfactionBar).padTop(2);
 
         // Style and place the table
         table.setBackground(skin.getDrawable("panel1"));
-        table.setSize(175, 60);
+        table.setSize(185, 60);
         placeTable();
     }
 
     public void render() {
+        label.setText(String.format("Satisfaction Score: %d%%", (int) (GameState.getState().satisfactionScore * 100)));
         satisfactionBar.setValue(GameState.getState().satisfactionScore);
     }
 
