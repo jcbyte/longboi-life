@@ -151,11 +151,21 @@ public class InputManager {
                     Gdx.graphics.setWindowedMode(prevAppWidth, prevAppHeight);
                 }
             }
+
             // If the close key is pressed, send events to cancel actions
             else if (keycode == Keybindings.CLOSE.getKey()) {
                 try {
                     EventHandler.getEventHandler().callEvent("close_build_menu");
                     gameState.selectedBuilding = null;
+                } catch (NoSuchMethodException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            // If the pause key is pressed, pause/resume the game
+            else if (keycode == Keybindings.PAUSE.getKey()) {
+                try {
+                    EventHandler.getEventHandler().callEvent(GameState.getState().paused ? "resume_game" : "pause_game");
                 } catch (NoSuchMethodException e) {
                     throw new RuntimeException(e);
                 }
