@@ -15,26 +15,18 @@ import com.spacecomplexity.longboilife.world.World;
  */
 public class RenderUtils {
     /**
-     * Draw the {@link World} onto the {@link SpriteBatch} given.
+     * Draw the world's base tiles.
      *
-     * @param batch            the {@link SpriteBatch} to draw sprites to.
-     * @param shapeRenderer    the {@link ShapeRenderer} to draw shapes to.
-     * @param world            the {@link World} containing map and buildings to draw.
-     * @param ghostBuilding    a building to draw at the mouse location if it would be valid.
-     * @param outlined         a placed building which will be outlined.
-     * @param darkened         if the map is darkened.
-     * @param displayGridlines whether gridlines/tile borders should be drawn.
+     * @param batch the {@link SpriteBatch} to draw sprites to.
+     * @param world the {@link World} containing map to draw.
+     * @param tint  the tint to apply to all the tiles.
      */
-    public static void drawWorld(SpriteBatch batch, ShapeRenderer shapeRenderer, World world, BuildingType ghostBuilding, Building outlined, boolean darkened, boolean displayGridlines) {
-        GameState gameState = GameState.getState();
+    public static void drawWorld(SpriteBatch batch, World world, Color tint) {
+        float cellSize = getCellSize();
 
-        float cellSize = Constants.TILE_SIZE * gameState.scaleFactor;
-
+        // Begin the batch with the specified tint
         batch.begin();
-
-        // If the map should be darkened then add a tint here
-        if (darkened)
-            batch.setColor(Color.GRAY);
+        batch.setColor(tint);
 
         // For every tile
         for (int x = 0; x < world.getWidth(); x++) {
@@ -49,6 +41,26 @@ public class RenderUtils {
                 );
             }
         }
+
+        // Remove any tints applied
+        batch.setColor(Color.WHITE);
+
+        batch.end();
+    }
+
+    /**
+     * Draw the world's buildings.
+     *
+     * @param batch the {@link SpriteBatch} to draw sprites to.
+     * @param world the {@link World} containing buildings to draw.
+     * @param tint  the tint to apply to all the buildings.
+     */
+    public static void drawBuildings(SpriteBatch batch, World world, Color tint) {
+        float cellSize = getCellSize();
+
+        // Begin the batch with the specified tint
+        batch.begin();
+        batch.setColor(tint);
 
         // For every building
         for (Building building : world.buildings) {
@@ -65,76 +77,127 @@ public class RenderUtils {
             );
         }
 
-        // Remove the darkened tint if there was one applied
+        // Remove any tints applied
         batch.setColor(Color.WHITE);
 
-        // If there is a ghost building to draw, draw in on top of the tiles
-        if (ghostBuilding != null) {
-            Vector2Int mouse = GameUtils.getMouseOnGrid(world);
+        batch.end();
+    }
 
-            // Check if this would be a valid position to build
+    /**
+     * Draw gridlines between every tile in the world.
+     *
+     * @param shapeRenderer the {@link ShapeRenderer} to draw lines to.
+     * @param world         the {@link World} for size.
+     */
+    public static void drawWorldGridlines(ShapeRenderer shapeRenderer, World world, Color colour) {
+        float cellSize = getCellSize();
 
-            // Make building slightly transparent
-            // if an invalid position then give the building a red hue
-            if (world.canBuild(ghostBuilding, mouse.x, mouse.y)) {
-                batch.setColor(new Color(1, 1, 1, 0.75f));
-            } else {
-                batch.setColor(new Color(1, 0, 0, 0.75f));
-            }
+        // Begin the shape render with specified colour
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(colour);
 
-            // Draw the ghost building
-            batch.draw(
-                ghostBuilding.getTexture(),
-                mouse.x * cellSize,
-                mouse.y * cellSize,
-                ghostBuilding.getSize().x * cellSize,
-                ghostBuilding.getSize().y * cellSize
-            );
-
-            // Remove tint
-            batch.setColor(Color.WHITE);
+        // Draw all vertical lines
+        float worldTop = world.getHeight() * cellSize;
+        for (int x = 0; x < world.getWidth(); x++) {
+            float xEdge = x * cellSize;
+            shapeRenderer.line(xEdge, 0, xEdge, worldTop);
         }
+
+        // Draw all horizontal lines
+        float worldRight = world.getWidth() * cellSize;
+        for (int y = 0; y < world.getHeight(); y++) {
+            float yEdge = y * cellSize;
+            shapeRenderer.line(0, yEdge, worldRight, yEdge);
+        }
+
+        shapeRenderer.end();
+    }
+
+
+    /**
+     * Draw the world's buildings.
+     *
+     * @param batch the {@link SpriteBatch} to draw sprites to.
+     * @param world the {@link World} containing buildings to draw.
+     * @param tint  the tint to apply to all the buildings.
+     */
+    /**
+     * Draw a building at the mouse coordinates.
+     *
+     * @param batch     the {@link SpriteBatch} to draw sprites to.
+     * @param world     the {@link World} containing map to check validity.
+     * @param building  the building type to draw.
+     * @param tint      the tint to apply to the building.
+     * @param issueTint the tint to apply to the building if it is invalid.
+     */
+    public static void drawPlacingBuilding(SpriteBatch batch, World world, BuildingType building, Color tint, Color issueTint) {
+        float cellSize = getCellSize();
+
+        Vector2Int mouse = GameUtils.getMouseOnGrid(world);
+
+        // Check if this would be a valid position to build
+        boolean validPosition = world.canBuild(building, mouse.x, mouse.y);
+
+        // Begin the batch with the specified tint based on the building being valid.
+        batch.begin();
+        if (validPosition) {
+            batch.setColor(tint);
+        } else {
+            batch.setColor(issueTint);
+        }
+
+        // Draw the building
+        batch.draw(
+            building.getTexture(),
+            mouse.x * cellSize,
+            mouse.y * cellSize,
+            building.getSize().x * cellSize,
+            building.getSize().y * cellSize
+        );
+
+        // Remove any tints applied
+        batch.setColor(Color.WHITE);
 
         batch.end();
+    }
 
-        // If we are to display gird lines do it now
-        if (displayGridlines) {
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.setColor(Color.BLACK);
+    /**
+     * Outline a building in the world.
+     *
+     * @param shapeRenderer the {@link ShapeRenderer} to draw lines to.
+     * @param building      the building to outline.
+     * @param colour        the colour of the border.
+     * @param thickness     the thickness of the border.
+     */
+    public static void outlineBuilding(ShapeRenderer shapeRenderer, Building building, Color colour, int thickness) {
+        float cellSize = getCellSize();
 
-            // Draw all vertical lines
-            float worldTop = world.getHeight() * cellSize;
-            for (int x = 0; x < world.getWidth(); x++) {
-                float xEdge = x * cellSize;
-                shapeRenderer.line(xEdge, 0, xEdge, worldTop);
-            }
+        // Set line thickness directly to GL as LibGdx does not have a way of doing this.
+        Gdx.gl.glLineWidth(thickness);
+        // Begin the shape render with specified colour
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(colour);
 
-            // Draw all horizontal lines
-            float worldRight = world.getWidth() * cellSize;
-            for (int y = 0; y < world.getHeight(); y++) {
-                float yEdge = y * cellSize;
-                shapeRenderer.line(0, yEdge, worldRight, yEdge);
-            }
+        // Draw a box around the building
+        shapeRenderer.rect(
+            building.getPosition().x * cellSize,
+            building.getPosition().y * cellSize,
+            building.getType().getSize().x * cellSize,
+            building.getType().getSize().y * cellSize
+        );
 
-            shapeRenderer.end();
-        }
+        shapeRenderer.end();
+        // Reset line thickness
+        Gdx.gl.glLineWidth(1);
+    }
 
-        // If a building should be outlined
-        if (outlined != null) {
-            Gdx.gl.glLineWidth(2);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.setColor(Color.RED);
-            
-            // Draw a box around the building
-            shapeRenderer.rect(
-                outlined.getPosition().x * cellSize,
-                outlined.getPosition().y * cellSize,
-                outlined.getType().getSize().x * cellSize,
-                outlined.getType().getSize().y * cellSize
-            );
-
-            shapeRenderer.end();
-            Gdx.gl.glLineWidth(1);
-        }
+    /**
+     * Gets the cell size based on tile size and current scaling factor.
+     *
+     * @return the cell size (in px).
+     */
+    private static float getCellSize() {
+        GameState gameState = GameState.getState();
+        return Constants.TILE_SIZE * gameState.scaleFactor;
     }
 }

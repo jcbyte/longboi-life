@@ -61,7 +61,6 @@ public class GameState {
      * <p>
      * If {@code null} then nothing is selected.
      */
-    // todo highlight this in rendering
     public Building selectedBuilding = null;
 
     /**

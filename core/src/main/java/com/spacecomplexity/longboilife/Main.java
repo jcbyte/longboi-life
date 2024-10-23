@@ -3,6 +3,7 @@ package com.spacecomplexity.longboilife;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
@@ -171,15 +172,25 @@ public class Main extends ApplicationAdapter {
         batch.setProjectionMatrix(MainCamera.camera().getCombinedMatrix());
         shapeRenderer.setProjectionMatrix(MainCamera.camera().getCombinedMatrix());
 
-        // Draw the world on screen
-        RenderUtils.drawWorld(
-            batch,
-            shapeRenderer,
-            world,
-            gameState.placingBuilding,
-            gameState.selectedBuilding,
-            gameState.paused,
-            gameState.placingBuilding != null || gameState.selectedBuilding != null);
+        // Darkened the world when paused
+        Color worldTint = gameState.paused ? Color.LIGHT_GRAY : Color.WHITE;
+
+        // Draw the world tiles
+        RenderUtils.drawWorld(batch, world, worldTint);
+        // Draw the worlds buildings
+        RenderUtils.drawBuildings(batch, world, worldTint);
+        // If there is a building to be placed draw it as a ghost building
+        if (gameState.placingBuilding != null) {
+            RenderUtils.drawPlacingBuilding(batch, world, gameState.placingBuilding, new Color(1f, 1f, 1f, 0.75f), new Color(1f, 0f, 0f, 0.75f));
+        }
+        // If we are placing a building or there is a building selected then draw gridlines
+        if (gameState.placingBuilding != null || gameState.selectedBuilding != null) {
+            RenderUtils.drawWorldGridlines(shapeRenderer, world, Color.BLACK);
+        }
+        // If there is a building selected then outline it
+        if (gameState.selectedBuilding != null) {
+            RenderUtils.outlineBuilding(shapeRenderer, gameState.selectedBuilding, Color.RED, 2);
+        }
 
         // Render the UI
         ui.render();
