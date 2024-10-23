@@ -147,7 +147,7 @@ public class Main extends ApplicationAdapter {
             } catch (NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
-            
+
             return null;
         });
     }
@@ -172,7 +172,14 @@ public class Main extends ApplicationAdapter {
         shapeRenderer.setProjectionMatrix(MainCamera.camera().getCombinedMatrix());
 
         // Draw the world on screen
-        RenderUtils.drawWorld(batch, shapeRenderer, world, gameState.placingBuilding, gameState.paused, gameState.placingBuilding != null);
+        RenderUtils.drawWorld(
+            batch,
+            shapeRenderer,
+            world,
+            gameState.placingBuilding,
+            gameState.selectedBuilding,
+            gameState.paused,
+            gameState.placingBuilding != null || gameState.selectedBuilding != null);
 
         // Render the UI
         ui.render();
