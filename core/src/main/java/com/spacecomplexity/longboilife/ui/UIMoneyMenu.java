@@ -42,7 +42,6 @@ public class UIMoneyMenu extends UIElement {
     }
 
     public void render() {
-        // todo display £
         label.setText(NumberFormat.getCurrencyInstance(Locale.UK).format(GameState.getState().money));
     }
 

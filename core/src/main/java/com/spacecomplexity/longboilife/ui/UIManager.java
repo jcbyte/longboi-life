@@ -2,9 +2,13 @@ package com.spacecomplexity.longboilife.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -43,6 +47,22 @@ public class UIManager {
         // Load external UI skin
         skin = new Skin(Gdx.files.internal("ui/skin/uiskin.json"));
 
+        // Load external font
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/Roboto-Medium.ttf"));
+        // Generate a bitmap font for size 12
+        BitmapFont ourFont12 = generator.generateFont(new FreeTypeFontGenerator.FreeTypeFontParameter() {{
+            size = 12;
+        }});
+        // Generate a bitmap font for size 14
+        BitmapFont ourFont16 = generator.generateFont(new FreeTypeFontGenerator.FreeTypeFontParameter() {{
+            size = 14;
+        }});
+        generator.dispose();
+
+        // Set skins font to our font
+        skin.get("default", Label.LabelStyle.class).font = ourFont12;
+        skin.get("default", TextButton.TextButtonStyle.class).font = ourFont16;
+
         // Create our UI elements
         uiElements = new UIElement[]{
             new UIClockMenu(viewport, table, skin),
@@ -51,8 +71,6 @@ public class UIManager {
             new UIBottomMenu(viewport, table, skin),
             new UIBuildingSelectedMenu(viewport, table, skin),
         };
-
-//        table.debugAll();
     }
 
     /**
