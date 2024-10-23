@@ -108,7 +108,8 @@ public class UIBottomMenu extends UIElement {
 
     @Override
     public void resize() {
-        placeTable();
+        super.resize();
+        
         buildMenu.resize();
     }
 
