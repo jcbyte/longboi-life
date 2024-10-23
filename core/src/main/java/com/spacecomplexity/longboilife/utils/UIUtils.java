@@ -1,5 +1,6 @@
 package com.spacecomplexity.longboilife.utils;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -82,6 +83,8 @@ public class UIUtils {
      */
     static private void actorEnable(Actor actor) {
         actor.setTouchable(Touchable.enabled);
+        // Remove tint
+        actor.setColor(Color.WHITE);
     }
 
     /**
@@ -90,8 +93,8 @@ public class UIUtils {
      * @param actor the actor to disable.
      */
     static private void actorDisable(Actor actor) {
-        // todo make it a bit darker when it is disabled?
-
         actor.setTouchable(Touchable.disabled);
+        // Add tint to show it is disabled
+        actor.setColor(Color.LIGHT_GRAY);
     }
 }
