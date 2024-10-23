@@ -19,6 +19,9 @@ public class RenderUtils {
      * @param batch            the {@link SpriteBatch} to draw sprites to.
      * @param shapeRenderer    the {@link ShapeRenderer} to draw shapes to.
      * @param world            the {@link World} containing map and buildings to draw.
+     * @param ghostBuilding    a building to draw at the mouse location if it would be valid.
+     * @param outlined         a placed building which will be outlined.
+     * @param darkened         if the map is darkened.
      * @param displayGridlines whether gridlines/tile borders should be drawn.
      */
     public static void drawWorld(SpriteBatch batch, ShapeRenderer shapeRenderer, World world, BuildingType ghostBuilding, boolean darkened, boolean displayGridlines) {
@@ -69,11 +72,13 @@ public class RenderUtils {
             Vector2Int mouse = GameUtils.getMouseOnGrid(world);
 
             // Check if this would be a valid position to build
-            boolean invalidPlacement = !world.canBuild(ghostBuilding, mouse.x, mouse.y);
 
-            // If an invalid position then give the building a red hue
-            if (invalidPlacement) {
-                batch.setColor(Color.RED);
+            // Make building slightly transparent
+            // if an invalid position then give the building a red hue
+            if (world.canBuild(ghostBuilding, mouse.x, mouse.y)) {
+                batch.setColor(new Color(1, 1, 1, 0.75f));
+            } else {
+                batch.setColor(new Color(1, 0, 0, 0.75f));
             }
 
             // Draw the ghost building
@@ -85,10 +90,8 @@ public class RenderUtils {
                 ghostBuilding.getSize().y * cellSize
             );
 
-            // If we previously set a red hue, return it to white
-            if (invalidPlacement) {
-                batch.setColor(Color.WHITE);
-            }
+            // Remove tint
+            batch.setColor(Color.WHITE);
         }
 
         batch.end();
