@@ -1,5 +1,7 @@
 package com.spacecomplexity.longboilife;
 
+import java.util.TreeMap;
+
 /**
  * Class contain the constants used throughout the game.
  */
@@ -13,6 +15,16 @@ public class Constants {
      * The height of the window at scaling level 1.
      */
     public static final int SCALING_1_HEIGHT = 1080;
+
+    /**
+     * Map of the UI scaling at the specified window height.
+     */
+    public static final TreeMap<Integer, Float> UI_SCALING_MAP = new TreeMap<>() {{
+        put(0, 1f);
+        put(720, 1.5f);
+        put(1440, 2f);
+        put(2160, 2.5f);
+    }};
 
     /**
      * Minimum camera zoom level.

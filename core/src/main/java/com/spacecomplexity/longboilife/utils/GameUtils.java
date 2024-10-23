@@ -29,4 +29,15 @@ public class GameUtils {
             Math.max(0, Math.min((int) (mouse.y / cellSize), world.getHeight() - 1))
         );
     }
+
+    /**
+     * Calculate and set scaling factors using the window size.
+     */
+    public static void calculateScaling() {
+        int screenHeight = Gdx.graphics.getHeight();
+        // Calculate scale factor based on screen height linearly using constant
+        GameState.getState().scaleFactor = screenHeight / (float) Constants.SCALING_1_HEIGHT;
+        // Calculate UI scale factor based on screen height using scaling map
+        GameState.getState().uiScaleFactor = Constants.UI_SCALING_MAP.floorEntry(screenHeight).getValue();
+    }
 }

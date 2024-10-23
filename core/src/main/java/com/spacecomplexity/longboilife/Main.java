@@ -66,12 +66,11 @@ public class Main extends ApplicationAdapter {
         // Initialise viewport for rescaling
         viewport = new ScreenViewport(MainCamera.camera().getCamera());
 
+        // Calculates the scaling factor based initial screen height
+        GameUtils.calculateScaling();
+
         // Initialise UI elements with UIManager
         ui = new UIManager(inputMultiplexer);
-
-        // Calculates the scale factor based initial screen height
-        int screenHeight = Gdx.graphics.getHeight();
-        gameState.scaleFactor = screenHeight / (float) Constants.SCALING_1_HEIGHT;
 
         // Position camera in the center of the world map
         MainCamera.camera().position.set(new Vector3(
@@ -85,6 +84,7 @@ public class Main extends ApplicationAdapter {
         // Set the Gdx input processor to handle all our input processes
         Gdx.input.setInputProcessor(inputMultiplexer);
 
+        // todo why do i need this here + when full screening, create the same issue
         // Initialise the events performed from this script.
         initialiseEvents();
     }
@@ -163,8 +163,8 @@ public class Main extends ApplicationAdapter {
         // Updates viewport to match new window size
         viewport.update(width, height, false);
 
-        // Recalculate scaling factor with new height
-        gameState.scaleFactor = height / (float) Constants.SCALING_1_HEIGHT;
+        // Recalculate scaling factors with new height
+        GameUtils.calculateScaling();
 
         // Rescale UI
         ui.resize(width, height);
