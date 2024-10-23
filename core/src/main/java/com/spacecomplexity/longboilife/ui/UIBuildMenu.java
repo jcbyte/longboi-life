@@ -13,6 +13,9 @@ import com.spacecomplexity.longboilife.GameState;
 import com.spacecomplexity.longboilife.building.BuildingCategory;
 import com.spacecomplexity.longboilife.building.BuildingType;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  * Class to represent the Build Menu UI.
  */
@@ -79,7 +82,7 @@ public class UIBuildMenu extends UIElement {
 
             // Initialise building labels
             Label titleLabel = new Label(building.name(), skin);
-            Label costLabel = new Label(String.format("$%.2f", building.getCost()), skin);
+            Label costLabel = new Label(NumberFormat.getCurrencyInstance(Locale.UK).format(building.getCost()), skin);
 
             // create container for UI elements relating to this building
             Table buildingTable = new Table();

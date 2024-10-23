@@ -8,6 +8,9 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.GameState;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  * Class to represent the Money UI.
  */
@@ -39,7 +42,8 @@ public class UIMoneyMenu extends UIElement {
     }
 
     public void render() {
-        label.setText("$" + GameState.getState().money);
+        // todo display £
+        label.setText(NumberFormat.getCurrencyInstance(Locale.UK).format(GameState.getState().money));
     }
 
     @Override
