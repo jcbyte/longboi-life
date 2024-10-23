@@ -75,11 +75,13 @@ public class InputManager {
             return true;
         }
 
+        private int lastButton;
+
         // Used to store mouse position between dragging frames
         private float lastScreenX, lastScreenY;
 
         /**
-         * Record the initial touch position for the drag event.
+         * Mouse down event.
          *
          * @param screenX The x coordinate, origin is in the upper left corner.
          * @param screenY The y coordinate, origin is in the upper left corner.
@@ -89,13 +91,29 @@ public class InputManager {
          */
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            lastScreenX = screenX;
-            lastScreenY = screenY;
+            // Set the last button so we can check what to do in the touchDragged event
+            lastButton = button;
 
-            try {
-                EventHandler.getEventHandler().callEvent("build");
-            } catch (NoSuchMethodException e) {
-                throw new RuntimeException(e);
+            switch (button) {
+                // If main button clicked
+                case 0:
+                    // If a building is selected then try to build this
+                    if (GameState.getState().selectedBuilding != null) {
+                        try {
+                            EventHandler.getEventHandler().callEvent("build");
+                        } catch (NoSuchMethodException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    break;
+
+                // If secondary or tertiary button clicked
+                case 1:
+                case 2:
+                    // Record the initial touch position for the drag event
+                    lastScreenX = screenX;
+                    lastScreenY = screenY;
+                    break;
             }
 
             return true;
@@ -111,16 +129,22 @@ public class InputManager {
          */
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-            // Calculate the difference between last mouse position and now
-            float deltaX = screenX - lastScreenX;
-            float deltaY = screenY - lastScreenY;
+            switch (lastButton) {
+                // If secondary or tertiary button clicked
+                case 1:
+                case 2:
+                    // Calculate the difference between last mouse position and now
+                    float deltaX = screenX - lastScreenX;
+                    float deltaY = screenY - lastScreenY;
 
-            // Move the camera the respective amount to simulate dragging
-            MainCamera.camera().position.x -= deltaX * MainCamera.camera().zoom;
-            MainCamera.camera().position.y += deltaY * MainCamera.camera().zoom;
+                    // Move the camera the respective amount to simulate dragging
+                    MainCamera.camera().position.x -= deltaX * MainCamera.camera().zoom;
+                    MainCamera.camera().position.y += deltaY * MainCamera.camera().zoom;
 
-            lastScreenX = screenX;
-            lastScreenY = screenY;
+                    lastScreenX = screenX;
+                    lastScreenY = screenY;
+                    break;
+            }
 
             return true;
         }
