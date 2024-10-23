@@ -123,7 +123,7 @@ public class InputManager {
                     // Record the initial touch position for the drag event
                     lastScreenX = screenX;
                     lastScreenY = screenY;
-                    
+
                     break;
             }
 
@@ -191,6 +191,7 @@ public class InputManager {
             else if (keycode == Keybindings.CLOSE.getKey()) {
                 try {
                     EventHandler.getEventHandler().callEvent("close_build_menu");
+                    EventHandler.getEventHandler().callEvent("close_selected_menu");
                     gameState.selectedBuilding = null;
                 } catch (NoSuchMethodException e) {
                     throw new RuntimeException(e);

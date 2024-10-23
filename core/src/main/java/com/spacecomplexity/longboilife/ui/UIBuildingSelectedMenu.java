@@ -31,11 +31,13 @@ public class UIBuildingSelectedMenu extends UIElement {
 
         // Initialise move button
         moveButton = new TextButton("Move", skin);
+        // todo allow buildings to move
 
         // Initialise sell button
         sellButton = new TextButton("Sell", skin);
+        // todo allow selling buildings
 
-        // Place labels onto table
+        // Place buttons onto table
         table.add(moveButton);
         table.add(sellButton).padLeft(2);
 
@@ -67,6 +69,7 @@ public class UIBuildingSelectedMenu extends UIElement {
         Vector2 mouse = new Vector2(Gdx.input.getX(), Gdx.input.getY());
         uiViewport.unproject(mouse);
         table.setPosition(mouse.x, mouse.y);
+        // todo keep this placed relative to world space
 
         table.setVisible(true);
     }
