@@ -9,11 +9,12 @@ import java.util.stream.Stream;
  * Contains a list of all buildings, including there default data.
  */
 public enum BuildingType {
-    GREGGS(new Texture("buildings/greggs.png"), new Vector2Int(2, 2), BuildingCategory.FOOD, 200),
-    LIBRARY(new Texture("buildings/library.png"), new Vector2Int(4, 4), BuildingCategory.EDUCATIONAL, 200),
-    GYM(new Texture("buildings/gym.png"), new Vector2Int(3, 3), BuildingCategory.RECREATIONAL, 200),
+    GREGGS("Greggs", new Texture("buildings/greggs.png"), new Vector2Int(2, 2), BuildingCategory.FOOD, 200),
+    LIBRARY("Library", new Texture("buildings/library.png"), new Vector2Int(4, 4), BuildingCategory.EDUCATIONAL, 200),
+    GYM("Gym", new Texture("buildings/gym.png"), new Vector2Int(3, 3), BuildingCategory.RECREATIONAL, 200),
     ;
 
+    private final String displayName;
     private final Texture texture;
     private final Vector2Int size;
     private final BuildingCategory category;
@@ -22,11 +23,14 @@ public enum BuildingType {
     /**
      * Create a {@link BuildingType} with specified attributes.
      *
-     * @param texture the texture representing the building.
-     * @param size    the size of the building (in tiles).
-     * @param cost    the cost to place the building.
+     * @param displayName the name to display when selecting this building.
+     * @param texture     the texture representing the building.
+     * @param size        the size of the building (in tiles).
+     * @param category    the category of the building.
+     * @param cost        the cost to place the building.
      */
-    BuildingType(Texture texture, Vector2Int size, BuildingCategory category, float cost) {
+    BuildingType(String displayName, Texture texture, Vector2Int size, BuildingCategory category, float cost) {
+        this.displayName = displayName;
         this.texture = texture;
         this.size = size;
         this.category = category;
@@ -38,6 +42,9 @@ public enum BuildingType {
         return texture;
     }
 
+    public String getDisplayName() {
+        return displayName;
+    }
 
     public Vector2Int getSize() {
         return size;

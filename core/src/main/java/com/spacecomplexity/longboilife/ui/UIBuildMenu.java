@@ -81,7 +81,7 @@ public class UIBuildMenu extends UIElement {
             });
 
             // Initialise building labels
-            Label titleLabel = new Label(building.name(), skin);
+            Label titleLabel = new Label(building.getDisplayName(), skin);
             Label costLabel = new Label(NumberFormat.getCurrencyInstance(Locale.UK).format(building.getCost()), skin);
 
             // create container for UI elements relating to this building
