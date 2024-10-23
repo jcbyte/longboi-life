@@ -36,12 +36,14 @@ public class UIBuildMenu extends UIElement {
 
         // Style and place the table
         table.setBackground(skin.getDrawable("panel1"));
-        closeBuildMenu();
         placeTable();
 
-        // Close build menu when receiving an event to do so.
+        // Initially close the menu
+        closeMenu();
+
+        // Close menu when receiving an event to do so
         EventHandler.getEventHandler().createEvent("close_build_menu", (params) -> {
-            closeBuildMenu();
+            closeMenu();
             return null;
         });
     }
@@ -54,7 +56,7 @@ public class UIBuildMenu extends UIElement {
      *
      * @param category specific category of buildings to show.
      */
-    public void openBuildMenu(BuildingCategory category) {
+    public void openMenu(BuildingCategory category) {
         // CLear previous buildings from the table
         table.clear();
 
@@ -76,7 +78,7 @@ public class UIBuildMenu extends UIElement {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     GameState.getState().selectedBuilding = building;
-                    closeBuildMenu();
+                    closeMenu();
                 }
             });
 
@@ -109,7 +111,7 @@ public class UIBuildMenu extends UIElement {
     /**
      * Close the build menu.
      */
-    public void closeBuildMenu() {
+    public void closeMenu() {
         // Hide the build menu
         table.setVisible(false);
     }

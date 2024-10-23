@@ -49,6 +49,7 @@ public class UIManager {
             new UISatisfactionMenu(viewport, table, skin),
             new UIMoneyMenu(viewport, table, skin),
             new UIBottomMenu(viewport, table, skin),
+            new UIBuildingSelectedMenu(viewport, table, skin),
         };
 
 //        table.debugAll();
@@ -85,7 +86,7 @@ public class UIManager {
             (float) width / GameState.getState().uiScaleFactor,
             (float) height / GameState.getState().uiScaleFactor
         );
-        
+
         // Updates viewport to match new window size
         viewport.update(width, height, true);
 

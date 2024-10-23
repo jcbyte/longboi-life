@@ -41,7 +41,7 @@ public class UIBottomMenu extends UIElement {
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    buildMenu.openBuildMenu(category);
+                    buildMenu.openMenu(category);
                 }
             });
 
@@ -78,7 +78,7 @@ public class UIBottomMenu extends UIElement {
             // Pause the timer
             TimerManager.getTimerManager().getTimer().pauseTimer();
             // Close menus and deselect any buildings
-            buildMenu.closeBuildMenu();
+            buildMenu.closeMenu();
             GameState.getState().selectedBuilding = null;
             // Disable all UI but the pause button
             UIUtils.disableAllActors(parentTable.getStage());
@@ -109,7 +109,7 @@ public class UIBottomMenu extends UIElement {
     @Override
     public void resize() {
         super.resize();
-        
+
         buildMenu.resize();
     }
 

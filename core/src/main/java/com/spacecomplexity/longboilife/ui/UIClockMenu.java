@@ -49,7 +49,7 @@ public class UIClockMenu extends UIElement {
      *
      * @param time the time in seconds
      */
-    public void setTime(long time) {
+    private void setTime(long time) {
         // Format this onto the time label
         label.setText(String.format("%d:%02d", time / 60, time % 60));
     }

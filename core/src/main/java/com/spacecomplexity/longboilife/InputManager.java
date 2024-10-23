@@ -105,6 +105,16 @@ public class InputManager {
                             throw new RuntimeException(e);
                         }
                     }
+
+                    // Else try and select a building already on the map
+                    else {
+                        try {
+                            EventHandler.getEventHandler().callEvent("select_building");
+                        } catch (NoSuchMethodException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+
                     break;
 
                 // If secondary or tertiary button clicked
@@ -113,6 +123,7 @@ public class InputManager {
                     // Record the initial touch position for the drag event
                     lastScreenX = screenX;
                     lastScreenY = screenY;
+                    
                     break;
             }
 

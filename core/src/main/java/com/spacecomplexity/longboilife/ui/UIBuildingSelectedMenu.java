@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.spacecomplexity.longboilife.EventHandler;
 
 /**
  * Class to represent the pop-up menu after selecting a placed building.
@@ -42,13 +43,36 @@ public class UIBuildingSelectedMenu extends UIElement {
         table.setSize(150, 50);
         table.setBackground(skin.getDrawable("panel1"));
         placeTable();
+
+        // Initially close the menu
+        closeMenu();
+
+        // Open menu when receiving an event to do so
+        EventHandler.getEventHandler().createEvent("open_selected_menu", (params) -> {
+            openMenu();
+            return null;
+        });
+
+        // Close menu when receiving an event to do so
+        EventHandler.getEventHandler().createEvent("close_selected_menu", (params) -> {
+            closeMenu();
+            return null;
+        });
     }
 
     public void render() {
-        // todo remove this, for debugging
+    }
+
+    private void openMenu() {
         Vector2 mouse = new Vector2(Gdx.input.getX(), Gdx.input.getY());
         uiViewport.unproject(mouse);
         table.setPosition(mouse.x, mouse.y);
+
+        table.setVisible(true);
+    }
+
+    private void closeMenu() {
+        table.setVisible(false);
     }
 
     @Override

@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.building.BuildingType;
 import com.spacecomplexity.longboilife.tile.InvalidSaveMapException;
+import com.spacecomplexity.longboilife.tile.Tile;
 import com.spacecomplexity.longboilife.ui.UIManager;
 import com.spacecomplexity.longboilife.utils.GameUtils;
 import com.spacecomplexity.longboilife.utils.RenderUtils;
@@ -119,6 +120,22 @@ public class Main extends ApplicationAdapter {
 
             // Remove the selected building
             gameState.selectedBuilding = null;
+
+            return null;
+        });
+
+        // Select a previously built building
+        EventHandler.getEventHandler().createEvent("select_building", (params) -> {
+            Vector2Int mouse = GameUtils.getMouseOnGrid(world);
+            Tile tile = world.getTile(mouse.x, mouse.y);
+
+            if (tile.getBuildingRef() != null) {
+                try {
+                    EventHandler.getEventHandler().callEvent("open_selected_menu");
+                } catch (NoSuchMethodException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
             return null;
         });
