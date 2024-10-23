@@ -1,11 +1,14 @@
 package com.spacecomplexity.longboilife.tile;
 
+import com.spacecomplexity.longboilife.building.Building;
+
 /**
  * Represents a tile in the game.
  */
 public class Tile {
     private final TileType type;
     private boolean isBuildable;
+    private Building buildingRef = null;
 
     /**
      * Constructs a tile instance given the specific tile.
@@ -37,5 +40,23 @@ public class Tile {
      */
     public void setBuildable(boolean isBuildable) {
         this.isBuildable = isBuildable;
+    }
+
+    /**
+     * Get the reference to building which is currently on this tile.
+     *
+     * @return the reference to the  building on this tile.
+     */
+    public Building getBuildingRef() {
+        return buildingRef;
+    }
+
+    /**
+     * Set the reference to building which is currently on this tile.
+     *
+     * @param buildingRef the new building ref.
+     */
+    public void setBuildingRef(Building buildingRef) {
+        this.buildingRef = buildingRef;
     }
 }

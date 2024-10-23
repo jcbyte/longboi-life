@@ -110,24 +110,29 @@ public class World {
     /**
      * Build a building at a specific location in the world.
      *
-     * @param building the building we wish to place.
-     * @param x        the x coordinate of the building.
-     * @param y        the y coordinate of the building.
+     * @param buildingType the building we wish to place.
+     * @param x            the x coordinate of the building.
+     * @param y            the y coordinate of the building.
      */
-    public void build(BuildingType building, int x, int y) {
-        if (!canBuild(building, x, y)) {
-            throw new IllegalStateException("Building \"" + building.name() + "\" cannot build at (" + x + ", " + y + ")");
+    public void build(BuildingType buildingType, int x, int y) {
+        if (!canBuild(buildingType, x, y)) {
+            throw new IllegalStateException("Building \"" + buildingType.name() + "\" cannot build at (" + x + ", " + y + ")");
         }
 
-        Vector2Int buildingSize = building.getSize();
+        Building building = new Building(buildingType, new Vector2Int(x, y));
+
+        Vector2Int buildingSize = buildingType.getSize();
 
         // Set every tile underneath this building to un-buildable
         for (int xi = x; xi < x + buildingSize.x; xi++) {
             for (int yi = y; yi < y + buildingSize.y; yi++) {
-                getTile(xi, yi).setBuildable(false);
+                Tile tile = getTile(xi, yi);
+                tile.setBuildingRef(building);
+                tile.setBuildable(false);
+
             }
         }
 
-        buildings.add(new Building(building, new Vector2Int(x, y)));
+        buildings.add(building);
     }
 }
