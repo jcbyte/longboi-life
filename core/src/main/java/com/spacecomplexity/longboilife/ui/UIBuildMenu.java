@@ -77,8 +77,13 @@ public class UIBuildMenu extends UIElement {
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    try {
+                        EventHandler.getEventHandler().callEvent("cancel_operations");
+                    } catch (NoSuchMethodException e) {
+                        throw new RuntimeException(e);
+                    }
+
                     GameState.getState().placingBuilding = building;
-                    closeMenu();
                 }
             });
 

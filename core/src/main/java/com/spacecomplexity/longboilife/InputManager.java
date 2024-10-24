@@ -195,7 +195,7 @@ public class InputManager {
             // If the close key is pressed, send events to cancel actions
             else if (keycode == Keybindings.CANCEL.getKey()) {
                 try {
-                    EventHandler.getEventHandler().callEvent("cancel_all");
+                    EventHandler.getEventHandler().callEvent("cancel_operations");
                 } catch (NoSuchMethodException e) {
                     throw new RuntimeException(e);
                 }

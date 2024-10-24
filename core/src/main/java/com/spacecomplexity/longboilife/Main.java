@@ -175,7 +175,7 @@ public class Main extends ApplicationAdapter {
         });
 
         // Cancel all events
-        EventHandler.getEventHandler().createEvent("cancel_all", (params) -> {
+        EventHandler.getEventHandler().createEvent("cancel_operations", (params) -> {
             // Close menus and deselect any buildings
             try {
                 EventHandler.getEventHandler().callEvent("close_build_menu");
@@ -274,7 +274,7 @@ public class Main extends ApplicationAdapter {
         }
         // If there is a moving selected then outline where it was previously
         if (gameState.movingBuilding != null) {
-            RenderUtils.outlineBuilding(shapeRenderer, gameState.movingBuilding, Color.RED, 2);
+            RenderUtils.outlineBuilding(shapeRenderer, gameState.movingBuilding, Color.PURPLE, 2);
         }
 
         // Render the UI
