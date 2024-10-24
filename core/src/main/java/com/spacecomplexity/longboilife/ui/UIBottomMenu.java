@@ -21,10 +21,10 @@ import com.spacecomplexity.longboilife.utils.UIUtils;
  */
 public class UIBottomMenu extends UIElement {
     private ImageButton pauseButton;
-    private Texture pauseTexture;
-    private TextureRegionDrawable pauseDrawable;
-    private Texture playTexture;
-    private TextureRegionDrawable playDrawable;
+    private final Texture pauseTexture;
+    private final TextureRegionDrawable pauseDrawable;
+    private final Texture playTexture;
+    private final TextureRegionDrawable playDrawable;
 
     private UIBuildMenu buildMenu;
 
@@ -37,6 +37,8 @@ public class UIBottomMenu extends UIElement {
      */
     public UIBottomMenu(Viewport uiViewport, Table parentTable, Skin skin) {
         super(uiViewport, parentTable, skin);
+
+        EventHandler eventHandler = EventHandler.getEventHandler();
 
         buildMenu = new UIBuildMenu(uiViewport, parentTable, skin);
 
@@ -79,7 +81,7 @@ public class UIBottomMenu extends UIElement {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Call the events to pause/resume the game based on the current pause state
-                EventHandler.getEventHandler().callEvent(GameState.getState().paused ? EventHandler.Event.RESUME_GAME : EventHandler.Event.PAUSE_GAME);
+                eventHandler.callEvent(GameState.getState().paused ? EventHandler.Event.RESUME_GAME : EventHandler.Event.PAUSE_GAME);
             }
         });
         // Place pause button on the table
@@ -90,13 +92,13 @@ public class UIBottomMenu extends UIElement {
         placeTable();
 
         // Assign pause and play events
-        EventHandler.getEventHandler().createEvent(EventHandler.Event.PAUSE_GAME, (params) -> {
+        eventHandler.createEvent(EventHandler.Event.PAUSE_GAME, (params) -> {
             // Set pause state
             GameState.getState().paused = true;
             // Pause the timer
             TimerManager.getTimerManager().getTimer().pauseTimer();
             // Cancel all actions
-            EventHandler.getEventHandler().callEvent(EventHandler.Event.CANCEL_OPERATIONS);
+            eventHandler.callEvent(EventHandler.Event.CANCEL_OPERATIONS);
             // Disable all UI but the pause button
             UIUtils.disableAllActors(parentTable.getStage());
             UIUtils.enableActor(pauseButton);
@@ -106,7 +108,7 @@ public class UIBottomMenu extends UIElement {
 
             return null;
         });
-        EventHandler.getEventHandler().createEvent(EventHandler.Event.RESUME_GAME, (params) -> {
+        eventHandler.createEvent(EventHandler.Event.RESUME_GAME, (params) -> {
             // Set pause state
             GameState.getState().paused = false;
             // Resume the timer

@@ -39,6 +39,8 @@ public class UIBuildingSelectedMenu extends UIElement {
 
         this.uiViewport = uiViewport;
 
+        EventHandler eventHandler = EventHandler.getEventHandler();
+
         // Initialise move button
         moveButton = new TextButton("Move", skin);
         moveButton.pad(10);
@@ -47,7 +49,7 @@ public class UIBuildingSelectedMenu extends UIElement {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Call the events to sell the selected building
-                EventHandler.getEventHandler().callEvent(EventHandler.Event.MOVE_BUILDING);
+                eventHandler.callEvent(EventHandler.Event.MOVE_BUILDING);
             }
         });
 
@@ -59,7 +61,7 @@ public class UIBuildingSelectedMenu extends UIElement {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Call the events to sell the selected building
-                EventHandler.getEventHandler().callEvent(EventHandler.Event.SELL_BUILDING);
+                eventHandler.callEvent(EventHandler.Event.SELL_BUILDING);
 
                 closeMenu();
             }
@@ -78,13 +80,13 @@ public class UIBuildingSelectedMenu extends UIElement {
         closeMenu();
 
         // Open menu when receiving an event to do so
-        EventHandler.getEventHandler().createEvent(EventHandler.Event.OPEN_SELECTED_MENU, (params) -> {
+        eventHandler.createEvent(EventHandler.Event.OPEN_SELECTED_MENU, (params) -> {
             openMenu();
             return null;
         });
 
         // Close menu when receiving an event to do so
-        EventHandler.getEventHandler().createEvent(EventHandler.Event.CLOSE_SELECTED_MENU, (params) -> {
+        eventHandler.createEvent(EventHandler.Event.CLOSE_SELECTED_MENU, (params) -> {
             closeMenu();
             return null;
         });

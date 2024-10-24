@@ -95,8 +95,10 @@ public class Main extends ApplicationAdapter {
      * Initialise events for the event handler.
      */
     private void initialiseEvents() {
+        EventHandler eventHandler = EventHandler.getEventHandler();
+
         // Build the selected building
-        EventHandler.getEventHandler().createEvent(EventHandler.Event.BUILD, (params) -> {
+        eventHandler.createEvent(EventHandler.Event.BUILD, (params) -> {
             BuildingType toBuild = gameState.placingBuilding;
 
             // If there is no selected building do nothing
@@ -147,7 +149,7 @@ public class Main extends ApplicationAdapter {
         });
 
         // Select a previously built building
-        EventHandler.getEventHandler().createEvent(EventHandler.Event.SELECT_BUILDING, (params) -> {
+        eventHandler.createEvent(EventHandler.Event.SELECT_BUILDING, (params) -> {
             // Get the tile at the mouse coordinates
             Vector2Int mouse = GameUtils.getMouseOnGrid(world);
             Tile tile = world.getTile(mouse.x, mouse.y);
@@ -163,17 +165,17 @@ public class Main extends ApplicationAdapter {
             gameState.selectedBuilding = selectedBuilding;
 
             // Open the selected building menu
-            EventHandler.getEventHandler().callEvent(EventHandler.Event.OPEN_SELECTED_MENU);
+            eventHandler.callEvent(EventHandler.Event.OPEN_SELECTED_MENU);
 
             return null;
         });
 
         // Cancel all events
-        EventHandler.getEventHandler().createEvent(EventHandler.Event.CANCEL_OPERATIONS, (params) -> {
+        eventHandler.createEvent(EventHandler.Event.CANCEL_OPERATIONS, (params) -> {
             // Close menus and deselect any buildings
-            EventHandler.getEventHandler().callEvent(EventHandler.Event.CLOSE_BUILD_MENU);
+            eventHandler.callEvent(EventHandler.Event.CLOSE_BUILD_MENU);
             gameState.placingBuilding = null;
-            EventHandler.getEventHandler().callEvent(EventHandler.Event.CLOSE_SELECTED_MENU);
+            eventHandler.callEvent(EventHandler.Event.CLOSE_SELECTED_MENU);
             gameState.selectedBuilding = null;
 
             // If there is a building move in progress cancel this
@@ -186,7 +188,7 @@ public class Main extends ApplicationAdapter {
         });
 
         // Sell the selected building
-        EventHandler.getEventHandler().createEvent(EventHandler.Event.SELL_BUILDING, (params) -> {
+        eventHandler.createEvent(EventHandler.Event.SELL_BUILDING, (params) -> {
             // Delete the building
             world.demolish(gameState.selectedBuilding);
             // Refund the specified amount
@@ -198,7 +200,7 @@ public class Main extends ApplicationAdapter {
         });
 
         // Start the move of the selected building
-        EventHandler.getEventHandler().createEvent(EventHandler.Event.MOVE_BUILDING, (params) -> {
+        eventHandler.createEvent(EventHandler.Event.MOVE_BUILDING, (params) -> {
             float cost = gameState.selectedBuilding.getType().getCost() * Constants.moveCostRecovery;
             // If we don't have enough money then don't allow the move
             if (gameState.money < cost) {
@@ -214,7 +216,7 @@ public class Main extends ApplicationAdapter {
             gameState.selectedBuilding = null;
 
             // Close the menu
-            EventHandler.getEventHandler().callEvent(EventHandler.Event.CLOSE_SELECTED_MENU);
+            eventHandler.callEvent(EventHandler.Event.CLOSE_SELECTED_MENU);
 
             return null;
         });

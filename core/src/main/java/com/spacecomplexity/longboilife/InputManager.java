@@ -54,6 +54,8 @@ public class InputManager {
      * Will be called every frame (before rendering, hence before {@link InputManager#handleContinuousInput()}).
      */
     private class InputProcessor extends InputAdapter {
+        private final EventHandler eventHandler = EventHandler.getEventHandler();
+
         /**
          * Zoom the camera at the mouse position when the scroll wheel/trackpad is used.
          *
@@ -104,12 +106,12 @@ public class InputManager {
 
                     // If a building is selected then try to build this
                     if (GameState.getState().placingBuilding != null) {
-                        EventHandler.getEventHandler().callEvent(EventHandler.Event.BUILD);
+                        eventHandler.callEvent(EventHandler.Event.BUILD);
                     }
 
                     // Else try and select a building already on the map
                     else {
-                        EventHandler.getEventHandler().callEvent(EventHandler.Event.SELECT_BUILDING);
+                        eventHandler.callEvent(EventHandler.Event.SELECT_BUILDING);
                     }
 
                     break;
@@ -186,12 +188,12 @@ public class InputManager {
 
             // If the close key is pressed, send events to cancel actions
             else if (keycode == Keybindings.CANCEL.getKey()) {
-                EventHandler.getEventHandler().callEvent(EventHandler.Event.CANCEL_OPERATIONS);
+                eventHandler.callEvent(EventHandler.Event.CANCEL_OPERATIONS);
             }
 
             // If the pause key is pressed, pause/resume the game
             else if (keycode == Keybindings.PAUSE.getKey()) {
-                EventHandler.getEventHandler().callEvent(GameState.getState().paused ? EventHandler.Event.RESUME_GAME : EventHandler.Event.PAUSE_GAME);
+                eventHandler.callEvent(GameState.getState().paused ? EventHandler.Event.RESUME_GAME : EventHandler.Event.PAUSE_GAME);
             }
 
             return true;
