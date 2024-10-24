@@ -115,15 +115,17 @@ public class World {
      * @param y            the y coordinate of the building.
      */
     public void build(BuildingType buildingType, int x, int y) {
+        // If we cannot build then throw an exception
         if (!canBuild(buildingType, x, y)) {
             throw new IllegalStateException("Building \"" + buildingType.name() + "\" cannot build at (" + x + ", " + y + ")");
         }
 
+        // Create the building instance
         Building building = new Building(buildingType, new Vector2Int(x, y));
 
-        Vector2Int buildingSize = buildingType.getSize();
 
-        // Set every tile underneath this building to un-buildable
+        // Set every tile underneath this building to un-buildable and assign the reference
+        Vector2Int buildingSize = buildingType.getSize();
         for (int xi = x; xi < x + buildingSize.x; xi++) {
             for (int yi = y; yi < y + buildingSize.y; yi++) {
                 Tile tile = getTile(xi, yi);
@@ -142,7 +144,17 @@ public class World {
      * @param building the building to remove.
      */
     public void demolish(Building building) {
+        // Set every tile underneath this building to its original buildable state and remove the building reference
+        Vector2Int buildingSize = building.getType().getSize();
+        Vector2Int buildingPosition = building.getPosition();
+        for (int xi = buildingPosition.x; xi < buildingPosition.x + buildingSize.x; xi++) {
+            for (int yi = buildingPosition.y; yi < buildingPosition.y + buildingSize.y; yi++) {
+                Tile tile = getTile(xi, yi);
+                tile.setBuildingRef(null);
+                tile.setBuildable(tile.getType().isNaturallyBuildable());
+            }
+        }
+
         buildings.remove(building);
-        // todo remove building properly
     }
 }
