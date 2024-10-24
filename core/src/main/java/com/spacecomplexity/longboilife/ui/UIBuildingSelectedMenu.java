@@ -1,7 +1,7 @@
 package com.spacecomplexity.longboilife.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.Constants;
 import com.spacecomplexity.longboilife.EventHandler;
 import com.spacecomplexity.longboilife.GameState;
+import com.spacecomplexity.longboilife.MainCamera;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -23,6 +24,8 @@ public class UIBuildingSelectedMenu extends UIElement {
     TextButton sellButton;
 
     Viewport uiViewport;
+
+    Vector3 worldSpaceOpened;
 
     /**
      * Initialise selected menu elements.
@@ -96,13 +99,25 @@ public class UIBuildingSelectedMenu extends UIElement {
     }
 
     public void render() {
+        // Keep the menu placed relative to world space
+        if (worldSpaceOpened != null) {
+            Vector3 placement = new Vector3(worldSpaceOpened);
+            // Convert world space into screen space
+            MainCamera.camera().getCamera().project(placement);
+            // Flip y coordinates as screen/ui coordinate system has a flipped origin
+            placement.y = Gdx.graphics.getHeight() - placement.y;
+            // Convert screen space into ui coordinates
+            uiViewport.unproject(placement);
+            // Set the menu position at this location
+            table.setPosition(placement.x, placement.y);
+        }
     }
 
     private void openMenu() {
-        Vector2 mouse = new Vector2(Gdx.input.getX(), Gdx.input.getY());
-        uiViewport.unproject(mouse);
-        table.setPosition(mouse.x, mouse.y);
-        // todo keep this placed relative to world space
+        // Get the world space of current mouse position so that we can keep it positioned relatively
+        Vector3 mouse = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        MainCamera.camera().getCamera().unproject(mouse);
+        worldSpaceOpened = new Vector3(mouse);
 
         // Set the prices of each of these actions based on the price of the building and constants
         float buildingCost = GameState.getState().selectedBuilding.getType().getCost();
@@ -118,11 +133,14 @@ public class UIBuildingSelectedMenu extends UIElement {
     }
 
     private void closeMenu() {
+        // Remove the open coordinates so we don't calculate the menus position every frame
+        worldSpaceOpened = null;
+
         table.setVisible(false);
     }
 
     @Override
     protected void placeTable() {
-        // This doesn't make sense for this element as it will always be positioned by the mouse cursor
+        // Element can move a lot so is placed in the render loop
     }
 }

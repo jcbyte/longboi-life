@@ -143,8 +143,6 @@ public class Main extends ApplicationAdapter {
                 gameState.placingBuilding = null;
             }
 
-            // todo if move is canceled then return it
-
             return null;
         });
 
