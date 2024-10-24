@@ -63,12 +63,13 @@ public class UIManager {
         skin.get("default", TextButton.TextButtonStyle.class).font = ourFont16;
 
         // Create our UI elements
+        // Note: The order of these is the order that they will be rendered
         uiElements = new UIElement[]{
+            new UIBuildingSelectedMenu(viewport, table, skin),
+            new UIBottomMenu(viewport, table, skin),
             new UIClockMenu(viewport, table, skin),
             new UISatisfactionMenu(viewport, table, skin),
             new UIMoneyMenu(viewport, table, skin),
-            new UIBottomMenu(viewport, table, skin),
-            new UIBuildingSelectedMenu(viewport, table, skin),
         };
     }
 
