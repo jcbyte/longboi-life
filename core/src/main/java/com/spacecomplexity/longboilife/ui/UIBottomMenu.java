@@ -79,11 +79,7 @@ public class UIBottomMenu extends UIElement {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Call the events to pause/resume the game based on the current pause state
-                try {
-                    EventHandler.getEventHandler().callEvent(GameState.getState().paused ? EventHandler.Event.RESUME_GAME : EventHandler.Event.PAUSE_GAME);
-                } catch (NoSuchMethodException e) {
-                    throw new RuntimeException(e);
-                }
+                EventHandler.getEventHandler().callEvent(GameState.getState().paused ? EventHandler.Event.RESUME_GAME : EventHandler.Event.PAUSE_GAME);
             }
         });
         // Place pause button on the table
@@ -100,11 +96,7 @@ public class UIBottomMenu extends UIElement {
             // Pause the timer
             TimerManager.getTimerManager().getTimer().pauseTimer();
             // Cancel all actions
-            try {
-                EventHandler.getEventHandler().callEvent(EventHandler.Event.CANCEL_OPERATIONS);
-            } catch (NoSuchMethodException e) {
-                throw new RuntimeException(e);
-            }
+            EventHandler.getEventHandler().callEvent(EventHandler.Event.CANCEL_OPERATIONS);
             // Disable all UI but the pause button
             UIUtils.disableAllActors(parentTable.getStage());
             UIUtils.enableActor(pauseButton);

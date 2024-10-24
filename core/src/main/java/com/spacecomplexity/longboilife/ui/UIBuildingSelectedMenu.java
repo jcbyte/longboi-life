@@ -47,11 +47,7 @@ public class UIBuildingSelectedMenu extends UIElement {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Call the events to sell the selected building
-                try {
-                    EventHandler.getEventHandler().callEvent(EventHandler.Event.MOVE_BUILDING);
-                } catch (NoSuchMethodException e) {
-                    throw new RuntimeException(e);
-                }
+                EventHandler.getEventHandler().callEvent(EventHandler.Event.MOVE_BUILDING);
             }
         });
 
@@ -63,11 +59,7 @@ public class UIBuildingSelectedMenu extends UIElement {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Call the events to sell the selected building
-                try {
-                    EventHandler.getEventHandler().callEvent(EventHandler.Event.SELL_BUILDING);
-                } catch (NoSuchMethodException e) {
-                    throw new RuntimeException(e);
-                }
+                EventHandler.getEventHandler().callEvent(EventHandler.Event.SELL_BUILDING);
 
                 closeMenu();
             }

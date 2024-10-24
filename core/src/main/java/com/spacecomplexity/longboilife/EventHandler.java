@@ -48,14 +48,14 @@ public class EventHandler {
      * @param event  the enum of the event defined.
      * @param params the parameter to pass to the event.
      * @return what the original event would return, this will need to be cast as we cannot know the type here.
-     * @throws NoSuchMethodException if the event has not been defined.
+     * @throws IllegalArgumentException if the event has not been defined.
      */
-    public Object callEvent(Event event, Object... params) throws NoSuchMethodException {
+    public Object callEvent(Event event, Object... params) throws IllegalArgumentException {
         Function<Object[], Object> callback = event.getCallback();
 
         // If the callback is not defined then throw an error
         if (callback == null) {
-            throw new NoSuchMethodException("No event defined for: \"" + event.name() + "\"");
+            throw new IllegalArgumentException("No event defined for: \"" + event.name() + "\"");
         }
 
         // Execute the callback and return the result

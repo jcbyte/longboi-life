@@ -163,11 +163,7 @@ public class Main extends ApplicationAdapter {
             gameState.selectedBuilding = selectedBuilding;
 
             // Open the selected building menu
-            try {
-                EventHandler.getEventHandler().callEvent(EventHandler.Event.OPEN_SELECTED_MENU);
-            } catch (NoSuchMethodException e) {
-                throw new RuntimeException(e);
-            }
+            EventHandler.getEventHandler().callEvent(EventHandler.Event.OPEN_SELECTED_MENU);
 
             return null;
         });
@@ -175,19 +171,15 @@ public class Main extends ApplicationAdapter {
         // Cancel all events
         EventHandler.getEventHandler().createEvent(EventHandler.Event.CANCEL_OPERATIONS, (params) -> {
             // Close menus and deselect any buildings
-            try {
-                EventHandler.getEventHandler().callEvent(EventHandler.Event.CLOSE_BUILD_MENU);
-                gameState.placingBuilding = null;
-                EventHandler.getEventHandler().callEvent(EventHandler.Event.CLOSE_SELECTED_MENU);
-                gameState.selectedBuilding = null;
+            EventHandler.getEventHandler().callEvent(EventHandler.Event.CLOSE_BUILD_MENU);
+            gameState.placingBuilding = null;
+            EventHandler.getEventHandler().callEvent(EventHandler.Event.CLOSE_SELECTED_MENU);
+            gameState.selectedBuilding = null;
 
-                // If there is a building move in progress cancel this
-                if (gameState.movingBuilding != null) {
-                    world.build(gameState.movingBuilding);
-                    gameState.movingBuilding = null;
-                }
-            } catch (NoSuchMethodException e) {
-                throw new RuntimeException(e);
+            // If there is a building move in progress cancel this
+            if (gameState.movingBuilding != null) {
+                world.build(gameState.movingBuilding);
+                gameState.movingBuilding = null;
             }
 
             return null;
@@ -222,11 +214,7 @@ public class Main extends ApplicationAdapter {
             gameState.selectedBuilding = null;
 
             // Close the menu
-            try {
-                EventHandler.getEventHandler().callEvent(EventHandler.Event.CLOSE_SELECTED_MENU);
-            } catch (NoSuchMethodException e) {
-                throw new RuntimeException(e);
-            }
+            EventHandler.getEventHandler().callEvent(EventHandler.Event.CLOSE_SELECTED_MENU);
 
             return null;
         });
