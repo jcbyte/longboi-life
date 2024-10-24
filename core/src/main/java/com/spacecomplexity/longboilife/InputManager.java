@@ -105,7 +105,7 @@ public class InputManager {
                     // If a building is selected then try to build this
                     if (GameState.getState().placingBuilding != null) {
                         try {
-                            EventHandler.getEventHandler().callEvent("build");
+                            EventHandler.getEventHandler().callEvent(EventHandler.Event.BUILD);
                         } catch (NoSuchMethodException e) {
                             throw new RuntimeException(e);
                         }
@@ -114,7 +114,7 @@ public class InputManager {
                     // Else try and select a building already on the map
                     else {
                         try {
-                            EventHandler.getEventHandler().callEvent("select_building");
+                            EventHandler.getEventHandler().callEvent(EventHandler.Event.SELECT_BUILDING);
                         } catch (NoSuchMethodException e) {
                             throw new RuntimeException(e);
                         }
@@ -195,7 +195,7 @@ public class InputManager {
             // If the close key is pressed, send events to cancel actions
             else if (keycode == Keybindings.CANCEL.getKey()) {
                 try {
-                    EventHandler.getEventHandler().callEvent("cancel_operations");
+                    EventHandler.getEventHandler().callEvent(EventHandler.Event.CANCEL_OPERATIONS);
                 } catch (NoSuchMethodException e) {
                     throw new RuntimeException(e);
                 }
@@ -204,7 +204,7 @@ public class InputManager {
             // If the pause key is pressed, pause/resume the game
             else if (keycode == Keybindings.PAUSE.getKey()) {
                 try {
-                    EventHandler.getEventHandler().callEvent(GameState.getState().paused ? "resume_game" : "pause_game");
+                    EventHandler.getEventHandler().callEvent(GameState.getState().paused ? EventHandler.Event.RESUME_GAME : EventHandler.Event.PAUSE_GAME);
                 } catch (NoSuchMethodException e) {
                     throw new RuntimeException(e);
                 }

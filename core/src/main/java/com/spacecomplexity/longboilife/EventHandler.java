@@ -7,8 +7,22 @@ import java.util.function.Function;
  * CLass to manage events which can be called from anywhere within the game.
  */
 public class EventHandler {
+    public enum Event {
+        BUILD,
+        SELECT_BUILDING,
+        CANCEL_OPERATIONS,
+        SELL_BUILDING,
+        MOVE_BUILDING,
+        PAUSE_GAME,
+        RESUME_GAME,
+        OPEN_SELECTED_MENU,
+        CLOSE_SELECTED_MENU,
+        CLOSE_BUILD_MENU,
+        ;
+    }
+
     private static final EventHandler eventHandler = new EventHandler();
-    private HashMap<String, Function<Object[], Object>> events;
+    private HashMap<Event, Function<Object[], Object>> events;
 
     /**
      * Initialise events attributes.
@@ -20,31 +34,31 @@ public class EventHandler {
     /**
      * Create an event.
      *
-     * @param name  the name of the event, needed when called.
-     * @param event the event method, this is what will be executed.
+     * @param event    the enum the event, needed when called.
+     * @param callback the event method, this is what will be executed.
      */
-    public void createEvent(String name, Function<Object[], Object> event) {
-        events.put(name, event);
+    public void createEvent(Event event, Function<Object[], Object> callback) {
+        events.put(event, callback);
     }
 
     /**
      * Call a previously defined event.
      *
-     * @param name   the name of the event defined.
+     * @param event  the enum of the event defined.
      * @param params the parameter to pass to the event.
      * @return what the original event would return, this will need to be cast as we cannot know the type here.
      * @throws NoSuchMethodException if the event has not been defined.
      */
-    public Object callEvent(String name, Object... params) throws NoSuchMethodException {
-        Function<Object[], Object> event = events.get(name);
+    public Object callEvent(Event event, Object... params) throws NoSuchMethodException {
+        Function<Object[], Object> callback = events.get(event);
 
-        // If the event is not defined then throw an error
-        if (event == null) {
-            throw new NoSuchMethodException("No event: \"" + name + "\"");
+        // If the callback is not defined then throw an error
+        if (callback == null) {
+            throw new NoSuchMethodException("No event defined for: \"" + event.name() + "\"");
         }
 
-        // Execute the event and return the result
-        return event.apply(params);
+        // Execute the callback and return the result
+        return callback.apply(params);
     }
 
     /**

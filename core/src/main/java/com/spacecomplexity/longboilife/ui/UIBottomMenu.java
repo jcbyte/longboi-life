@@ -80,7 +80,7 @@ public class UIBottomMenu extends UIElement {
             public void clicked(InputEvent event, float x, float y) {
                 // Call the events to pause/resume the game based on the current pause state
                 try {
-                    EventHandler.getEventHandler().callEvent(GameState.getState().paused ? "resume_game" : "pause_game");
+                    EventHandler.getEventHandler().callEvent(GameState.getState().paused ? EventHandler.Event.RESUME_GAME : EventHandler.Event.PAUSE_GAME);
                 } catch (NoSuchMethodException e) {
                     throw new RuntimeException(e);
                 }
@@ -94,14 +94,14 @@ public class UIBottomMenu extends UIElement {
         placeTable();
 
         // Assign pause and play events
-        EventHandler.getEventHandler().createEvent("pause_game", (params) -> {
+        EventHandler.getEventHandler().createEvent(EventHandler.Event.PAUSE_GAME, (params) -> {
             // Set pause state
             GameState.getState().paused = true;
             // Pause the timer
             TimerManager.getTimerManager().getTimer().pauseTimer();
             // Cancel all actions
             try {
-                EventHandler.getEventHandler().callEvent("cancel_operations");
+                EventHandler.getEventHandler().callEvent(EventHandler.Event.CANCEL_OPERATIONS);
             } catch (NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
@@ -114,7 +114,7 @@ public class UIBottomMenu extends UIElement {
 
             return null;
         });
-        EventHandler.getEventHandler().createEvent("resume_game", (params) -> {
+        EventHandler.getEventHandler().createEvent(EventHandler.Event.RESUME_GAME, (params) -> {
             // Set pause state
             GameState.getState().paused = false;
             // Resume the timer

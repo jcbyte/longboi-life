@@ -42,7 +42,7 @@ public class UIBuildMenu extends UIElement {
         closeMenu();
 
         // Close menu when receiving an event to do so
-        EventHandler.getEventHandler().createEvent("close_build_menu", (params) -> {
+        EventHandler.getEventHandler().createEvent(EventHandler.Event.CLOSE_BUILD_MENU, (params) -> {
             closeMenu();
             return null;
         });
@@ -78,7 +78,7 @@ public class UIBuildMenu extends UIElement {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     try {
-                        EventHandler.getEventHandler().callEvent("cancel_operations");
+                        EventHandler.getEventHandler().callEvent(EventHandler.Event.CANCEL_OPERATIONS);
                     } catch (NoSuchMethodException e) {
                         throw new RuntimeException(e);
                     }

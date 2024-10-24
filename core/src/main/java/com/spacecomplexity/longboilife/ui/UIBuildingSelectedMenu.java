@@ -48,7 +48,7 @@ public class UIBuildingSelectedMenu extends UIElement {
             public void clicked(InputEvent event, float x, float y) {
                 // Call the events to sell the selected building
                 try {
-                    EventHandler.getEventHandler().callEvent("move_building");
+                    EventHandler.getEventHandler().callEvent(EventHandler.Event.MOVE_BUILDING);
                 } catch (NoSuchMethodException e) {
                     throw new RuntimeException(e);
                 }
@@ -64,7 +64,7 @@ public class UIBuildingSelectedMenu extends UIElement {
             public void clicked(InputEvent event, float x, float y) {
                 // Call the events to sell the selected building
                 try {
-                    EventHandler.getEventHandler().callEvent("sell_building");
+                    EventHandler.getEventHandler().callEvent(EventHandler.Event.SELL_BUILDING);
                 } catch (NoSuchMethodException e) {
                     throw new RuntimeException(e);
                 }
@@ -86,13 +86,13 @@ public class UIBuildingSelectedMenu extends UIElement {
         closeMenu();
 
         // Open menu when receiving an event to do so
-        EventHandler.getEventHandler().createEvent("open_selected_menu", (params) -> {
+        EventHandler.getEventHandler().createEvent(EventHandler.Event.OPEN_SELECTED_MENU, (params) -> {
             openMenu();
             return null;
         });
 
         // Close menu when receiving an event to do so
-        EventHandler.getEventHandler().createEvent("close_selected_menu", (params) -> {
+        EventHandler.getEventHandler().createEvent(EventHandler.Event.CLOSE_SELECTED_MENU, (params) -> {
             closeMenu();
             return null;
         });
