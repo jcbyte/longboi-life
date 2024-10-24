@@ -64,6 +64,13 @@ public class GameState {
     public Building selectedBuilding = null;
 
     /**
+     * The currently selected building to be moved.
+     * <p>
+     * If {@code null} then nothing is selected.
+     */
+    public Building movingBuilding = null;
+
+    /**
      * If the game is currently paused.
      */
     public boolean paused = false;

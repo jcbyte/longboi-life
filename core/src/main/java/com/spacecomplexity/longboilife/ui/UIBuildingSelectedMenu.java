@@ -39,7 +39,18 @@ public class UIBuildingSelectedMenu extends UIElement {
         // Initialise move button
         moveButton = new TextButton("Move", skin);
         moveButton.pad(10);
-        // todo allow buildings to move
+        // move the selected building when clicked
+        moveButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // Call the events to sell the selected building
+                try {
+                    EventHandler.getEventHandler().callEvent("move_building");
+                } catch (NoSuchMethodException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
         // Initialise sell button
         sellButton = new TextButton("Sell", skin);

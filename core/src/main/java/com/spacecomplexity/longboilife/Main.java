@@ -104,24 +104,46 @@ public class Main extends ApplicationAdapter {
                 return null;
             }
 
-            // If the user doesn't have enough money to buy the building then don't build
-            float cost = toBuild.getCost();
-            if (gameState.money < cost) {
-                return null;
-            }
-
             // If the building is in an invalid location then don't built
             Vector2Int mouse = GameUtils.getMouseOnGrid(world);
             if (!world.canBuild(toBuild, mouse.x, mouse.y)) {
                 return null;
             }
 
-            // Build the building at the mouse location and charge the player accordingly
-            world.build(toBuild, mouse.x, mouse.y);
-            gameState.money -= cost;
+            // If there is no moving building then this is a new build
+            if (gameState.movingBuilding == null) {
+                // If the user doesn't have enough money to buy the building then don't build
+                float cost = toBuild.getCost();
+                if (gameState.money < cost) {
+                    return null;
+                }
 
-            // Remove the selected building
-            gameState.placingBuilding = null;
+                // Build the building at the mouse location and charge the player accordingly
+                world.build(toBuild, mouse.x, mouse.y);
+                gameState.money -= cost;
+
+                // Remove the selected building
+                gameState.placingBuilding = null;
+
+            }
+            // If there is a moving building then this is a moved building.
+            else {
+                // If the user doesn't have enough money to buy the building then don't build
+                float cost = toBuild.getCost() * Constants.moveCostRecovery;
+                if (gameState.money < cost) {
+                    return null;
+                }
+
+                // Build the building at the mouse location and charge the player accordingly
+                world.build(gameState.movingBuilding, mouse.x, mouse.y);
+                gameState.money -= cost;
+
+                // Remove the old moving building and selected building
+                gameState.movingBuilding = null;
+                gameState.placingBuilding = null;
+            }
+
+            // todo if move is canceled then return it
 
             return null;
         });
@@ -160,6 +182,12 @@ public class Main extends ApplicationAdapter {
                 gameState.placingBuilding = null;
                 EventHandler.getEventHandler().callEvent("close_selected_menu");
                 gameState.selectedBuilding = null;
+
+                // If there is a building move in progress cancel this
+                if (gameState.movingBuilding != null) {
+                    world.build(gameState.movingBuilding);
+                    gameState.movingBuilding = null;
+                }
             } catch (NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
@@ -175,6 +203,32 @@ public class Main extends ApplicationAdapter {
             gameState.money += gameState.selectedBuilding.getType().getCost() * Constants.sellCostRecovery;
             // Deselect the removed building
             gameState.selectedBuilding = null;
+
+            return null;
+        });
+
+        // Start the move of the selected building
+        EventHandler.getEventHandler().createEvent("move_building", (params) -> {
+            float cost = gameState.selectedBuilding.getType().getCost() * Constants.moveCostRecovery;
+            // If we don't have enough money then don't allow the move
+            if (gameState.money < cost) {
+                return null;
+            }
+
+            // Delete the original building
+            world.demolish(gameState.selectedBuilding);
+            // Select the same type of building to be placed again
+            gameState.placingBuilding = gameState.selectedBuilding.getType();
+            // Deselect the removed building and set it to the building to be moved
+            gameState.movingBuilding = gameState.selectedBuilding;
+            gameState.selectedBuilding = null;
+
+            // Close the menu
+            try {
+                EventHandler.getEventHandler().callEvent("close_selected_menu");
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
 
             return null;
         });
@@ -217,6 +271,10 @@ public class Main extends ApplicationAdapter {
         // If there is a building selected then outline it
         if (gameState.selectedBuilding != null) {
             RenderUtils.outlineBuilding(shapeRenderer, gameState.selectedBuilding, Color.RED, 2);
+        }
+        // If there is a moving selected then outline where it was previously
+        if (gameState.movingBuilding != null) {
+            RenderUtils.outlineBuilding(shapeRenderer, gameState.movingBuilding, Color.RED, 2);
         }
 
         // Render the UI

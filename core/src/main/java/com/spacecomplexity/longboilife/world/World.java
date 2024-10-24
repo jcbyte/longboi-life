@@ -115,17 +115,45 @@ public class World {
      * @param y            the y coordinate of the building.
      */
     public void build(BuildingType buildingType, int x, int y) {
-        // If we cannot build then throw an exception
-        if (!canBuild(buildingType, x, y)) {
-            throw new IllegalStateException("Building \"" + buildingType.name() + "\" cannot build at (" + x + ", " + y + ")");
-        }
-
         // Create the building instance
         Building building = new Building(buildingType, new Vector2Int(x, y));
 
+        // Try to build this
+        build(building);
+    }
+
+    /**
+     * Build a building at a specific location in the world.
+     *
+     * @param building the building to build.
+     * @param x        the x coordinate of the building.
+     * @param y        the y coordinate of the building.
+     */
+    public void build(Building building, int x, int y) {
+        // Update the building instance
+        building.setPosition(new Vector2Int(x, y));
+
+        // Try to build this
+        build(building);
+    }
+
+    /**
+     * Build a building in the world.
+     *
+     * @param building the building to build
+     */
+    public void build(Building building) {
+        // Get the coordinates of where to build the building
+        int x = building.getPosition().x;
+        int y = building.getPosition().y;
+
+        // If we cannot build then throw an exception
+        if (!canBuild(building.getType(), x, y)) {
+            throw new IllegalStateException("Building \"" + building.getType().name() + "\" cannot build at (" + x + ", " + y + ")");
+        }
 
         // Set every tile underneath this building to un-buildable and assign the reference
-        Vector2Int buildingSize = buildingType.getSize();
+        Vector2Int buildingSize = building.getType().getSize();
         for (int xi = x; xi < x + buildingSize.x; xi++) {
             for (int yi = y; yi < y + buildingSize.y; yi++) {
                 Tile tile = getTile(xi, yi);
