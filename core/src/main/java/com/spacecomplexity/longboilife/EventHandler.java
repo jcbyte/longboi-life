@@ -1,6 +1,5 @@
 package com.spacecomplexity.longboilife;
 
-import java.util.HashMap;
 import java.util.function.Function;
 
 /**
@@ -19,17 +18,19 @@ public class EventHandler {
         CLOSE_SELECTED_MENU,
         CLOSE_BUILD_MENU,
         ;
+
+        private Function<Object[], Object> callback;
+
+        private void setCallback(Function<Object[], Object> callback) {
+            this.callback = callback;
+        }
+
+        private Function<Object[], Object> getCallback() {
+            return callback;
+        }
     }
 
     private static final EventHandler eventHandler = new EventHandler();
-    private HashMap<Event, Function<Object[], Object>> events;
-
-    /**
-     * Initialise events attributes.
-     */
-    public EventHandler() {
-        events = new HashMap<>();
-    }
 
     /**
      * Create an event.
@@ -38,7 +39,7 @@ public class EventHandler {
      * @param callback the event method, this is what will be executed.
      */
     public void createEvent(Event event, Function<Object[], Object> callback) {
-        events.put(event, callback);
+        event.setCallback(callback);
     }
 
     /**
@@ -50,7 +51,7 @@ public class EventHandler {
      * @throws NoSuchMethodException if the event has not been defined.
      */
     public Object callEvent(Event event, Object... params) throws NoSuchMethodException {
-        Function<Object[], Object> callback = events.get(event);
+        Function<Object[], Object> callback = event.getCallback();
 
         // If the callback is not defined then throw an error
         if (callback == null) {
