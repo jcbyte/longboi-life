@@ -14,7 +14,7 @@ import com.spacecomplexity.longboilife.TimerManager;
 public class UIClockMenu extends UIElement {
     private Label label;
 
-    private TimerManager timerManager = TimerManager.getTimerManager();
+    private final TimerManager timerManager = TimerManager.getTimerManager();
 
     /**
      * Initialise clock menu elements.

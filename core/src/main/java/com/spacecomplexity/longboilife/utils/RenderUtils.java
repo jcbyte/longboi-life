@@ -113,14 +113,7 @@ public class RenderUtils {
         shapeRenderer.end();
     }
 
-
-    /**
-     * Draw the world's buildings.
-     *
-     * @param batch the {@link SpriteBatch} to draw sprites to.
-     * @param world the {@link World} containing buildings to draw.
-     * @param tint  the tint to apply to all the buildings.
-     */
+    
     /**
      * Draw a building at the mouse coordinates.
      *

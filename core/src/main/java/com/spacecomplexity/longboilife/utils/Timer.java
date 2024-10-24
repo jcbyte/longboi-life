@@ -8,6 +8,9 @@ public class Timer {
     private long onPauseTime;
     private boolean paused;
 
+    /**
+     * Create a new timer object.
+     */
     public Timer() {
     }
 

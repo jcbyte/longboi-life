@@ -20,7 +20,7 @@ import java.util.Locale;
  * Class to represent the Build Menu UI.
  */
 public class UIBuildMenu extends UIElement {
-    private Skin skin;
+    private final Skin skin;
 
     /**
      * Initialise build menu elements.

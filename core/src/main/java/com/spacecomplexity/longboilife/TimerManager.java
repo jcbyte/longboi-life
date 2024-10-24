@@ -8,7 +8,7 @@ import com.spacecomplexity.longboilife.utils.Timer;
 public class TimerManager {
     private static final TimerManager timerManager = new TimerManager();
 
-    private Timer timer;
+    private final Timer timer;
 
     private TimerManager() {
         timer = new Timer();

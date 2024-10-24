@@ -21,8 +21,7 @@ public class UIManager {
     private Viewport viewport;
 
     private Stage stage;
-    private Skin skin;
-    private Table table;
+    private final Skin skin;
 
     private UIElement[] uiElements;
 
@@ -40,7 +39,7 @@ public class UIManager {
         inputMultiplexer.addProcessor(stage);
 
         // Initialise root table
-        table = new Table();
+        Table table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
 
@@ -86,10 +85,6 @@ public class UIManager {
         viewport.apply();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
-    }
-
-    private float customNonLinearScale(float scaleFactor) {
-        return (float) Math.pow(scaleFactor, 5);
     }
 
     /**
