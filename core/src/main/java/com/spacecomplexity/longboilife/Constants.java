@@ -35,4 +35,14 @@ public class Constants {
      * Maximum camera zoom level.
      */
     public static final float MAX_ZOOM = 0.5f;
+
+    /**
+     * The proportion of money the user will get back form selling the building.
+     */
+    public static float sellCostRecovery = 0.5f;
+
+    /**
+     * THe proportion of money the user will need in order to move the building.
+     */
+    public static float moveCostRecovery = 0.25f;
 }

@@ -10,7 +10,7 @@ import java.util.stream.Stream;
  */
 public enum BuildingType {
     GREGGS("Greggs", new Texture("buildings/greggs.png"), new Vector2Int(2, 2), BuildingCategory.FOOD, 200),
-    LIBRARY("Library", new Texture("buildings/library.png"), new Vector2Int(4, 4), BuildingCategory.EDUCATIONAL, 200),
+    LIBRARY("Library", new Texture("buildings/library.png"), new Vector2Int(4, 4), BuildingCategory.EDUCATIONAL, 3000),
     GYM("Gym", new Texture("buildings/gym.png"), new Vector2Int(3, 3), BuildingCategory.RECREATIONAL, 200),
     ;
 
