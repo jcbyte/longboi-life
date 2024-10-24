@@ -2,9 +2,11 @@ package com.spacecomplexity.longboilife.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.Constants;
 import com.spacecomplexity.longboilife.EventHandler;
@@ -42,7 +44,20 @@ public class UIBuildingSelectedMenu extends UIElement {
         // Initialise sell button
         sellButton = new TextButton("Sell", skin);
         sellButton.pad(10);
-        // todo allow selling buildings
+        // Sell the selected building when clicked
+        sellButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // Call the events to sell the selected building
+                try {
+                    EventHandler.getEventHandler().callEvent("sell_building");
+                } catch (NoSuchMethodException e) {
+                    throw new RuntimeException(e);
+                }
+
+                closeMenu();
+            }
+        });
 
         // Place buttons onto table
         table.add(moveButton);

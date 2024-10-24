@@ -166,6 +166,18 @@ public class Main extends ApplicationAdapter {
 
             return null;
         });
+
+        // Sell the selected building
+        EventHandler.getEventHandler().createEvent("sell_building", (params) -> {
+            // Delete the building
+            world.demolish(gameState.selectedBuilding);
+            // Refund the specified amount
+            gameState.money += gameState.selectedBuilding.getType().getCost() * Constants.sellCostRecovery;
+            // Deselect the removed building
+            gameState.selectedBuilding = null;
+
+            return null;
+        });
     }
 
     /**

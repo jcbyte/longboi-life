@@ -135,4 +135,14 @@ public class World {
 
         buildings.add(building);
     }
+
+    /**
+     * Remove a building from the world.
+     *
+     * @param building the building to remove.
+     */
+    public void demolish(Building building) {
+        buildings.remove(building);
+        // todo remove building properly
+    }
 }
