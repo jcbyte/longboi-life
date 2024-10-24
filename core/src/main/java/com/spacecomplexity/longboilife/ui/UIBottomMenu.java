@@ -101,7 +101,7 @@ public class UIBottomMenu extends UIElement {
             TimerManager.getTimerManager().getTimer().pauseTimer();
             // Cancel all actions
             try {
-                EventHandler.getEventHandler().callEvent("cancel_all");
+                EventHandler.getEventHandler().callEvent("cancel_operations");
             } catch (NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
