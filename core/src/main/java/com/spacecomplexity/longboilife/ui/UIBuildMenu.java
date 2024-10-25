@@ -12,6 +12,7 @@ import com.spacecomplexity.longboilife.EventHandler;
 import com.spacecomplexity.longboilife.GameState;
 import com.spacecomplexity.longboilife.building.BuildingCategory;
 import com.spacecomplexity.longboilife.building.BuildingType;
+import com.spacecomplexity.longboilife.utils.Vector2Int;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -66,10 +67,13 @@ public class UIBuildMenu extends UIElement {
         // Place building buttons on separate table for condensed styling
         Table buildingButtonsTable = new Table();
         for (BuildingType building : buildings) {
-            // Get building texture and make it fill the bar
+            // Get building texture
             TextureRegionDrawable texture = new TextureRegionDrawable(building.getTexture());
+            // Set the size of the texture keeping its aspect ratio
             float textureSize = table.getHeight() - 75;
-            texture.setMinSize(textureSize, textureSize);
+            Vector2Int buildingSize = building.getSize();
+            float maxDimension = Math.max(buildingSize.x, buildingSize.y);
+            texture.setMinSize(textureSize * (buildingSize.x / maxDimension), textureSize * (buildingSize.y / maxDimension));
 
             // Initialise building button
             ImageButton button = new ImageButton(texture);
