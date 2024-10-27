@@ -130,7 +130,7 @@ public class InputManager {
         }
 
         /**
-         * Calculates the difference in mouse drag and moves the camera accordingly, hence allows the world to be dragged around.
+         * Mouse down (not initial frame) event.
          *
          * @param screenX The x coordinate, origin is in the upper left corner.
          * @param screenY The y coordinate, origin is in the upper left corner.
@@ -140,6 +140,20 @@ public class InputManager {
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
             switch (lastButton) {
+                // If main button clicked
+                case 0:
+                    // If game is paused don't allow any actions
+                    if (gameState.paused) {
+                        return true;
+                    }
+
+                    // If a building is selected then try to build
+                    // This allows drag placing buildings which are not automatically deselected
+                    if (GameState.getState().placingBuilding != null) {
+                        eventHandler.callEvent(EventHandler.Event.BUILD);
+                    }
+
+                    break;
                 // If secondary or tertiary button clicked
                 case 1:
                 case 2:
