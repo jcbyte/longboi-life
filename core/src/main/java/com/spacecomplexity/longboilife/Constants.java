@@ -1,5 +1,7 @@
 package com.spacecomplexity.longboilife;
 
+import com.spacecomplexity.longboilife.building.BuildingCategory;
+
 import java.util.TreeMap;
 
 /**
@@ -42,7 +44,14 @@ public class Constants {
     public static float sellCostRecovery = 0.5f;
 
     /**
-     * THe proportion of money the user will need in order to move the building.
+     * The proportion of money the user will need in order to move the building.
      */
     public static float moveCostRecovery = 0.25f;
+
+    /**
+     * Which category of buildings will not be deselected when built.
+     */
+    public static BuildingCategory[] dontRemoveSelection = new BuildingCategory[]{
+        BuildingCategory.PATHWAY
+    };
 }

@@ -21,6 +21,7 @@ import com.spacecomplexity.longboilife.utils.Vector2Int;
 import com.spacecomplexity.longboilife.world.World;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 
 
 /**
@@ -124,9 +125,10 @@ public class Main extends ApplicationAdapter {
                 world.build(toBuild, mouse.x, mouse.y);
                 gameState.money -= cost;
 
-                // Remove the selected building
-                gameState.placingBuilding = null;
-
+                // Remove the selected building if it is wanted to do so
+                if (Arrays.stream(Constants.dontRemoveSelection).noneMatch(category -> gameState.placingBuilding.getCategory() == category)) {
+                    gameState.placingBuilding = null;
+                }
             }
             // If there is a moving building then this is a moved building.
             else {
