@@ -4,12 +4,15 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.SerializationException;
 import com.spacecomplexity.longboilife.building.Building;
+import com.spacecomplexity.longboilife.building.BuildingCategory;
 import com.spacecomplexity.longboilife.building.BuildingType;
+import com.spacecomplexity.longboilife.pathways.PathwayPositions;
 import com.spacecomplexity.longboilife.tile.InvalidSaveMapException;
 import com.spacecomplexity.longboilife.tile.Tile;
 import com.spacecomplexity.longboilife.utils.Vector2Int;
 
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.Vector;
 
 /**
@@ -18,6 +21,7 @@ import java.util.Vector;
 public class World {
     private Tile[][] world;
     public Vector<Building> buildings;
+    private PathwayPositions[][] pathways;
 
     /**
      * Creates a new world loaded from a map JSON file.
@@ -29,6 +33,7 @@ public class World {
     public World(FileHandle mapFile) throws FileNotFoundException, InvalidSaveMapException {
         world = getMap(mapFile);
         buildings = new Vector<>();
+        pathways = new PathwayPositions[getWidth()][getHeight()];
     }
 
     /**
@@ -164,6 +169,68 @@ public class World {
         }
 
         buildings.add(building);
+
+        // If building is a pathway then calculate and add the type to the pathways grid
+        if (building.getType().getCategory() == BuildingCategory.PATHWAY) {
+            // todo should this be in a separate file?
+
+            BuildingType thisBuilding = building.getType();
+
+            // Get neighbouring paths
+            boolean top = isOurPathway(x, y + 1, thisBuilding);
+            boolean right = isOurPathway(x + 1, y, thisBuilding);
+            boolean bottom = isOurPathway(x, y - 1, thisBuilding);
+            boolean left = isOurPathway(x - 1, y, thisBuilding);
+
+            // Map of encoded neighbouring paths and the respective layout of this path
+            // todo should this be static
+            HashMap<Integer, PathwayPositions> pathwayPositionsMap = new HashMap<>() {
+                {
+                    put(0b1010, PathwayPositions.TOP_BOTTOM);
+                    put(0b0101, PathwayPositions.LEFT_RIGHT);
+                    put(0b1001, PathwayPositions.LEFT_TOP);
+                    put(0b1100, PathwayPositions.TOP_RIGHT);
+                    put(0b0110, PathwayPositions.RIGHT_BOTTOM);
+                    put(0b0011, PathwayPositions.BOTTOM_LEFT);
+                    put(0b1101, PathwayPositions.LEFT_TOP_RIGHT);
+                    put(0b1110, PathwayPositions.TOP_RIGHT_BOTTOM);
+                    put(0b0111, PathwayPositions.RIGHT_BOTTOM_LEFT);
+                    put(0b1011, PathwayPositions.BOTTOM_LEFT_TOP);
+                    put(0b1111, PathwayPositions.TOP_LEFT_BOTTOM_RIGHT);
+                }
+            };
+
+            // Encode our neighboring paths to query the map for the layout
+            int code = (top ? 1 : 0) << 3 + (right ? 1 : 0) << 2 + (bottom ? 1 : 0) << 1 + (left ? 1 : 0);
+            PathwayPositions position = pathwayPositionsMap.get(code);
+            // If this is not specified default to straight
+            if (position == null) {
+                position = PathwayPositions.TOP_BOTTOM;
+            }
+
+            pathways[x][y] = position;
+        }
+    }
+
+    /**
+     * Check if a pathway is the same as a specified one.
+     *
+     * @param x           the x coordinate of the pathway
+     * @param y           the y coordinate of the pathway.
+     * @param thisPathway the pathway to check/match too.
+     * @return if the pathway at (x, y) is the same as the pathway specified.
+     */
+    private boolean isOurPathway(int x, int y, BuildingType thisPathway) {
+        // Check this is in the worlds bounds
+        if (x < 0 || x >= getWidth() || y < 0 || y >= getHeight()) {
+            return false;
+        }
+
+        // Get the building on this tile
+        Building ref = getTile(x - 1, y).getBuildingRef();
+        // If there is no building return false
+        // If there is a building only return true if it is the same pathway as this
+        return ref != null && ref.getType() == thisPathway;
     }
 
     /**
@@ -184,5 +251,9 @@ public class World {
         }
 
         buildings.remove(building);
+
+        if (building.getType().getCategory() == BuildingCategory.PATHWAY) {
+            pathways[buildingPosition.x][buildingPosition.y] = null;
+        }
     }
 }
