@@ -25,4 +25,23 @@ public class Vector2Int {
         this.x = x;
         this.y = y;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        // Check for the same reference
+        if (this == obj) return true;
+        // Check class type
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        // Check if fields are equal
+        Vector2Int that = (Vector2Int) obj;
+        return x == that.x && y == that.y;
+    }
+    
+    @Override
+    public int hashCode() {
+        int result = Integer.hashCode(x);
+        result = 31 * result + Integer.hashCode(y);
+        return result;
+    }
 }
