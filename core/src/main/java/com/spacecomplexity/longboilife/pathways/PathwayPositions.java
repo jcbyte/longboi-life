@@ -8,14 +8,14 @@ public enum PathwayPositions {
     LEFT_RIGHT(90, PathwayTextures.Type.STRAIGHT),
 
     LEFT_TOP(0, PathwayTextures.Type.CORNER),
-    TOP_RIGHT(90, PathwayTextures.Type.CORNER),
+    BOTTOM_LEFT(90, PathwayTextures.Type.CORNER),
     RIGHT_BOTTOM(180, PathwayTextures.Type.CORNER),
-    BOTTOM_LEFT(270, PathwayTextures.Type.CORNER),
+    TOP_RIGHT(270, PathwayTextures.Type.CORNER),
 
     LEFT_TOP_RIGHT(0, PathwayTextures.Type.TJUNC),
-    TOP_RIGHT_BOTTOM(90, PathwayTextures.Type.TJUNC),
+    BOTTOM_LEFT_TOP(90, PathwayTextures.Type.TJUNC),
     RIGHT_BOTTOM_LEFT(180, PathwayTextures.Type.TJUNC),
-    BOTTOM_LEFT_TOP(270, PathwayTextures.Type.TJUNC),
+    TOP_RIGHT_BOTTOM(270, PathwayTextures.Type.TJUNC),
 
     TOP_LEFT_BOTTOM_RIGHT(0, PathwayTextures.Type.CROSS),
     ;
