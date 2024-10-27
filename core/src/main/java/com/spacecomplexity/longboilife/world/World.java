@@ -208,6 +208,28 @@ public class World {
 
         if (building.getType().getCategory() == BuildingCategory.PATHWAY) {
             pathways[buildingPosition.x][buildingPosition.y] = null;
+
+            BuildingType thisBuildingType = building.getType();
+
+            // Get neighbouring pathways
+            boolean top = isOurPathway(buildingPosition.x, buildingPosition.y + 1, thisBuildingType);
+            boolean right = isOurPathway(buildingPosition.x + 1, buildingPosition.y, thisBuildingType);
+            boolean bottom = isOurPathway(buildingPosition.x, buildingPosition.y - 1, thisBuildingType);
+            boolean left = isOurPathway(buildingPosition.x - 1, buildingPosition.y, thisBuildingType);
+
+            // Recursively set nearby pathways positions
+            if (top) {
+                updatePathwayPosition(buildingPosition.x, buildingPosition.y + 1);
+            }
+            if (right) {
+                updatePathwayPosition(buildingPosition.x + 1, buildingPosition.y);
+            }
+            if (bottom) {
+                updatePathwayPosition(buildingPosition.x, buildingPosition.y - 1);
+            }
+            if (left) {
+                updatePathwayPosition(buildingPosition.x - 1, buildingPosition.y);
+            }
         }
     }
 
