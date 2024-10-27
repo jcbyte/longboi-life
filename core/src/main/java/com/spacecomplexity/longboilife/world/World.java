@@ -214,9 +214,15 @@ public class World {
 
     /**
      * Map of encoded neighbouring paths and the respective layout of this path.
+     * <p>
+     * The key is represented by a 4-bit binary number 0b(top)(right)(bottom)(left
      */
     private static final HashMap<Integer, PathwayPositions> pathwayPositionsMap = new HashMap<>() {
         {
+            put(0b1000, PathwayPositions.TOP_BOTTOM);
+            put(0b0010, PathwayPositions.TOP_BOTTOM);
+            put(0b0100, PathwayPositions.LEFT_RIGHT);
+            put(0b0001, PathwayPositions.LEFT_RIGHT);
             put(0b1010, PathwayPositions.TOP_BOTTOM);
             put(0b0101, PathwayPositions.LEFT_RIGHT);
             put(0b1001, PathwayPositions.LEFT_TOP);
