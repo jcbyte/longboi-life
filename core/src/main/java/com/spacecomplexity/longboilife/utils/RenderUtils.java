@@ -2,12 +2,17 @@ package com.spacecomplexity.longboilife.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.spacecomplexity.longboilife.Constants;
 import com.spacecomplexity.longboilife.GameState;
 import com.spacecomplexity.longboilife.building.Building;
+import com.spacecomplexity.longboilife.building.BuildingCategory;
 import com.spacecomplexity.longboilife.building.BuildingType;
+import com.spacecomplexity.longboilife.pathways.PathwayPositions;
+import com.spacecomplexity.longboilife.pathways.PathwayTextures;
 import com.spacecomplexity.longboilife.world.World;
 
 /**
@@ -67,13 +72,29 @@ public class RenderUtils {
             Vector2Int buildingPosition = building.getPosition();
             Vector2Int buildingSize = building.getType().getSize();
 
+            Texture texture = building.getType().getTexture();
+            float rotation = 0;
+
+            // If the building is a pathway we need to select the correct texture to render.
+            if (building.getType().getCategory() == BuildingCategory.PATHWAY) {
+                PathwayPositions pathwayPositions = world.getPathwayPosition(buildingPosition.x, buildingPosition.y);
+                texture = PathwayTextures.getTexture(building.getType(), pathwayPositions.getTextureType());
+                rotation = pathwayPositions.getRotation();
+            }
+
+            // Convert the texture into a texture region for drawing
+            TextureRegion textureRegion = new TextureRegion(texture);
+
             // Draw the building
             batch.draw(
-                building.getType().getTexture(),
+                textureRegion,
                 buildingPosition.x * cellSize,
                 buildingPosition.y * cellSize,
+                (buildingSize.x * cellSize) / 2f, (buildingSize.y * cellSize) / 2f,
                 buildingSize.x * cellSize,
-                buildingSize.y * cellSize
+                buildingSize.y * cellSize,
+                1, 1,
+                rotation
             );
         }
 
@@ -113,7 +134,7 @@ public class RenderUtils {
         shapeRenderer.end();
     }
 
-    
+
     /**
      * Draw a building at the mouse coordinates.
      *

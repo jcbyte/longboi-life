@@ -74,6 +74,17 @@ public class World {
         return world[x][y];
     }
 
+    /**
+     * Retrieves the pathway position at the specified coordinates.
+     *
+     * @param x the x coordinate.
+     * @param y the y coordinate.
+     * @return the pathway position the specified coordinates.
+     */
+    public PathwayPositions getPathwayPosition(int x, int y) {
+        return pathways[x][y];
+    }
+
     public int getHeight() {
         return world[0].length;
     }
@@ -201,7 +212,7 @@ public class World {
             };
 
             // Encode our neighboring paths to query the map for the layout
-            int code = (top ? 1 : 0) << 3 + (right ? 1 : 0) << 2 + (bottom ? 1 : 0) << 1 + (left ? 1 : 0);
+            int code = (top ? 1 : 0) << 3 | (right ? 1 : 0) << 2 | (bottom ? 1 : 0) << 1 | (left ? 1 : 0);
             PathwayPositions position = pathwayPositionsMap.get(code);
             // If this is not specified default to straight
             if (position == null) {
@@ -227,7 +238,7 @@ public class World {
         }
 
         // Get the building on this tile
-        Building ref = getTile(x - 1, y).getBuildingRef();
+        Building ref = getTile(x, y).getBuildingRef();
         // If there is no building return false
         // If there is a building only return true if it is the same pathway as this
         return ref != null && ref.getType() == thisPathway;

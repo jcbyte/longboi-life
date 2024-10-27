@@ -39,7 +39,7 @@ public class PathwayTextures {
      * @param pathwayTextureType the type of texture.
      * @return the texture fitting these criteria.
      */
-    private static Texture getTexture(BuildingType buildingType, PathwayTextures.Type pathwayTextureType) {
+    public static Texture getTexture(BuildingType buildingType, PathwayTextures.Type pathwayTextureType) {
         return textureList.get(buildingType).get(pathwayTextureType);
     }
 }
