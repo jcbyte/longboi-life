@@ -38,7 +38,7 @@ public class RenderUtils {
             for (int y = 0; y < world.getHeight(); y++) {
                 // Draw the tile texture with size specified by TILE_SIZE and the current scaling factor
                 batch.draw(
-                    world.getTile(x, y).getType().getTexture(),
+                    world.getTile(new Vector2Int(x, y)).getType().getTexture(),
                     x * cellSize,
                     y * cellSize,
                     cellSize,
@@ -77,7 +77,7 @@ public class RenderUtils {
 
             // If the building is a pathway we need to select the correct texture to render.
             if (building.getType().getCategory() == BuildingCategory.PATHWAY) {
-                PathwayPositions pathwayPositions = world.getPathwayPosition(buildingPosition.x, buildingPosition.y);
+                PathwayPositions pathwayPositions = world.getPathwayPosition(buildingPosition);
                 texture = PathwayTextures.getTexture(building.getType(), pathwayPositions.getTextureType());
                 rotation = pathwayPositions.getRotation();
             }
@@ -150,7 +150,7 @@ public class RenderUtils {
         Vector2Int mouse = GameUtils.getMouseOnGrid(world);
 
         // Check if this would be a valid position to build
-        boolean validPosition = world.canBuild(building, mouse.x, mouse.y);
+        boolean validPosition = world.canBuild(building, mouse);
 
         // Begin the batch with the specified tint based on the building being valid.
         batch.begin();

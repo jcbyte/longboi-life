@@ -61,23 +61,21 @@ public class World {
     /**
      * Retrieves the tile at the specified coordinates.
      *
-     * @param x the x coordinate.
-     * @param y the y coordinate.
+     * @param coordinate the coordinate.
      * @return the {@link Tile} at the specified coordinates.
      */
-    public Tile getTile(int x, int y) {
-        return world[x][y];
+    public Tile getTile(Vector2Int coordinate) {
+        return world[coordinate.x][coordinate.y];
     }
 
     /**
      * Retrieves the pathway position at the specified coordinates.
      *
-     * @param x the x coordinate.
-     * @param y the y coordinate.
+     * @param coordinate the coordinate.
      * @return the pathway position the specified coordinates.
      */
-    public PathwayPositions getPathwayPosition(int x, int y) {
-        return pathways[x][y];
+    public PathwayPositions getPathwayPosition(Vector2Int coordinate) {
+        return pathways[coordinate.x][coordinate.y];
     }
 
     public int getHeight() {
@@ -91,23 +89,22 @@ public class World {
     /**
      * Check if a building can be placed at a specific location in the world.
      *
-     * @param building the building we wish to place.
-     * @param x        the x coordinate of the building.
-     * @param y        the y coordinate of the building.
+     * @param building   the building we wish to place.
+     * @param coordinate the coordinate of the building.
      * @return whether this is a valid position to build the building.
      */
-    public boolean canBuild(BuildingType building, int x, int y) {
+    public boolean canBuild(BuildingType building, Vector2Int coordinate) {
         Vector2Int buildingSize = building.getSize();
 
         // If the building goes off the edge of the map it is not valid
-        if (x + buildingSize.x > getWidth() || y + buildingSize.y > getHeight()) {
+        if (coordinate.x + buildingSize.x > getWidth() || coordinate.y + buildingSize.y > getHeight()) {
             return false;
         }
 
         // Check if every tile underneath this building is buildable
-        for (int xi = x; xi < x + buildingSize.x; xi++) {
-            for (int yi = y; yi < y + buildingSize.y; yi++) {
-                if (!getTile(xi, yi).isBuildable()) {
+        for (int xi = coordinate.x; xi < coordinate.x + buildingSize.x; xi++) {
+            for (int yi = coordinate.y; yi < coordinate.y + buildingSize.y; yi++) {
+                if (!getTile(new Vector2Int(xi, yi)).isBuildable()) {
                     // If a single tile is not then the building placement is invalid
                     return false;
                 }
@@ -122,13 +119,12 @@ public class World {
      * Build a building at a specific location in the world.
      *
      * @param buildingType the building we wish to place.
-     * @param x            the x coordinate of the building.
-     * @param y            the y coordinate of the building.
+     * @param coordinate   the coordinate of the building.
      * @throws IllegalStateException if the building cannot be built.
      */
-    public void build(BuildingType buildingType, int x, int y) throws IllegalStateException {
+    public void build(BuildingType buildingType, Vector2Int coordinate) throws IllegalStateException {
         // Create the building instance
-        Building building = new Building(buildingType, new Vector2Int(x, y));
+        Building building = new Building(buildingType, new Vector2Int(coordinate.x, coordinate.y));
 
         // Try to build this
         build(building);
@@ -137,14 +133,13 @@ public class World {
     /**
      * Build a building at a specific location in the world.
      *
-     * @param building the building to build.
-     * @param x        the x coordinate of the building.
-     * @param y        the y coordinate of the building.
+     * @param building   the building to build.
+     * @param coordinate the coordinate of the building.
      * @throws IllegalStateException if the building cannot be built.
      */
-    public void build(Building building, int x, int y) throws IllegalStateException {
+    public void build(Building building, Vector2Int coordinate) throws IllegalStateException {
         // Update the building instance
-        building.setPosition(new Vector2Int(x, y));
+        building.setPosition(new Vector2Int(coordinate.x, coordinate.y));
 
         // Try to build this
         build(building);
@@ -158,19 +153,18 @@ public class World {
      */
     public void build(Building building) throws IllegalStateException {
         // Get the coordinates of where to build the building
-        int x = building.getPosition().x;
-        int y = building.getPosition().y;
+        Vector2Int buildingPosition = building.getPosition();
 
         // If we cannot build then throw an exception
-        if (!canBuild(building.getType(), x, y)) {
-            throw new IllegalStateException("Building \"" + building.getType().name() + "\" cannot build at (" + x + ", " + y + ")");
+        if (!canBuild(building.getType(), buildingPosition)) {
+            throw new IllegalStateException("Building \"" + building.getType().name() + "\" cannot build at (" + buildingPosition.x + ", " + buildingPosition.y + ")");
         }
 
         // Set every tile underneath this building to un-buildable and assign the reference
         Vector2Int buildingSize = building.getType().getSize();
-        for (int xi = x; xi < x + buildingSize.x; xi++) {
-            for (int yi = y; yi < y + buildingSize.y; yi++) {
-                Tile tile = getTile(xi, yi);
+        for (int xi = buildingPosition.x; xi < buildingPosition.x + buildingSize.x; xi++) {
+            for (int yi = buildingPosition.y; yi < buildingPosition.y + buildingSize.y; yi++) {
+                Tile tile = getTile(new Vector2Int(xi, yi));
                 tile.setBuildingRef(building);
                 tile.setBuildable(false);
 
@@ -181,7 +175,7 @@ public class World {
 
         // If building is a pathway then calculate and add the type to the pathways grid
         if (building.getType().getCategory() == BuildingCategory.PATHWAY) {
-            updatePathwayPosition(x, y);
+            updatePathwayPosition(buildingPosition);
         }
 
         // Update the game state counter with the new building
@@ -199,7 +193,7 @@ public class World {
         Vector2Int buildingPosition = building.getPosition();
         for (int xi = buildingPosition.x; xi < buildingPosition.x + buildingSize.x; xi++) {
             for (int yi = buildingPosition.y; yi < buildingPosition.y + buildingSize.y; yi++) {
-                Tile tile = getTile(xi, yi);
+                Tile tile = getTile(new Vector2Int(xi, yi));
                 tile.setBuildingRef(null);
                 tile.setBuildable(tile.getType().isNaturallyBuildable());
             }
@@ -213,23 +207,17 @@ public class World {
             BuildingType thisBuildingType = building.getType();
 
             // Get neighbouring pathways
-            boolean top = isOurPathway(buildingPosition.x, buildingPosition.y + 1, thisBuildingType);
-            boolean right = isOurPathway(buildingPosition.x + 1, buildingPosition.y, thisBuildingType);
-            boolean bottom = isOurPathway(buildingPosition.x, buildingPosition.y - 1, thisBuildingType);
-            boolean left = isOurPathway(buildingPosition.x - 1, buildingPosition.y, thisBuildingType);
+            Vector2Int[] neighbours = new Vector2Int[]{
+                new Vector2Int(buildingPosition.x, buildingPosition.y + 1),
+                new Vector2Int(buildingPosition.x + 1, buildingPosition.y),
+                new Vector2Int(buildingPosition.x, buildingPosition.y - 1),
+                new Vector2Int(buildingPosition.x - 1, buildingPosition.y)
+            };
+            for (Vector2Int neighbour : neighbours) {
+                if (isOurPathway(neighbour, thisBuildingType)) {
+                    updatePathwayPosition(neighbour);
 
-            // Recursively set nearby pathways positions
-            if (top) {
-                updatePathwayPosition(buildingPosition.x, buildingPosition.y + 1);
-            }
-            if (right) {
-                updatePathwayPosition(buildingPosition.x + 1, buildingPosition.y);
-            }
-            if (bottom) {
-                updatePathwayPosition(buildingPosition.x, buildingPosition.y - 1);
-            }
-            if (left) {
-                updatePathwayPosition(buildingPosition.x - 1, buildingPosition.y);
+                }
             }
         }
 
@@ -266,12 +254,11 @@ public class World {
     /**
      * Update the pathways on the board recursively starting at the coordinates given.
      *
-     * @param x the x coordinate of the pathway.
-     * @param y the x coordinate of the pathway.
+     * @param coordinate the coordinate of the pathway.
      */
-    private void updatePathwayPosition(int x, int y) {
+    private void updatePathwayPosition(Vector2Int coordinate) {
         // If there is no building on this tile then do nothing.
-        Building thisBuilding = getTile(x, y).getBuildingRef();
+        Building thisBuilding = getTile(coordinate).getBuildingRef();
         if (thisBuilding == null) {
             return;
         }
@@ -282,7 +269,7 @@ public class World {
         }
 
         // Call recursive function with an empty vector as no pathways have been set
-        updatePathwayPosition(x, y, new Vector<>());
+        updatePathwayPosition(coordinate, new Vector<>());
     }
 
     /**
@@ -290,23 +277,22 @@ public class World {
      * <p>
      * This should only be called recursive from this function and the starter function.
      *
-     * @param x               the x coordinate of the pathway.
-     * @param y               the x coordinate of the pathway.
+     * @param coordinate      the coordinate of the pathway.
      * @param updatedPathways a list of all pathways which have already been updated.
      */
-    private void updatePathwayPosition(int x, int y, Vector<Vector2Int> updatedPathways) {
+    private void updatePathwayPosition(Vector2Int coordinate, Vector<Vector2Int> updatedPathways) {
         // If this pathway has already been done then ignore
-        if (updatedPathways.contains(new Vector2Int(x, y))) {
+        if (updatedPathways.contains(coordinate)) {
             return;
         }
 
-        BuildingType thisBuildingType = getTile(x, y).getBuildingRef().getType();
+        BuildingType thisBuildingType = getTile(coordinate).getBuildingRef().getType();
 
         // Get neighbouring pathways
-        boolean top = isOurPathway(x, y + 1, thisBuildingType);
-        boolean right = isOurPathway(x + 1, y, thisBuildingType);
-        boolean bottom = isOurPathway(x, y - 1, thisBuildingType);
-        boolean left = isOurPathway(x - 1, y, thisBuildingType);
+        boolean top = isOurPathway(new Vector2Int(coordinate.x, coordinate.y + 1), thisBuildingType);
+        boolean right = isOurPathway(new Vector2Int(coordinate.x + 1, coordinate.y), thisBuildingType);
+        boolean bottom = isOurPathway(new Vector2Int(coordinate.x, coordinate.y - 1), thisBuildingType);
+        boolean left = isOurPathway(new Vector2Int(coordinate.x - 1, coordinate.y), thisBuildingType);
 
         // Encode our neighboring paths to query the map for the layout
         int code = (top ? 1 : 0) << 3 | (right ? 1 : 0) << 2 | (bottom ? 1 : 0) << 1 | (left ? 1 : 0);
@@ -316,41 +302,41 @@ public class World {
             position = PathwayPositions.TOP_BOTTOM;
         }
 
-        pathways[x][y] = position;
+        pathways[coordinate.x][coordinate.y] = position;
 
         // Recursively set nearby pathways positions
         // The initial checks have already been done as `isOurPathway` will only return true if these passed
-        updatedPathways.add(new Vector2Int(x, y));
+        updatedPathways.add(new Vector2Int(coordinate.x, coordinate.y));
+
         if (top) {
-            updatePathwayPosition(x, y + 1, updatedPathways);
+            updatePathwayPosition(new Vector2Int(coordinate.x, coordinate.y + 1), updatedPathways);
         }
         if (right) {
-            updatePathwayPosition(x + 1, y, updatedPathways);
+            updatePathwayPosition(new Vector2Int(coordinate.x + 1, coordinate.y), updatedPathways);
         }
         if (bottom) {
-            updatePathwayPosition(x, y - 1, updatedPathways);
+            updatePathwayPosition(new Vector2Int(coordinate.x, coordinate.y - 1), updatedPathways);
         }
         if (left) {
-            updatePathwayPosition(x - 1, y, updatedPathways);
+            updatePathwayPosition(new Vector2Int(coordinate.x - 1, coordinate.y), updatedPathways);
         }
     }
 
     /**
      * Check if a pathway is the same as a specified one.
      *
-     * @param x           the x coordinate of the pathway
-     * @param y           the y coordinate of the pathway.
+     * @param coordinate  the coordinate of the pathway
      * @param thisPathway the pathway to check/match too.
      * @return if the pathway at (x, y) is the same as the pathway specified.
      */
-    private boolean isOurPathway(int x, int y, BuildingType thisPathway) {
+    private boolean isOurPathway(Vector2Int coordinate, BuildingType thisPathway) {
         // Check this is in the worlds bounds
-        if (x < 0 || x >= getWidth() || y < 0 || y >= getHeight()) {
+        if (coordinate.x < 0 || coordinate.x >= getWidth() || coordinate.y < 0 || coordinate.y >= getHeight()) {
             return false;
         }
 
         // Get the building on this tile
-        Building ref = getTile(x, y).getBuildingRef();
+        Building ref = getTile(coordinate).getBuildingRef();
         // If there is no building return false
         // If there is a building only return true if it is the same pathway as this
         return ref != null && ref.getType() == thisPathway;

@@ -4,6 +4,7 @@ import com.spacecomplexity.longboilife.building.BuildingType;
 import com.spacecomplexity.longboilife.tile.InvalidSaveMapException;
 import com.spacecomplexity.longboilife.tile.Tile;
 import com.spacecomplexity.longboilife.tile.TileType;
+import com.spacecomplexity.longboilife.utils.Vector2Int;
 
 /**
  * Class representing the saved map in a JSON format.
@@ -94,7 +95,7 @@ public class SaveMap {
                 try {
                     // Build the building in the world
                     // Flipping the y-axis as LibGdx draws from the bottom right, instead of top left how our json is structured
-                    world.build(buildingType, building.x, world.getHeight() - building.y - 1);
+                    world.build(buildingType, new Vector2Int(building.x, world.getHeight() - building.y - 1));
                 } catch (IllegalArgumentException e) {
                     // If the building cannot be built then throw an error
                     throw new InvalidSaveMapException("Building \"" + building.name + "\" cannot be built at (" + building.x + ", " + building.y + ")");

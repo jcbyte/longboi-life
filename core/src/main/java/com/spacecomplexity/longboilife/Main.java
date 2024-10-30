@@ -109,7 +109,7 @@ public class Main extends ApplicationAdapter {
 
             // If the building is in an invalid location then don't built
             Vector2Int mouse = GameUtils.getMouseOnGrid(world);
-            if (!world.canBuild(toBuild, mouse.x, mouse.y)) {
+            if (!world.canBuild(toBuild, mouse)) {
                 return null;
             }
 
@@ -122,7 +122,7 @@ public class Main extends ApplicationAdapter {
                 }
 
                 // Build the building at the mouse location and charge the player accordingly
-                world.build(toBuild, mouse.x, mouse.y);
+                world.build(toBuild, mouse);
                 gameState.money -= cost;
 
                 // Remove the selected building if it is wanted to do so
@@ -139,7 +139,7 @@ public class Main extends ApplicationAdapter {
                 }
 
                 // Build the building at the mouse location and charge the player accordingly
-                world.build(gameState.movingBuilding, mouse.x, mouse.y);
+                world.build(gameState.movingBuilding, mouse);
                 gameState.money -= cost;
 
                 // Remove the old moving building and selected building
@@ -156,8 +156,7 @@ public class Main extends ApplicationAdapter {
         // Select a previously built building
         eventHandler.createEvent(EventHandler.Event.SELECT_BUILDING, (params) -> {
             // Get the tile at the mouse coordinates
-            Vector2Int mouse = GameUtils.getMouseOnGrid(world);
-            Tile tile = world.getTile(mouse.x, mouse.y);
+            Tile tile = world.getTile(GameUtils.getMouseOnGrid(world));
             // Get the building on the tile
             Building selectedBuilding = tile.getBuildingRef();
 
