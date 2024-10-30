@@ -1,5 +1,6 @@
 package com.spacecomplexity.longboilife.world;
 
+import com.spacecomplexity.longboilife.building.BuildingType;
 import com.spacecomplexity.longboilife.tile.InvalidSaveMapException;
 import com.spacecomplexity.longboilife.tile.Tile;
 import com.spacecomplexity.longboilife.tile.TileType;
@@ -13,13 +14,28 @@ import com.spacecomplexity.longboilife.tile.TileType;
  *  "map": [
  *      ["GRASS", "GRASS", "GRASS"],
  *      ["WATER", "WATER", "GRASS"]
+ *  ],
+ *  "buildings":[
+ *      {"name":"GREGGS", "x":2, "y":5},
+ *      {"name":"ROAD", "x":10, "y":15}
  *  ]
  * }
  * </pre>
- * Where each element can be any valid enum name as specified in {@link TileType}.
+ * Each element in the map can be any valid enum name as specified in {@link TileType}.
+ * Each element in the buildings contains the name {@link com.spacecomplexity.longboilife.building.BuildingType} and position on the map.
  */
 public class SaveMap {
+    public static class Building {
+        String name;
+        int x;
+        int y;
+
+        public Building() {
+        }
+    }
+
     private String[][] map;
+    private Building[] buildings;
 
     public SaveMap() {
     }
@@ -68,5 +84,26 @@ public class SaveMap {
         }
 
         return world;
+    }
+
+    public void buildBuildings(World world) throws InvalidSaveMapException {
+        // Go through each building and build it in the world
+        for (Building building : buildings) {
+            try {
+                BuildingType buildingType = BuildingType.valueOf(building.name);
+                try {
+                    // Build the building in the world
+                    // Flipping the y-axis as LibGdx draws from the bottom right, instead of top left how our json is structured
+                    world.build(buildingType, building.x, world.getHeight() - building.y - 1);
+                } catch (IllegalArgumentException e) {
+                    // If the building cannot be built then throw an error
+                    throw new InvalidSaveMapException("Building \"" + building.name + "\" cannot be built at (" + building.x + ", " + building.y + ")");
+                }
+
+            } catch (IllegalArgumentException e) {
+                // If the building is invalid throw an error
+                throw new InvalidSaveMapException("Invalid building type \"" + building.name + "\"");
+            }
+        }
     }
 }
