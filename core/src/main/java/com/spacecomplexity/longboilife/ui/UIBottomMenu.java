@@ -27,6 +27,7 @@ public class UIBottomMenu extends UIElement {
     private final TextureRegionDrawable playDrawable;
 
     private UIBuildMenu buildMenu;
+    private UIPauseScreen pauseScreen;
 
     /**
      * Initialise bottom menu elements.
@@ -41,6 +42,7 @@ public class UIBottomMenu extends UIElement {
         EventHandler eventHandler = EventHandler.getEventHandler();
 
         buildMenu = new UIBuildMenu(uiViewport, parentTable, skin);
+        pauseScreen = new UIPauseScreen(uiViewport, parentTable, skin);
 
         // Place building buttons on separate table for condensed styling
         Table buildingButtonsTable = new Table(skin);
@@ -125,6 +127,7 @@ public class UIBottomMenu extends UIElement {
 
     public void render() {
         buildMenu.render();
+        pauseScreen.render();
     }
 
     @Override
@@ -132,6 +135,7 @@ public class UIBottomMenu extends UIElement {
         super.resize();
 
         buildMenu.resize();
+        pauseScreen.resize();
     }
 
     @Override
@@ -142,9 +146,12 @@ public class UIBottomMenu extends UIElement {
 
     @Override
     public void dispose() {
+        super.dispose();
+
         playTexture.dispose();
         pauseTexture.dispose();
 
         buildMenu.dispose();
+        pauseScreen.dispose();
     }
 }
