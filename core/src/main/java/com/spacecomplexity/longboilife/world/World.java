@@ -3,6 +3,7 @@ package com.spacecomplexity.longboilife.world;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.SerializationException;
+import com.spacecomplexity.longboilife.GameState;
 import com.spacecomplexity.longboilife.building.Building;
 import com.spacecomplexity.longboilife.building.BuildingCategory;
 import com.spacecomplexity.longboilife.building.BuildingType;
@@ -44,7 +45,7 @@ public class World {
 
             // Get the Tile[][] from this object
             world = saveMap.getWorld();
-            
+
             // Build the buildings onto this world
             buildings = new Vector<>();
             pathways = new PathwayPositions[getWidth()][getHeight()];
@@ -180,6 +181,9 @@ public class World {
         if (building.getType().getCategory() == BuildingCategory.PATHWAY) {
             updatePathwayPosition(x, y);
         }
+
+        // Update the game state counter with the new building
+        GameState.getState().changeBuildingCount(building.getType(), 1);
     }
 
     /**
@@ -226,6 +230,9 @@ public class World {
                 updatePathwayPosition(buildingPosition.x - 1, buildingPosition.y);
             }
         }
+
+        // Update the game state counter with the removal of the building
+        GameState.getState().changeBuildingCount(building.getType(), -1);
     }
 
 

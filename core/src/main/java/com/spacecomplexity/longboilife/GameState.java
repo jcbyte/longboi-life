@@ -3,6 +3,8 @@ package com.spacecomplexity.longboilife;
 import com.spacecomplexity.longboilife.building.Building;
 import com.spacecomplexity.longboilife.building.BuildingType;
 
+import java.util.HashMap;
+
 /**
  * Singleton class to contain variables relating to state/config of the game.
  */
@@ -74,6 +76,42 @@ public class GameState {
      * If the game is currently paused.
      */
     public boolean paused = false;
+
+    /**
+     * The current count of buildings.
+     * <p>
+     * This should be modified by {@link GameState#getBuildingCount(BuildingType)} and {@link GameState#changeBuildingCount(BuildingType, int)} not directly.
+     * <p>
+     * This is initialised in the constructor.
+     */
+    public HashMap<BuildingType, Integer> buildingsCount = new HashMap<>();
+
+    /**
+     * Helper function to get the number of a specified building.
+     *
+     * @param buildingType the building type to get.
+     * @return the building count for this specific building.
+     */
+    public Integer getBuildingCount(BuildingType buildingType) {
+        Integer count = buildingsCount.get(buildingType);
+        // If this has not yet been set return 0
+        if (count == null) {
+            return 0;
+        }
+
+        return count;
+    }
+
+    /**
+     * Helper function to change the number of a specified building.
+     *
+     * @param buildingType the building type to change.
+     * @param change       the amount to change it by.
+     */
+    public void changeBuildingCount(BuildingType buildingType, int change) {
+        int count = getBuildingCount(buildingType);
+        buildingsCount.put(buildingType, count + change);
+    }
 
     private GameState() {
     }
