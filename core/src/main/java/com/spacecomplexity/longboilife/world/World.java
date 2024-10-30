@@ -14,6 +14,8 @@ import com.spacecomplexity.longboilife.utils.Vector2Int;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Vector;
 
 /**
@@ -352,5 +354,79 @@ public class World {
         // If there is no building return false
         // If there is a building only return true if it is the same pathway as this
         return ref != null && ref.getType() == thisPathway;
+    }
+
+    /**
+     * Breadth first search along pathways to calculate the distance between two positions.
+     *
+     * @param from coordinates of the location to search from.
+     * @param to   coordinates of the location to search for.
+     * @return the distance in tiles to travel, -1 if there is no path.
+     */
+    public int getPathDistance(Vector2Int from, Vector2Int to) {
+        if (pathways[from.x][from.y] == null) {
+            return -1;
+        }
+        if (pathways[to.x][to.y] == null) {
+            return -1;
+        }
+
+        Queue<Vector2Int> queue = new LinkedList<>() {{
+            add(from);
+        }};
+        Vector<Vector2Int> visited = new Vector<>();
+
+        // Distance counter
+        int distance = 0;
+
+        // While there are still tiles to search
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+
+            // Process each level in the queue
+            for (int i = 0; i < size; i++) {
+                Vector2Int current = queue.poll();
+
+                // If we reached the target position return this distance
+                if (current.equals(to)) {
+                    return distance;
+                }
+
+                // Explore neighbors
+                Vector2Int[] possibleNext = new Vector2Int[]{
+                    new Vector2Int(current.x, current.y + 1),
+                    new Vector2Int(current.x + 1, current.y),
+                    new Vector2Int(current.x, current.y - 1),
+                    new Vector2Int(current.x - 1, current.y),
+                };
+                for (Vector2Int next : possibleNext) {
+
+                    // If this has been visited before don't search it again
+                    if (visited.contains(next)) {
+                        continue;
+                    }
+                    // If this is outside the worlds bounds don't search it
+                    if (next.x < 0 || next.x >= getWidth() || next.y < 0 || next.y >= getHeight()) {
+                        continue;
+                    }
+                    // If this is not a pathway don't search it
+                    if (pathways[next.x][next.y] == null) {
+                        continue;
+                    }
+
+                    // Add this neighbour to be searched
+                    queue.add(next);
+                }
+
+                // Mark the current position as visited
+                visited.add(current);
+
+            }
+            // Increment distance after processing the current level
+            distance++;
+        }
+
+        // Return -1 if there is no path
+        return -1;
     }
 }
