@@ -147,6 +147,9 @@ public class Main extends ApplicationAdapter {
                 gameState.placingBuilding = null;
             }
 
+            // Reset satisfaction velocity when building places/moved
+            gameState.satisfactionScoreVelocity = 0;
+
             return null;
         });
 
