@@ -2,6 +2,7 @@ package com.spacecomplexity.longboilife;
 
 import com.spacecomplexity.longboilife.building.BuildingCategory;
 
+import java.util.HashMap;
 import java.util.TreeMap;
 
 /**
@@ -54,4 +55,15 @@ public class Constants {
     public static BuildingCategory[] dontRemoveSelection = new BuildingCategory[]{
         BuildingCategory.PATHWAY
     };
+
+    /**
+     * The satisfactory distances from accommodation to a specific category of building
+     * <p>
+     * Used for calculating satisfaction score
+     */
+    public static HashMap<BuildingCategory, Float> satisfactoryDistance = new HashMap<BuildingCategory, Float>() {{
+        put(BuildingCategory.FOOD, 5f);
+        put(BuildingCategory.RECREATIONAL, 5f);
+        put(BuildingCategory.EDUCATIONAL, 10f);
+    }};
 }

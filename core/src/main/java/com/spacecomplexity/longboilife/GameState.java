@@ -49,7 +49,7 @@ public class GameState {
     /**
      * The current satisfaction score.
      */
-    public float satisfactionScore = 0.5f;
+    public float satisfactionScore = 0f;
 
     /**
      * The building selected to be placed.
@@ -115,6 +115,16 @@ public class GameState {
 
     private GameState() {
     }
+
+    /**
+     * The value that the satisfaction score changes by each second.
+     */
+    public float satisfactionScoreVelocity = 0;
+
+    /**
+     * If the last satisfaction modifier calculated was positive.
+     */
+    public boolean satisfactionModifierPositive = false;
 
     /**
      * Get the singleton instance of the {@link GameState} class.

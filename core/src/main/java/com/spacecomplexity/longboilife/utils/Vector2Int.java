@@ -37,11 +37,39 @@ public class Vector2Int {
         Vector2Int that = (Vector2Int) obj;
         return x == that.x && y == that.y;
     }
-    
+
     @Override
     public int hashCode() {
         int result = Integer.hashCode(x);
         result = 31 * result + Integer.hashCode(y);
         return result;
+    }
+
+    /**
+     * Returns the subtraction of another vector from this vector.
+     *
+     * @param other the vector to subtract.
+     * @return a new Vector2Int representing the result of the subtraction.
+     */
+    public Vector2Int subtract(Vector2Int other) {
+        return new Vector2Int(this.x - other.x, this.y - other.y);
+    }
+
+    /**
+     * Returns the magnitude squared of the vector.
+     *
+     * @return the squared magnitude of the vector.
+     */
+    public int mag2() {
+        return x * x + y * y;
+    }
+
+    /**
+     * Returns the magnitude of the vector.
+     *
+     * @return vectors magnitude.
+     */
+    public float mag() {
+        return (float) Math.sqrt(mag2());
     }
 }

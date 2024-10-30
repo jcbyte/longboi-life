@@ -269,6 +269,9 @@ public class Main extends ApplicationAdapter {
 
         // Render the UI
         ui.render();
+
+        // Update the satisfaction score
+        GameUtils.updateSatisfactionScore(world);
     }
 
     /**

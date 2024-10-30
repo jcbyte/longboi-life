@@ -429,4 +429,8 @@ public class World {
         // Return -1 if there is no path
         return -1;
     }
+
+    public Vector<Building> getBuildings() {
+        return buildings;
+    }
 }
