@@ -94,16 +94,16 @@ public class World {
      * @return whether this is a valid position to build the building.
      */
     public boolean canBuild(BuildingType building, Vector2Int coordinate) {
-        Vector2Int buildingSize = building.getSize();
+        Vector2Int buildingTop = coordinate.add(building.getSize());
 
         // If the building goes off the edge of the map it is not valid
-        if (coordinate.x + buildingSize.x > getWidth() || coordinate.y + buildingSize.y > getHeight()) {
+        if (!isInWorld(coordinate) || !isInWorld(buildingTop.subtract(new Vector2Int(1, 1)))) {
             return false;
         }
 
         // Check if every tile underneath this building is buildable
-        for (int xi = coordinate.x; xi < coordinate.x + buildingSize.x; xi++) {
-            for (int yi = coordinate.y; yi < coordinate.y + buildingSize.y; yi++) {
+        for (int xi = coordinate.x; xi < buildingTop.x; xi++) {
+            for (int yi = coordinate.y; yi < buildingTop.y; yi++) {
                 if (!getTile(new Vector2Int(xi, yi)).isBuildable()) {
                     // If a single tile is not then the building placement is invalid
                     return false;
@@ -323,6 +323,16 @@ public class World {
     }
 
     /**
+     * Returns if the coordinate supplied it outside the bounds of the world.
+     *
+     * @param coordinate the coordinate.
+     * @return true if the coordinate is in the world bounds.
+     */
+    private boolean isInWorld(Vector2Int coordinate) {
+        return coordinate.x >= 0 && coordinate.x < getWidth() && coordinate.y >= 0 && coordinate.y < getHeight();
+    }
+
+    /**
      * Check if a pathway is the same as a specified one.
      *
      * @param coordinate  the coordinate of the pathway
@@ -331,7 +341,7 @@ public class World {
      */
     private boolean isOurPathway(Vector2Int coordinate, BuildingType thisPathway) {
         // Check this is in the worlds bounds
-        if (coordinate.x < 0 || coordinate.x >= getWidth() || coordinate.y < 0 || coordinate.y >= getHeight()) {
+        if (!isInWorld(coordinate)) {
             return false;
         }
 
@@ -392,7 +402,7 @@ public class World {
                         continue;
                     }
                     // If this is outside the worlds bounds don't search it
-                    if (next.x < 0 || next.x >= getWidth() || next.y < 0 || next.y >= getHeight()) {
+                    if (!isInWorld(next)) {
                         continue;
                     }
                     // If this is not a pathway don't search it

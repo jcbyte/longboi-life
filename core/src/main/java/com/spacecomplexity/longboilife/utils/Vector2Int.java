@@ -46,6 +46,16 @@ public class Vector2Int {
     }
 
     /**
+     * Returns the addition of another vector on this vector.
+     *
+     * @param other the vector to add.
+     * @return a new Vector2Int representing the result of the addition.
+     */
+    public Vector2Int add(Vector2Int other) {
+        return new Vector2Int(this.x + other.x, this.y + other.y);
+    }
+
+    /**
      * Returns the subtraction of another vector from this vector.
      *
      * @param other the vector to subtract.
