@@ -2,6 +2,8 @@ package com.spacecomplexity.longboilife;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.spacecomplexity.longboilife.game.GameScreen;
+import com.spacecomplexity.longboilife.menu.MenuScreen;
 
 import java.util.HashMap;
 
