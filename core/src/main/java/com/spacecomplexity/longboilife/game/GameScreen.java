@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.Main;
+import com.spacecomplexity.longboilife.MainInputManager;
 import com.spacecomplexity.longboilife.game.building.Building;
 import com.spacecomplexity.longboilife.game.building.BuildingType;
 import com.spacecomplexity.longboilife.game.tile.InvalidSaveMapException;
@@ -63,7 +64,7 @@ public class GameScreen implements Screen {
         TimerManager.getTimerManager().getTimer().setTimer(5 * 60 * 1000);
 
         // Create an input multiplexer to handle input from all sources
-        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(new MainInputManager());
 
         // Initialise SpriteBatch and ShapeRender for rendering
         batch = new SpriteBatch();

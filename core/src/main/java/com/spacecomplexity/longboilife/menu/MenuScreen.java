@@ -1,6 +1,7 @@
 package com.spacecomplexity.longboilife.menu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.Main;
+import com.spacecomplexity.longboilife.MainInputManager;
 
 /**
  * Main class to control the menu screen.
@@ -78,7 +80,8 @@ public class MenuScreen implements Screen {
         table.add(exitButton).padTop(10);
 
         // Allows UI to capture touch events
-        Gdx.input.setInputProcessor(stage);
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(new MainInputManager(), stage);
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override

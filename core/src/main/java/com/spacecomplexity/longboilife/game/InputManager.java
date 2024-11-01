@@ -173,44 +173,29 @@ public class InputManager {
             return true;
         }
 
-        private int prevAppWidth, prevAppHeight;
-
         /**
          * Handles onKeyPress events.
          *
          * @param keycode one of the constants in {@link com.badlogic.gdx.Input.Keys}
-         * @return true to show the event was handled.
+         * @return true if the event was handled.
          */
         @Override
         public boolean keyDown(int keycode) {
-            // If the fullscreen key is pressed then toggle fullscreen mode
-            if (keycode == Keybindings.FULLSCREEN.getKey()) {
-                gameState.fullscreen = !gameState.fullscreen;
-
-                if (gameState.fullscreen) {
-                    // If going to fullscreen then record the current width and height to return to
-                    prevAppWidth = Gdx.graphics.getWidth();
-                    prevAppHeight = Gdx.graphics.getHeight();
-
-                    // Change to fullscreen
-                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-                } else {
-                    // Change back to windowed mode, restoring the previous app width and height
-                    Gdx.graphics.setWindowedMode(prevAppWidth, prevAppHeight);
-                }
-            }
-
             // If the close key is pressed, send events to cancel actions
-            else if (keycode == Keybindings.CANCEL.getKey()) {
+            if (keycode == Keybindings.CANCEL.getKey()) {
                 eventHandler.callEvent(EventHandler.Event.CANCEL_OPERATIONS);
+
+                return true;
             }
 
             // If the pause key is pressed, pause/resume the game
             else if (keycode == Keybindings.PAUSE.getKey()) {
                 eventHandler.callEvent(GameState.getState().paused ? EventHandler.Event.RESUME_GAME : EventHandler.Event.PAUSE_GAME);
+
+                return true;
             }
 
-            return true;
+            return false;
         }
     }
 }
