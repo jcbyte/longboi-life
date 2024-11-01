@@ -43,7 +43,7 @@ public class MenuScreen implements Screen {
         batch = new SpriteBatch();
 
         // Load background texture
-        backgroundTexture = new Texture(Gdx.files.internal("menuBackground.png"));
+        backgroundTexture = new Texture(Gdx.files.internal("menu/background.png"));
 
         // Load UI skin for buttons
         skin = new Skin(Gdx.files.internal("ui/skin/uiskin.json"));

@@ -25,10 +25,10 @@ public class PathwayTextures {
      */
     private static final HashMap<BuildingType, HashMap<PathwayTextures.Type, Texture>> textureList = new HashMap<>() {{
         put(BuildingType.ROAD, new HashMap<>() {{
-            put(PathwayTextures.Type.STRAIGHT, new Texture("roads/straight.png"));
-            put(PathwayTextures.Type.CORNER, new Texture("roads/corner.png"));
-            put(PathwayTextures.Type.TJUNC, new Texture("roads/3-way.png"));
-            put(PathwayTextures.Type.CROSS, new Texture("roads/4-way.png"));
+            put(PathwayTextures.Type.STRAIGHT, new Texture("buildings/roads/straight.png"));
+            put(PathwayTextures.Type.CORNER, new Texture("buildings/roads/corner.png"));
+            put(PathwayTextures.Type.TJUNC, new Texture("buildings/roads/3-way.png"));
+            put(PathwayTextures.Type.CROSS, new Texture("buildings/roads/4-way.png"));
         }});
     }};
 
