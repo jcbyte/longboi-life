@@ -2,9 +2,9 @@ package com.spacecomplexity.longboilife;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
-import com.spacecomplexity.longboilife.game.EventHandler;
-import com.spacecomplexity.longboilife.game.GameState;
-import com.spacecomplexity.longboilife.game.Keybindings;
+import com.spacecomplexity.longboilife.game.globals.GameState;
+import com.spacecomplexity.longboilife.game.globals.Keybindings;
+import com.spacecomplexity.longboilife.game.utils.EventHandler;
 
 /**
  * Input manager to handle inputs which should always be handled.

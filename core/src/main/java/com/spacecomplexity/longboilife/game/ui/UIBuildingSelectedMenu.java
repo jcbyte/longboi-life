@@ -8,10 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.spacecomplexity.longboilife.game.Constants;
-import com.spacecomplexity.longboilife.game.EventHandler;
-import com.spacecomplexity.longboilife.game.GameState;
-import com.spacecomplexity.longboilife.game.MainCamera;
+import com.spacecomplexity.longboilife.game.globals.Constants;
+import com.spacecomplexity.longboilife.game.globals.GameState;
+import com.spacecomplexity.longboilife.game.globals.MainCamera;
+import com.spacecomplexity.longboilife.game.utils.EventHandler;
 
 import java.text.NumberFormat;
 import java.util.Locale;

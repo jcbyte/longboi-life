@@ -1,9 +1,12 @@
-package com.spacecomplexity.longboilife.game;
+package com.spacecomplexity.longboilife.game.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.math.Vector3;
+import com.spacecomplexity.longboilife.game.globals.GameState;
+import com.spacecomplexity.longboilife.game.globals.Keybindings;
+import com.spacecomplexity.longboilife.game.globals.MainCamera;
 
 public class InputManager {
     private final GameState gameState = GameState.getState();

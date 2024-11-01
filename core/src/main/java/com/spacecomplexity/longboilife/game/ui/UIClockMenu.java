@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.spacecomplexity.longboilife.game.TimerManager;
+import com.spacecomplexity.longboilife.game.globals.MainTimer;
 
 /**
  * Class to represent the Clock UI.
@@ -14,7 +14,7 @@ import com.spacecomplexity.longboilife.game.TimerManager;
 public class UIClockMenu extends UIElement {
     private Label label;
 
-    private final TimerManager timerManager = TimerManager.getTimerManager();
+    private final MainTimer mainTimer = MainTimer.getTimerManager();
 
     /**
      * Initialise clock menu elements.
@@ -41,7 +41,7 @@ public class UIClockMenu extends UIElement {
     }
 
     public void render() {
-        setTime(timerManager.getTimer().getTimeLeft() / 1000);
+        setTime(mainTimer.getTimer().getTimeLeft() / 1000);
     }
 
     /**

@@ -10,10 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.spacecomplexity.longboilife.game.EventHandler;
-import com.spacecomplexity.longboilife.game.GameState;
-import com.spacecomplexity.longboilife.game.TimerManager;
 import com.spacecomplexity.longboilife.game.building.BuildingCategory;
+import com.spacecomplexity.longboilife.game.globals.GameState;
+import com.spacecomplexity.longboilife.game.globals.MainTimer;
+import com.spacecomplexity.longboilife.game.utils.EventHandler;
 import com.spacecomplexity.longboilife.game.utils.UIUtils;
 
 /**
@@ -98,7 +98,7 @@ public class UIBottomMenu extends UIElement {
             // Set pause state
             GameState.getState().paused = true;
             // Pause the timer
-            TimerManager.getTimerManager().getTimer().pauseTimer();
+            MainTimer.getTimerManager().getTimer().pauseTimer();
             // Cancel all actions
             eventHandler.callEvent(EventHandler.Event.CANCEL_OPERATIONS);
             // Disable all UI but the pause button
@@ -114,7 +114,7 @@ public class UIBottomMenu extends UIElement {
             // Set pause state
             GameState.getState().paused = false;
             // Resume the timer
-            TimerManager.getTimerManager().getTimer().resumeTimer();
+            MainTimer.getTimerManager().getTimer().resumeTimer();
             // Re enable all UI
             UIUtils.enableAllActors(parentTable.getStage());
             // Change background to ❚❚

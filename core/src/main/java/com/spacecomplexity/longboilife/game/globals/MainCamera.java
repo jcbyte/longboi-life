@@ -1,4 +1,6 @@
-package com.spacecomplexity.longboilife.game;
+package com.spacecomplexity.longboilife.game.globals;
+
+import com.spacecomplexity.longboilife.game.utils.CameraManager;
 
 /**
  * Class to represent the main camera which can be accessed from anywhere in the game.

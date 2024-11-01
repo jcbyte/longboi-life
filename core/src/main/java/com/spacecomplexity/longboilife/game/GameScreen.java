@@ -14,12 +14,14 @@ import com.spacecomplexity.longboilife.Main;
 import com.spacecomplexity.longboilife.MainInputManager;
 import com.spacecomplexity.longboilife.game.building.Building;
 import com.spacecomplexity.longboilife.game.building.BuildingType;
+import com.spacecomplexity.longboilife.game.globals.Constants;
+import com.spacecomplexity.longboilife.game.globals.GameState;
+import com.spacecomplexity.longboilife.game.globals.MainCamera;
+import com.spacecomplexity.longboilife.game.globals.MainTimer;
 import com.spacecomplexity.longboilife.game.tile.InvalidSaveMapException;
 import com.spacecomplexity.longboilife.game.tile.Tile;
 import com.spacecomplexity.longboilife.game.ui.UIManager;
-import com.spacecomplexity.longboilife.game.utils.GameUtils;
-import com.spacecomplexity.longboilife.game.utils.RenderUtils;
-import com.spacecomplexity.longboilife.game.utils.Vector2Int;
+import com.spacecomplexity.longboilife.game.utils.*;
 import com.spacecomplexity.longboilife.game.world.World;
 
 import java.io.FileNotFoundException;
@@ -61,7 +63,7 @@ public class GameScreen implements Screen {
         }
 
         // Create a new timer for 5 minutes
-        TimerManager.getTimerManager().getTimer().setTimer(5 * 60 * 1000);
+        MainTimer.getTimerManager().getTimer().setTimer(5 * 60 * 1000);
 
         // Create an input multiplexer to handle input from all sources
         InputMultiplexer inputMultiplexer = new InputMultiplexer(new MainInputManager());

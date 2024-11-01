@@ -2,11 +2,11 @@ package com.spacecomplexity.longboilife.game.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
-import com.spacecomplexity.longboilife.game.Constants;
-import com.spacecomplexity.longboilife.game.GameState;
-import com.spacecomplexity.longboilife.game.MainCamera;
 import com.spacecomplexity.longboilife.game.building.Building;
 import com.spacecomplexity.longboilife.game.building.BuildingCategory;
+import com.spacecomplexity.longboilife.game.globals.Constants;
+import com.spacecomplexity.longboilife.game.globals.GameState;
+import com.spacecomplexity.longboilife.game.globals.MainCamera;
 import com.spacecomplexity.longboilife.game.world.World;
 
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.spacecomplexity.longboilife.game;
+package com.spacecomplexity.longboilife.game.globals;
 
 import com.badlogic.gdx.Input;
 
