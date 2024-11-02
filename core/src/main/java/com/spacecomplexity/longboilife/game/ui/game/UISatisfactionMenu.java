@@ -13,7 +13,6 @@ import com.spacecomplexity.longboilife.game.ui.UIElement;
  * Class to represent the Satisfaction Score UI.
  */
 public class UISatisfactionMenu extends UIElement {
-    private Label label;
     private Label scoreLabel;
     private ProgressBar satisfactionBar;
 
@@ -28,7 +27,7 @@ public class UISatisfactionMenu extends UIElement {
         super(uiViewport, parentTable, skin);
 
         // Initialise label
-        label = new Label("Satisfaction Score:", skin);
+        Label label = new Label("Satisfaction Score:", skin);
         label.setFontScale(1f);
         label.setColor(Color.WHITE);
 

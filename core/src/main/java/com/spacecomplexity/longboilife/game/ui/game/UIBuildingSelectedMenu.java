@@ -21,12 +21,10 @@ import java.util.Locale;
  * Class to represent the pop-up menu after selecting a placed building.
  */
 public class UIBuildingSelectedMenu extends UIElement {
-    TextButton moveButton;
-    TextButton sellButton;
+    private TextButton moveButton;
+    private TextButton sellButton;
 
-    Viewport uiViewport;
-
-    Vector3 worldSpaceOpened;
+    private Vector3 worldSpaceOpened;
 
     /**
      * Initialise selected menu elements.

@@ -15,7 +15,6 @@ import java.util.Arrays;
  * Class to represent the UI building counter.
  */
 public class UIBuildingCounter extends UIElement {
-    private Label buildingLabel;
     private Label counterLabel;
 
     /**
@@ -35,7 +34,7 @@ public class UIBuildingCounter extends UIElement {
                 .map(BuildingType::getDisplayName)
                 .toArray(String[]::new)
         );
-        buildingLabel = new Label(buildingList, skin);
+        Label buildingLabel = new Label(buildingList, skin);
         buildingLabel.setFontScale(1f);
         buildingLabel.setColor(Color.WHITE);
 

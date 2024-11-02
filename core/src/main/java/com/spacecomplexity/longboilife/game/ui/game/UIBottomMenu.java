@@ -21,7 +21,6 @@ import com.spacecomplexity.longboilife.game.utils.UIUtils;
  * Class to represent the Bottom Menu UI.
  */
 public class UIBottomMenu extends UIElement {
-    private ImageButton pauseButton;
     private final Texture pauseTexture;
     private final TextureRegionDrawable pauseDrawable;
     private final Texture playTexture;
@@ -74,7 +73,7 @@ public class UIBottomMenu extends UIElement {
         playDrawable.setMinSize(textureSize, textureSize);
 
         // Initialise pause button
-        pauseButton = new ImageButton(skin);
+        ImageButton pauseButton = new ImageButton(skin);
         pauseButton.setSize(textureSize, textureSize);
         // Initially set background to ❚❚
         pauseButton.getStyle().up = pauseDrawable;

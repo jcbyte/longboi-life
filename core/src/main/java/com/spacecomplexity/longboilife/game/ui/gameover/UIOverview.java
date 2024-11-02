@@ -17,9 +17,6 @@ import com.spacecomplexity.longboilife.game.utils.EventHandler;
  * Class to represent the Overview UI after the game is completed.
  */
 public class UIOverview extends UIElement {
-    private Label label;
-    private TextButton button;
-
     /**
      * Initialise overview elements.
      *
@@ -33,13 +30,13 @@ public class UIOverview extends UIElement {
         String overview = String.format("Game Over\r\nSatisfaction Score: %.2f%%", GameState.getState().satisfactionScore);
 
         // Initialise label
-        label = new Label(overview, skin);
+        Label label = new Label(overview, skin);
         label.setAlignment(Align.center);
         label.setFontScale(1.2f);
         label.setColor(Color.WHITE);
 
         // Initialise button
-        button = new TextButton("Menu", skin);
+        TextButton button = new TextButton("Menu", skin);
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

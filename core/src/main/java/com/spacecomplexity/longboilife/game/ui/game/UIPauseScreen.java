@@ -14,8 +14,7 @@ import com.spacecomplexity.longboilife.game.ui.UIElement;
  * Class to represent the Pause Screen UI.
  */
 public class UIPauseScreen extends UIElement {
-    private Texture pauseTexture;
-    private Image logo;
+    private final Texture pauseTexture;
 
     /**
      * Initialise pause screen elements.
@@ -29,7 +28,7 @@ public class UIPauseScreen extends UIElement {
 
         // Initialise logo
         pauseTexture = new Texture(Gdx.files.internal("ui/buttons/pause.png"));
-        logo = new Image(pauseTexture);
+        Image logo = new Image(pauseTexture);
 
         // Place label onto table
         table.add(logo).align(Align.center);
