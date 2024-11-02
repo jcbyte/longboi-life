@@ -1,14 +1,17 @@
 package com.spacecomplexity.longboilife.game.ui.gameover;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.game.globals.GameState;
 import com.spacecomplexity.longboilife.game.ui.UIElement;
+import com.spacecomplexity.longboilife.game.utils.EventHandler;
 
 /**
  * Class to represent the Overview UI after the game is completed.
@@ -37,7 +40,13 @@ public class UIOverview extends UIElement {
 
         // Initialise button
         button = new TextButton("Menu", skin);
-        // todo go back to menu
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // Call the events to return to the menu
+                EventHandler.getEventHandler().callEvent(EventHandler.Event.RETURN_MENU);
+            }
+        });
 
         // Place label onto table
         table.add(label).align(Align.center);
