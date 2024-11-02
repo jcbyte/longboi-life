@@ -89,7 +89,6 @@ public class UIManager {
 
             // Create the new end elements
             uiElements = new UIElement[]{
-                // todo need menu button
                 new UIOverview(viewport, table, skin),
             };
 

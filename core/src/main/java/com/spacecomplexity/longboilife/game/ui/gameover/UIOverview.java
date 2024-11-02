@@ -4,8 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.spacecomplexity.longboilife.game.globals.GameState;
 import com.spacecomplexity.longboilife.game.ui.UIElement;
 
 /**
@@ -13,6 +15,7 @@ import com.spacecomplexity.longboilife.game.ui.UIElement;
  */
 public class UIOverview extends UIElement {
     private Label label;
+    private TextButton button;
 
     /**
      * Initialise overview elements.
@@ -24,17 +27,26 @@ public class UIOverview extends UIElement {
     public UIOverview(Viewport uiViewport, Table parentTable, Skin skin) {
         super(uiViewport, parentTable, skin);
 
+        String overview = String.format("Game Over\r\nSatisfaction Score: %.2f%%", GameState.getState().satisfactionScore);
+
         // Initialise label
-        label = new Label("Overview", skin);
-        label.setFontScale(1f);
+        label = new Label(overview, skin);
+        label.setAlignment(Align.center);
+        label.setFontScale(1.2f);
         label.setColor(Color.WHITE);
+
+        // Initialise button
+        button = new TextButton("Menu", skin);
+        // todo go back to menu
 
         // Place label onto table
         table.add(label).align(Align.center);
+        table.row();
+        table.add(button).padTop(5).align(Align.center);
 
         // Style and place the table
         table.setBackground(skin.getDrawable("panel1"));
-        table.setSize(75, 50);
+        table.setSize(220, 100);
         placeTable();
     }
 
@@ -43,6 +55,6 @@ public class UIOverview extends UIElement {
 
     @Override
     protected void placeTable() {
-        table.setPosition(0, 0);
+        table.setPosition((uiViewport.getWorldWidth() - table.getWidth()) / 2, uiViewport.getWorldHeight() - table.getHeight());
     }
 }
