@@ -33,10 +33,7 @@ public class MenuScreen implements Screen {
 
     public MenuScreen(Main game) {
         this.game = game;
-    }
 
-    @Override
-    public void show() {
         // Initialise viewport and drawing elements
         viewport = new FitViewport(640, 480);
         stage = new Stage(viewport);
@@ -47,7 +44,10 @@ public class MenuScreen implements Screen {
 
         // Load UI skin for buttons
         skin = new Skin(Gdx.files.internal("ui/skin/uiskin.json"));
+    }
 
+    @Override
+    public void show() {
         // Table layout for menu alignment
         Table table = new Table();
         table.setFillParent(true);

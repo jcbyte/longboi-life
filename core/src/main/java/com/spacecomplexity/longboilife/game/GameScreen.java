@@ -47,6 +47,10 @@ public class GameScreen implements Screen {
 
     public GameScreen(Main game) {
         this.game = game;
+
+        // Initialise SpriteBatch and ShapeRender for rendering
+        batch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
     }
 
     /**
@@ -55,6 +59,8 @@ public class GameScreen implements Screen {
      */
     @Override
     public void show() {
+        gameState.reset();
+
         // Creates a new World object from "map.json" file
         try {
             world = new World(Gdx.files.internal("map.json"));
@@ -70,10 +76,6 @@ public class GameScreen implements Screen {
 
         // Create an input multiplexer to handle input from all sources
         InputMultiplexer inputMultiplexer = new InputMultiplexer(new MainInputManager());
-
-        // Initialise SpriteBatch and ShapeRender for rendering
-        batch = new SpriteBatch();
-        shapeRenderer = new ShapeRenderer();
 
         // Initialises camera with CameraManager
         CameraManager camera = new CameraManager(world);
@@ -328,6 +330,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void hide() {
+        ui.dispose();
     }
 
     /**

@@ -24,17 +24,17 @@ public class GameState {
     /**
      * Camera speed whilst controlling with keyboard.
      */
-    public float cameraSpeed = 1400;
+    public float cameraSpeed;
 
     /**
      * Camera zooming speed whilst controlling with keyboard.
      */
-    public float cameraKeyZoomSpeed = 3;
+    public float cameraKeyZoomSpeed;
 
     /**
      * Camera zooming speed whilst controlling with mouse/trackpad.
      */
-    public float cameraScrollZoomSpeed = 32;
+    public float cameraScrollZoomSpeed;
 
     /**
      * If the game is in fullscreen mode.
@@ -44,38 +44,38 @@ public class GameState {
     /**
      * The amount of money the player currently has.
      */
-    public float money = 800000;
+    public float money;
 
     /**
      * The current satisfaction score.
      */
-    public float satisfactionScore = 0f;
+    public float satisfactionScore;
 
     /**
      * The building selected to be placed.
      * <p>
      * If {@code null} then nothing is selected.
      */
-    public BuildingType placingBuilding = null;
+    public BuildingType placingBuilding;
 
     /**
      * The currently selected building on the map.
      * <p>
      * If {@code null} then nothing is selected.
      */
-    public Building selectedBuilding = null;
+    public Building selectedBuilding;
 
     /**
      * The currently selected building to be moved.
      * <p>
      * If {@code null} then nothing is selected.
      */
-    public Building movingBuilding = null;
+    public Building movingBuilding;
 
     /**
      * If the game is currently paused.
      */
-    public boolean paused = false;
+    public boolean paused;
 
     /**
      * The current count of buildings.
@@ -84,7 +84,7 @@ public class GameState {
      * <p>
      * This is initialised in the constructor.
      */
-    public HashMap<BuildingType, Integer> buildingsCount = new HashMap<>();
+    public HashMap<BuildingType, Integer> buildingsCount;
 
     /**
      * Helper function to get the number of a specified building.
@@ -113,9 +113,6 @@ public class GameState {
         buildingsCount.put(buildingType, count + change);
     }
 
-    private GameState() {
-    }
-
     /**
      * The value that the satisfaction score changes by each second.
      */
@@ -138,5 +135,31 @@ public class GameState {
      */
     public static GameState getState() {
         return gameState;
+    }
+
+    private GameState() {
+        reset();
+    }
+
+    /**
+     * Reset all values to default.
+     */
+    public void reset() {
+//        scaleFactor = 1;
+//        uiScaleFactor = 1;
+        cameraSpeed = 1400;
+        cameraKeyZoomSpeed = 3;
+        cameraScrollZoomSpeed = 32;
+//        fullscreen = false;
+        money = 800000;
+        satisfactionScore = 0f;
+        placingBuilding = null;
+        selectedBuilding = null;
+        movingBuilding = null;
+        paused = false;
+        buildingsCount = new HashMap<>();
+        satisfactionScoreVelocity = 0;
+        satisfactionModifierPositive = false;
+        gameOver = false;
     }
 }
