@@ -1,4 +1,4 @@
-package com.spacecomplexity.longboilife.game.ui;
+package com.spacecomplexity.longboilife.game.ui.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.game.globals.GameState;
+import com.spacecomplexity.longboilife.game.ui.UIElement;
 
 /**
  * Class to represent the Pause Screen UI.

@@ -1,4 +1,4 @@
-package com.spacecomplexity.longboilife.game.ui;
+package com.spacecomplexity.longboilife.game.ui.game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.game.globals.GameState;
+import com.spacecomplexity.longboilife.game.ui.UIElement;
 
 /**
  * Class to represent the Satisfaction Score UI.
