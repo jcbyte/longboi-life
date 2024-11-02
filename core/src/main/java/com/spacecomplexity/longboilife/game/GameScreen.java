@@ -284,13 +284,12 @@ public class GameScreen implements Screen {
         // Render the UI
         ui.render();
 
-        if (!gameState.paused) {
+        // Poll the timer to run the event if the timer has expired
+        // Do not update satisfaction score if the game is paused or has ended
+        if (!gameState.paused && !MainTimer.getTimerManager().getTimer().poll()) {
             // Update the satisfaction score
             GameUtils.updateSatisfactionScore(world);
         }
-
-        // Poll the timer to run the game end event if the timer has expired
-        MainTimer.getTimerManager().getTimer().poll();
     }
 
     /**

@@ -75,7 +75,19 @@ public class UIManager {
         };
 
         EventHandler.getEventHandler().createEvent(EventHandler.Event.GAME_END, (params) -> {
-            // todo hide game ui and show end ui
+            // Hide game UI and show then end events
+
+            // Run dispose functions on UI elements
+            for (UIElement uiElement : uiElements) {
+                uiElement.dispose();
+            }
+            table.clear();
+
+            // Create the new end elements
+            uiElements = new UIElement[]{
+                new UISatisfactionMenu(viewport, table, skin),
+            };
+
             return null;
         });
     }
