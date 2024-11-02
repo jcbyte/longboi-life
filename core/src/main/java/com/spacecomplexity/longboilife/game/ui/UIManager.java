@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.spacecomplexity.longboilife.game.globals.GameState;
+import com.spacecomplexity.longboilife.game.utils.EventHandler;
 
 /**
  * Class to manage the UI in the game.
@@ -72,6 +73,11 @@ public class UIManager {
             new UIMoneyMenu(viewport, table, skin),
             new UIBuildingCounter(viewport, table, skin),
         };
+
+        EventHandler.getEventHandler().createEvent(EventHandler.Event.GAME_END, (params) -> {
+            // todo hide game ui and show end ui
+            return null;
+        });
     }
 
     /**

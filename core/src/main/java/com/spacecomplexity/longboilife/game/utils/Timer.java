@@ -8,20 +8,19 @@ public class Timer {
     private long onPauseTime;
     private boolean paused;
 
+    private boolean eventCalled;
+    private Runnable event;
+
     /**
      * Create a new timer object.
+     * <p>
+     * {@link Timer#setTimer(long)} and {@link Timer#setEvent(Runnable)} should be used to initialise the timer.
      */
     public Timer() {
     }
 
-    /**
-     * Create a new timer with specified duration.
-     *
-     * @param duration duration of timer in ms.
-     */
-    public Timer(long duration) {
-        setTimer(duration);
-        paused = false;
+    public void setEvent(Runnable event) {
+        this.event = event;
     }
 
     /**
@@ -32,6 +31,7 @@ public class Timer {
     public void setTimer(long duration) {
         finishTime = System.currentTimeMillis() + duration;
         paused = false;
+        eventCalled = false;
     }
 
     /**
@@ -79,5 +79,23 @@ public class Timer {
      */
     public boolean isPaused() {
         return paused;
+    }
+
+    /**
+     * Polls the current time and will run the event if this time has passed.
+     *
+     * @return whether the time has passed.
+     */
+    public boolean poll() {
+        if (getTimeLeft() <= 0) {
+            if (!eventCalled) {
+                event.run();
+                eventCalled = true;
+            }
+            
+            return true;
+        }
+
+        return false;
     }
 }
