@@ -102,8 +102,8 @@ public class InputManager {
             switch (button) {
                 // If main button clicked
                 case 0:
-                    // If game is paused don't allow any actions
-                    if (gameState.paused) {
+                    // If game is paused or over don't allow any actions
+                    if (gameState.paused || gameState.gameOver) {
                         return true;
                     }
 
@@ -145,8 +145,8 @@ public class InputManager {
             switch (lastButton) {
                 // If main button clicked
                 case 0:
-                    // If game is paused don't allow any actions
-                    if (gameState.paused) {
+                    // If game is paused or over don't allow any actions
+                    if (gameState.paused || gameState.gameOver) {
                         return true;
                     }
 
@@ -193,6 +193,11 @@ public class InputManager {
 
             // If the pause key is pressed, pause/resume the game
             else if (keycode == Keybindings.PAUSE.getKey()) {
+                // If the game is over don't allow pause
+                if (gameState.gameOver) {
+                    return true;
+                }
+
                 eventHandler.callEvent(GameState.getState().paused ? EventHandler.Event.RESUME_GAME : EventHandler.Event.PAUSE_GAME);
 
                 return true;

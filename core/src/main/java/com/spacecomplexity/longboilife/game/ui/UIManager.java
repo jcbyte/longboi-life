@@ -76,8 +76,10 @@ public class UIManager {
             new UIBuildingCounter(viewport, table, skin),
         };
 
+        // Hide game UI and show end UI
         EventHandler.getEventHandler().createEvent(EventHandler.Event.GAME_END, (params) -> {
-            // Hide game UI and show then end events
+            GameState.getState().gameOver = true;
+            EventHandler.getEventHandler().callEvent(EventHandler.Event.CANCEL_OPERATIONS);
 
             // Run dispose functions on UI elements
             for (UIElement uiElement : uiElements) {
@@ -87,6 +89,7 @@ public class UIManager {
 
             // Create the new end elements
             uiElements = new UIElement[]{
+                // todo need menu button
                 new UIOverview(viewport, table, skin),
             };
 

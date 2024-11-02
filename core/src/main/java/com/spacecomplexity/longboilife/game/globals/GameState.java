@@ -127,6 +127,11 @@ public class GameState {
     public boolean satisfactionModifierPositive = false;
 
     /**
+     * If the game has ended
+     */
+    public boolean gameOver = false;
+
+    /**
      * Get the singleton instance of the {@link GameState} class.
      *
      * @return The single {@link GameState} class.
