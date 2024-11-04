@@ -27,7 +27,7 @@ public class UIOverview extends UIElement {
     public UIOverview(Viewport uiViewport, Table parentTable, Skin skin) {
         super(uiViewport, parentTable, skin);
 
-        String overview = String.format("Game Over\r\nSatisfaction Score: %.2f%%", GameState.getState().satisfactionScore);
+        String overview = String.format("Game Over\r\nSatisfaction Score: %.2f%%", GameState.getState().satisfactionScore * 100);
 
         // Initialise label
         Label label = new Label(overview, skin);
