@@ -131,8 +131,14 @@ public class GameUtils {
 
         GameState gameState = GameState.getState();
 
+
         // Update whether the last satisfaction modifier was positive
-        gameState.satisfactionModifierPositive = satisfactionModifier >= 0;
+        boolean newSatisfactionModifierPositive = satisfactionModifier >= 0;
+        if (newSatisfactionModifierPositive != gameState.satisfactionModifierPositive) {
+            // Reset satisfaction velocity direction flips
+            gameState.satisfactionScoreVelocity = 0;
+        }
+        gameState.satisfactionModifierPositive = newSatisfactionModifierPositive;
 
         // Increase satisfaction velocity based on the satisfaction modifier
         float newSatisfactionVelocity = gameState.satisfactionScoreVelocity + (satisfactionModifier / 1000000f);

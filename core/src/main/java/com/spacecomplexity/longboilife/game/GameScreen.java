@@ -161,9 +161,6 @@ public class GameScreen implements Screen {
                 gameState.placingBuilding = null;
             }
 
-            // Reset satisfaction velocity when building places/moved
-            gameState.satisfactionScoreVelocity = 0;
-
             return null;
         });
 
