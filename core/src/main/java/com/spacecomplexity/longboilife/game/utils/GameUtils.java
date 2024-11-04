@@ -130,8 +130,7 @@ public class GameUtils {
         }
 
         GameState gameState = GameState.getState();
-
-
+        
         // Update whether the last satisfaction modifier was positive
         boolean newSatisfactionModifierPositive = satisfactionModifier >= 0;
         if (newSatisfactionModifierPositive != gameState.satisfactionModifierPositive) {
