@@ -13,6 +13,15 @@ import java.util.HashMap;
  */
 public class Main extends Game {
     /**
+     * If the game is in fullscreen mode.
+     */
+    public static boolean fullscreen = false;
+    /**
+     * The previous dimensions of the game, for returning from fullscreen.
+     */
+    public static int prevAppWidth, prevAppHeight;
+
+    /**
      * Enum containing all screens and there class references.
      */
     public enum ScreenType {

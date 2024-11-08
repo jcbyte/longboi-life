@@ -13,8 +13,6 @@ public class MainInputManager extends InputAdapter {
     GameState gameState = GameState.getState();
     EventHandler eventHandler = EventHandler.getEventHandler();
 
-    private int prevAppWidth, prevAppHeight;
-
     /**
      * Handles onKeyPress events.
      *
@@ -25,18 +23,18 @@ public class MainInputManager extends InputAdapter {
     public boolean keyDown(int keycode) {
         // If the fullscreen key is pressed then toggle fullscreen mode
         if (keycode == Keybindings.FULLSCREEN.getKey()) {
-            gameState.fullscreen = !gameState.fullscreen;
+            Main.fullscreen = !Main.fullscreen;
 
-            if (gameState.fullscreen) {
+            if (Main.fullscreen) {
                 // If going to fullscreen then record the current width and height to return to
-                prevAppWidth = Gdx.graphics.getWidth();
-                prevAppHeight = Gdx.graphics.getHeight();
+                Main.prevAppWidth = Gdx.graphics.getWidth();
+                Main.prevAppHeight = Gdx.graphics.getHeight();
 
                 // Change to fullscreen
                 Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
             } else {
                 // Change back to windowed mode, restoring the previous app width and height
-                Gdx.graphics.setWindowedMode(prevAppWidth, prevAppHeight);
+                Gdx.graphics.setWindowedMode(Main.prevAppWidth, Main.prevAppHeight);
             }
 
             return true;

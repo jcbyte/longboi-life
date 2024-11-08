@@ -37,11 +37,6 @@ public class GameState {
     public float cameraScrollZoomSpeed;
 
     /**
-     * If the game is in fullscreen mode.
-     */
-    public boolean fullscreen = false;
-
-    /**
      * The amount of money the player currently has.
      */
     public float money;
