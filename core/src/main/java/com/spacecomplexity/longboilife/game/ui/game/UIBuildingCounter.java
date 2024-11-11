@@ -49,7 +49,7 @@ public class UIBuildingCounter extends UIElement {
 
         // Style and place the table
         table.setBackground(skin.getDrawable("panel1"));
-        table.setSize(100, 100);
+        table.setSize(100, 110);
         placeTable();
     }
 

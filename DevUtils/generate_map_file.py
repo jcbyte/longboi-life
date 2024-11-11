@@ -1,10 +1,13 @@
 import argparse
-import json
 
+import ujson
 from PIL import Image
 
 TILE_COLOUR_MAPPINGS = {(0, 255, 0): "GRASS", (0, 0, 255): "WATER"}
 BUILDING_COLOUR_MAPPINGS = {(0, 0, 0): "ROAD"}
+
+# Example Usage:
+# > python generate_map_file.py map64x32.png -b map64x32.png
 
 
 def create_map(map_in_img, out_json, buildings_in_img=None):
@@ -50,7 +53,7 @@ def create_map(map_in_img, out_json, buildings_in_img=None):
     # Write the map into the json file
     map_contents = {"map": extracted_map, "buildings": buildings}
     with open(out_json, "w") as f:
-        json.dump(map_contents, f)
+        ujson.dump(map_contents, f)
 
 
 # Parse arguments to get the input image file and output json file names
