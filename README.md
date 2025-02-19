@@ -39,3 +39,7 @@ For example, `core:clean` removes `build` folder only from the `core` project.
 ## DevUtils
 
 `/DevUtils/` contains useful scripts (not necessarily in Java) for developing the project.
+
+## Licence
+
+[Apache License 2.0](LICENSE)
