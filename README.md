@@ -1,6 +1,6 @@
 # longboi-life
 
-*University of York ENG1 Project.*
+*University of York ENG1 Project - Assessment 1.*
 
 Short single-player game that allows the player to build their own university
 campus trying to reach the highest student satisfaction possible.
@@ -38,7 +38,7 @@ For example, `core:clean` removes `build` folder only from the `core` project.
 
 ## DevUtils
 
-`/DevUtils/` contains useful scripts (not necessarily in Java) for developing the project.
+`/DevUtils/` contains useful scripts (not necessarily in Java) for working with the project.
 
 ## Licence
 
